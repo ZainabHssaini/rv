@@ -11,6 +11,7 @@ import FeaturesPage from "./pages/FeaturesPage";
 import TherapyPage from "./pages/TherapyPage";
 import PetGamePage from "./pages/PetGamePage";
 import MoodTrackerPage from "./pages/MoodTrackerPage";
+import BlogsPodcastsPage from "./pages/BlogsPodcastsPage";
 
 const queryClient = new QueryClient();
 
@@ -27,6 +28,7 @@ const App = () => (
           <Route path="/therapy" element={<TherapyPage />} />
           <Route path="/pet-game" element={<PetGamePage />} />
           <Route path="/mood-tracker" element={<MoodTrackerPage />} />
+          <Route path="/blogs-podcasts" element={<BlogsPodcastsPage />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

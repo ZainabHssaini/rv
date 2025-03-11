@@ -34,7 +34,7 @@ const Navbar = () => {
             <img 
               src="/lovable-uploads/8d6035b5-8ccf-43b7-a612-84053242895a.png" 
               alt="Reviva Logo" 
-              className="h-16 sm:h-20 md:h-24 w-auto transform hover:scale-105 transition-transform animate-pulse-gentle" 
+              className="h-24 sm:h-28 md:h-32 w-auto transform hover:scale-110 transition-transform duration-500 animate-pulse-gentle" 
             />
           </Link>
 
@@ -69,6 +69,12 @@ const Navbar = () => {
               className="text-reviva-charcoal dark:text-white hover:text-reviva-teal dark:hover:text-reviva-mint transition-colors animate-pulse"
             >
               AI Chatbot
+            </Link>
+            <Link
+              to="/blogs-podcasts"
+              className="text-reviva-charcoal dark:text-white hover:text-reviva-teal dark:hover:text-reviva-mint transition-colors"
+            >
+              Blogs & Podcasts
             </Link>
             <button className="reviva-button">
               Sign In
@@ -123,6 +129,13 @@ const Navbar = () => {
               onClick={() => setIsMobileMenuOpen(false)}
             >
               AI Chatbot
+            </Link>
+            <Link
+              to="/blogs-podcasts"
+              className="text-reviva-charcoal dark:text-white hover:text-reviva-teal dark:hover:text-reviva-mint transition-colors"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Blogs & Podcasts
             </Link>
             <button className="reviva-button">
               Sign In
