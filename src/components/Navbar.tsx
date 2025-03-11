@@ -1,6 +1,7 @@
 
 import { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -29,40 +30,46 @@ const Navbar = () => {
     >
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex items-center justify-between">
-          <a href="/" className="flex items-center">
+          <Link to="/" className="flex items-center">
             <img 
               src="/lovable-uploads/8d6035b5-8ccf-43b7-a612-84053242895a.png" 
               alt="Reviva Logo" 
-              className="h-10 md:h-12"
+              className="h-14 md:h-16 animate-pulse-gentle" // Increased logo size and added subtle animation
             />
-          </a>
+          </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
-            <a 
-              href="#features" 
+            <Link 
+              to="/features" 
               className="text-reviva-charcoal dark:text-white hover:text-reviva-teal dark:hover:text-reviva-mint transition-colors"
             >
               Features
-            </a>
-            <a 
-              href="#therapy" 
+            </Link>
+            <Link 
+              to="/therapy" 
               className="text-reviva-charcoal dark:text-white hover:text-reviva-teal dark:hover:text-reviva-mint transition-colors"
             >
               Therapy
-            </a>
-            <a 
-              href="#pet-game" 
+            </Link>
+            <Link 
+              to="/pet-game" 
               className="text-reviva-charcoal dark:text-white hover:text-reviva-teal dark:hover:text-reviva-mint transition-colors"
             >
               Pet Care
-            </a>
-            <a
-              href="#mood-tracker"
+            </Link>
+            <Link
+              to="/mood-tracker"
               className="text-reviva-charcoal dark:text-white hover:text-reviva-teal dark:hover:text-reviva-mint transition-colors"
             >
               Mood Tracker
-            </a>
+            </Link>
+            <Link
+              to="/chatbot"
+              className="text-reviva-charcoal dark:text-white hover:text-reviva-teal dark:hover:text-reviva-mint transition-colors animate-pulse"
+            >
+              AI Chatbot
+            </Link>
             <button className="reviva-button">
               Sign In
             </button>
@@ -82,34 +89,41 @@ const Navbar = () => {
       {isMobileMenuOpen && (
         <div className="md:hidden glass-card dark:glass-card-dark mt-2 mx-4 rounded-xl animate-slide-up">
           <div className="flex flex-col space-y-4 p-4">
-            <a 
-              href="#features" 
+            <Link 
+              to="/features" 
               className="text-reviva-charcoal dark:text-white hover:text-reviva-teal dark:hover:text-reviva-mint transition-colors"
               onClick={() => setIsMobileMenuOpen(false)}
             >
               Features
-            </a>
-            <a 
-              href="#therapy" 
+            </Link>
+            <Link 
+              to="/therapy" 
               className="text-reviva-charcoal dark:text-white hover:text-reviva-teal dark:hover:text-reviva-mint transition-colors"
               onClick={() => setIsMobileMenuOpen(false)}
             >
               Therapy
-            </a>
-            <a 
-              href="#pet-game" 
+            </Link>
+            <Link 
+              to="/pet-game" 
               className="text-reviva-charcoal dark:text-white hover:text-reviva-teal dark:hover:text-reviva-mint transition-colors"
               onClick={() => setIsMobileMenuOpen(false)}
             >
               Pet Care
-            </a>
-            <a
-              href="#mood-tracker"
+            </Link>
+            <Link
+              to="/mood-tracker"
               className="text-reviva-charcoal dark:text-white hover:text-reviva-teal dark:hover:text-reviva-mint transition-colors"
               onClick={() => setIsMobileMenuOpen(false)}
             >
               Mood Tracker
-            </a>
+            </Link>
+            <Link
+              to="/chatbot"
+              className="text-reviva-charcoal dark:text-white hover:text-reviva-teal dark:hover:text-reviva-mint transition-colors"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              AI Chatbot
+            </Link>
             <button className="reviva-button">
               Sign In
             </button>
