@@ -2,7 +2,7 @@
 import React from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import { BookOpen, Headphones, Clock, Calendar, Heart, Share2 } from 'lucide-react';
+import { BookOpen, Headphones, Clock, Calendar, Heart, Share2, ArrowRight } from 'lucide-react';
 
 const BlogsPodcastsPage = () => {
   return (
