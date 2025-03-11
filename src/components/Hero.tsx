@@ -135,20 +135,22 @@ const Hero = () => {
         </div>
       </div>
 
-      {/* Additional relaxing animations */}
-      <style jsx>{`
-        @keyframes float-around {
-          0% { transform: translate(0, 0); }
-          25% { transform: translate(10px, -10px); }
-          50% { transform: translate(-5px, -5px); }
-          75% { transform: translate(-10px, 10px); }
-          100% { transform: translate(0, 0); }
-        }
-        
-        .floating-circle {
-          animation: float-around 20s infinite ease-in-out;
-        }
-      `}</style>
+      {/* Additional relaxing animations - Fixed style tag by using standard CSS syntax */}
+      <style>
+        {`
+          @keyframes float-around {
+            0% { transform: translate(0, 0); }
+            25% { transform: translate(10px, -10px); }
+            50% { transform: translate(-5px, -5px); }
+            75% { transform: translate(-10px, 10px); }
+            100% { transform: translate(0, 0); }
+          }
+          
+          .floating-circle {
+            animation: float-around 20s infinite ease-in-out;
+          }
+        `}
+      </style>
     </section>
   );
 };

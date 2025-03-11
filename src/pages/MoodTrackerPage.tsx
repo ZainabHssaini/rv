@@ -1,9 +1,8 @@
-
 import { useState } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-import { Calendar, ChevronLeft, ChevronRight, Clock, Award, BarChart2 } from 'lucide-react';
+import { Calendar, ChevronLeft, ChevronRight, Clock, Award, BarChart2, CheckCircle } from 'lucide-react';
 
 type Mood = 'great' | 'good' | 'okay' | 'down' | 'bad';
 type MoodEntry = {
@@ -13,7 +12,6 @@ type MoodEntry = {
   timeOfDay: string;
 };
 
-// Convert mood strings to numbers for the chart
 const moodToValue = {
   great: 5,
   good: 4,
@@ -47,25 +45,20 @@ const MoodTrackerPage = () => {
   
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   
-  // Format date as YYYY-MM-DD
   const formatDate = (date: Date) => {
     return date.toISOString().split('T')[0];
   };
   
-  // Get formatted current date
   const formattedDate = formatDate(currentDate);
   
-  // Check if there's already an entry for today
   const todayEntry = recentEntries.find(entry => entry.date === formattedDate);
   
-  // Format date for display
   const displayDate = currentDate.toLocaleDateString('en-US', {
     weekday: 'long',
     month: 'long',
     day: 'numeric',
   });
   
-  // Handle mood submission
   const handleSubmitMood = () => {
     if (!selectedMood) return;
     
@@ -76,29 +69,23 @@ const MoodTrackerPage = () => {
       timeOfDay: timeOfDay,
     };
     
-    // Check if entry for today already exists
     const entryIndex = recentEntries.findIndex(entry => entry.date === formattedDate);
     
     if (entryIndex >= 0) {
-      // Update existing entry
       const updatedEntries = [...recentEntries];
       updatedEntries[entryIndex] = newEntry;
       setRecentEntries(updatedEntries);
     } else {
-      // Add new entry
       setRecentEntries([...recentEntries, newEntry]);
     }
     
-    // Reset form
     setSelectedMood(null);
     setMoodNote('');
     
-    // Show success message
     setShowSuccessMessage(true);
     setTimeout(() => setShowSuccessMessage(false), 3000);
   };
   
-  // Prepare chart data
   const chartData = recentEntries
     .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
     .map(entry => ({
@@ -107,7 +94,6 @@ const MoodTrackerPage = () => {
       mood: entry.mood,
     }));
   
-  // Custom tooltip for chart
   const CustomTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
       const mood = payload[0].payload.mood;
@@ -121,8 +107,7 @@ const MoodTrackerPage = () => {
     return null;
   };
   
-  // Calculate streak
-  const streak = 7; // In a real app, calculate based on consecutive entries
+  const streak = 7;
   
   return (
     <div className="min-h-screen bg-white dark:bg-reviva-charcoal">
@@ -414,19 +399,5 @@ const MoodTrackerPage = () => {
         </div>
       </main>
       
-      {/* Success message toast */}
-      {showSuccessMessage && (
-        <div className="fixed bottom-4 right-4 bg-green-100 dark:bg-green-900/50 text-green-700 dark:text-green-300 px-4 py-3 rounded-lg shadow-lg animate-slide-up flex items-center">
-          <div className="mr-2 bg-green-200 dark:bg-green-800 rounded-full p-1">
-            <CheckCircle className="h-5 w-5" />
-          </div>
-          <p>Mood entry saved successfully!</p>
-        </div>
-      )}
-      
-      <Footer />
-    </div>
-  );
-};
+      {
 
-export default MoodTrackerPage;
