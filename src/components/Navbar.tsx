@@ -34,7 +34,7 @@ const Navbar = () => {
             <img 
               src="/lovable-uploads/8d6035b5-8ccf-43b7-a612-84053242895a.png" 
               alt="Reviva Logo" 
-              className="h-14 md:h-16 animate-pulse-gentle" // Increased logo size and added subtle animation
+              className="h-16 sm:h-20 md:h-24 w-auto transform hover:scale-105 transition-transform animate-pulse-gentle" 
             />
           </Link>
 
