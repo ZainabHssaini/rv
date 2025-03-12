@@ -21,32 +21,32 @@ const TherapyPage = () => {
   const therapists: Therapist[] = [
     {
       id: 1,
-      name: "Dr. Sarah Johnson",
+      name: "Dr. Ihssan Yousfi",
       title: "Clinical Psychologist",
       specialties: ["Anxiety", "Depression", "Trauma"],
       rating: 4.9,
       sessions: 324,
-      image: "https://images.unsplash.com/photo-1649972904349-6e44c42644a7",
+      image: "/reviva/woman (1).png" ,
       available: true
     },
     {
       id: 2,
-      name: "Dr. Michael Chen",
+      name: "Dr. Sami Chakour",
       title: "Psychiatrist",
       specialties: ["Mood Disorders", "Medication Management", "Anxiety"],
       rating: 4.8,
       sessions: 287,
-      image: "https://images.unsplash.com/photo-1721322800607-8c38375eef04",
+      image: "/reviva/man.png" ,
       available: true
     },
     {
       id: 3,
-      name: "Emily Rodriguez, LMFT",
+      name: "Inass EL Bouchikhi",
       title: "Family Therapist",
       specialties: ["Relationships", "Family Counseling", "Couples Therapy"],
       rating: 4.7,
       sessions: 198,
-      image: "https://images.unsplash.com/photo-1649972904349-6e44c42644a7",
+      image: "/reviva/woman (1).png" ,
       available: false
     }
   ];
@@ -123,7 +123,7 @@ const TherapyPage = () => {
                 </div>
                 <div className="md:w-1/2 relative min-h-[300px]">
                   <img 
-                    src="https://images.unsplash.com/photo-1721322800607-8c38375eef04" 
+                    src="/reviva/3.jpg" 
                     alt="Therapy session" 
                     className="absolute inset-0 w-full h-full object-cover"
                   />

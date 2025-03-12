@@ -4,25 +4,25 @@ import { Calendar, Star, ArrowRight } from 'lucide-react';
 const TherapistSection = () => {
   const therapists = [
     {
-      name: "Dr. Sarah Johnson",
+      name: "Dr. Sami Chakour",
       specialty: "Anxiety & Depression",
-      image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=200&h=200&ixlib=rb-4.0.3",
+      image: "https://media.licdn.com/dms/image/v2/D4E03AQEiNgd7qj2XNQ/profile-displayphoto-shrink_200_200/B4EZP0Zw6sGcAY-/0/1734972215894?e=1747267200&v=beta&t=9ostmp6_91pEtaTEVQeJJfLJib86o1FCRmN5-0pRSZk",
       rating: 4.9,
       reviews: 128,
       nextAvailable: "Today"
     },
     {
-      name: "Dr. Michael Chen",
+      name: "Dr. Ihssan Yousfi",
       specialty: "Trauma Recovery",
-      image: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&q=80&w=200&h=200&ixlib=rb-4.0.3",
+      image: "https://media.licdn.com/dms/image/v2/D4E03AQFVBnOGUCju2g/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1714003455639?e=1747267200&v=beta&t=wqrNmcrUf8wOW1ncnKiVdFBNJ16WrFQQG7LZ8myZJ98",
       rating: 4.8,
       reviews: 93,
       nextAvailable: "Tomorrow"
     },
     {
-      name: "Dr. Amelia Rodriguez",
+      name: "Dr. INasse ElBouchikhi",
       specialty: "Relationship Counseling",
-      image: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&q=80&w=200&h=200&ixlib=rb-4.0.3",
+      image: "https://media.licdn.com/dms/image/v2/D4E03AQFSEDP7BaeMKA/profile-displayphoto-shrink_200_200/B4EZQ48u.8G4Ac-/0/1736122233315?e=1747267200&v=beta&t=8CCmYEIZiXpCiE-bs_4H9ggfo4ocIzdHWTBevEeQOFM",
       rating: 4.9,
       reviews: 156,
       nextAvailable: "In 2 days"

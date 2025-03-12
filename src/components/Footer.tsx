@@ -8,7 +8,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
           <div>
             <img 
-              src="/lovable-uploads/8d6035b5-8ccf-43b7-a612-84053242895a.png" 
+              src="/reviva/8d6035b5-8ccf-43b7-a612-84053242895a.png" 
               alt="Reviva Logo" 
               className="h-12 mb-4"
             />

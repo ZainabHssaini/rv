@@ -21,37 +21,66 @@ const Navbar = () => {
 
   return (
     <nav 
-      className={`sticky top-0 left-0 right-0 z-50 transition-all duration-300 backdrop-blur-md ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 backdrop-blur-md w-full ${
         isScrolled 
-          ? 'bg-white/80 dark:bg-reviva-charcoal/80 shadow-md py-2' 
-          : 'bg-transparent py-4'
+          ? 'bg-white/90 dark:bg-reviva-charcoal/90 shadow-md py-4' 
+          : 'bg-transparent py-6'
       }`}
     >
-      <div className="container mx-auto px-4 md:px-6">
+      <div className="container mx-auto px-6 md:px-8 lg:px-12">
         <div className="flex items-center justify-between">
-          <Link to="/" className="flex items-center space-x-4">
-            <img 
-              src="/lovable-uploads/8d6035b5-8ccf-43b7-a612-84053242895a.png" 
-              alt="Reviva Logo" 
-              className="h-48 sm:h-56 md:h-64 w-auto transform hover:scale-110 transition-transform duration-500 animate-pulse-gentle" 
-            />
+          <Link to="/" className="flex items-center">
+            <div className="relative">
+              <img 
+                src="/reviva/8d6035b5-8ccf-43b7-a612-84053242895a.png" 
+                alt="Reviva Logo" 
+                className="h-14 md:h-12 w-auto transform hover:scale-110 transition-transform duration-500" 
+              />
+              <div className="absolute -inset-1 -z-10 border-2 border-reviva-teal/30 rounded-t-3xl opacity-0 hover:opacity-100 transition-opacity duration-500"></div>
+            </div>
+            <div className="flex flex-col ml-3">
+             
+              <span className="text-reviva-charcoal dark:text-white text-xs italic">
+              صحّتك النفسية تهمنا
+              </span>
+            </div>
           </Link>
-          <span className="text-reviva-charcoal dark:text-white text-lg md:text-l italic ml-[-570px]">Find it all, find it here.</span>
 
-          {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
-            <Link to="/features/" className="text-reviva-charcoal dark:text-white hover:text-reviva-teal dark:hover:text-reviva-mint transition-colors">Features</Link>
-            <Link to="/therapy" className="text-reviva-charcoal dark:text-white hover:text-reviva-teal dark:hover:text-reviva-mint transition-colors">Therapy</Link>
-            <Link to="/pet-game" className="text-reviva-charcoal dark:text-white hover:text-reviva-teal dark:hover:text-reviva-mint transition-colors">Pet Care</Link>
-            <Link to="/mood-tracker" className="text-reviva-charcoal dark:text-white hover:text-reviva-teal dark:hover:text-reviva-mint transition-colors">Mood Tracker</Link>
-            <Link to="/chatbot" className="text-reviva-charcoal dark:text-white hover:text-reviva-teal dark:hover:text-reviva-mint transition-colors animate-pulse">AI Chatbot</Link>
-            <Link to="/blogs-podcasts" className="text-reviva-charcoal dark:text-white hover:text-reviva-teal dark:hover:text-reviva-mint transition-colors">Blogs & Podcasts</Link>
-            <button className="reviva-button">Sign In</button>
+            <Link to="/features/" className="text-reviva-charcoal dark:text-white hover:text-reviva-teal dark:hover:text-reviva-mint transition-colors relative group">
+              Features
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-reviva-teal group-hover:w-full transition-all duration-300 rounded-full"></span>
+            </Link>
+            <Link to="/therapy" className="text-reviva-charcoal dark:text-white hover:text-reviva-teal dark:hover:text-reviva-mint transition-colors relative group">
+              Therapy
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-reviva-teal group-hover:w-full transition-all duration-300 rounded-full"></span>
+            </Link>
+            <Link to="/pet-game" className="text-reviva-charcoal dark:text-white hover:text-reviva-teal dark:hover:text-reviva-mint transition-colors relative group">
+              Pet Care
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-reviva-teal group-hover:w-full transition-all duration-300 rounded-full"></span>
+            </Link>
+            <Link to="/mood-tracker" className="text-reviva-charcoal dark:text-white hover:text-reviva-teal dark:hover:text-reviva-mint transition-colors relative group">
+              Mood Tracker
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-reviva-teal group-hover:w-full transition-all duration-300 rounded-full"></span>
+            </Link>
+            <Link to="/chatbot" className="text-reviva-charcoal dark:text-white hover:text-reviva-teal dark:hover:text-reviva-mint transition-colors relative group">
+              AI Chatbot
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-reviva-teal group-hover:w-full transition-all duration-300 rounded-full"></span>
+            </Link>
+            <Link to="/blogs-podcasts" className="text-reviva-charcoal dark:text-white hover:text-reviva-teal dark:hover:text-reviva-mint transition-colors relative group">
+              Blogs & Podcasts
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-reviva-teal group-hover:w-full transition-all duration-300 rounded-full"></span>
+            </Link>
+            <button className="px-6 py-3 rounded-full bg-gradient-to-r from-reviva-teal to-reviva-mint text-white font-medium hover:shadow-lg transition-shadow relative overflow-hidden group">
+              <span className="relative z-10">Sign In</span>
+              {/* Moroccan-inspired decorative pattern on hover */}
+              <span className="absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity duration-500 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCI+PHBhdGggZD0iTTAgMGg0MHY0MEgweiIgZmlsbD0ibm9uZSIvPjxwYXRoIGQ9Ik0yMCAwTDAgMjBoMjBsMjAgMjBWMjBIMjB6IiBmaWxsPSIjZmZmIiBmaWxsLW9wYWNpdHk9Ii4yIi8+PC9zdmc+')]"></span>
+            </button>
           </div>
 
           {/* Mobile Menu Button */}
           <button 
-            className="md:hidden text-reviva-charcoal dark:text-white"
+            className="md:hidden text-reviva-charcoal dark:text-white p-2"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
             {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -59,17 +88,20 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Mobile Navigation */}
       {isMobileMenuOpen && (
-        <div className="md:hidden glass-card dark:glass-card-dark mt-2 mx-4 rounded-xl animate-slide-up">
-          <div className="flex flex-col space-y-4 p-4">
-            <Link to="/features" className="text-reviva-charcoal dark:text-white hover:text-reviva-teal dark:hover:text-reviva-mint transition-colors" onClick={() => setIsMobileMenuOpen(false)}>Features</Link>
-            <Link to="/therapy" className="text-reviva-charcoal dark:text-white hover:text-reviva-teal dark:hover:text-reviva-mint transition-colors" onClick={() => setIsMobileMenuOpen(false)}>Therapy</Link>
-            <Link to="/pet-game" className="text-reviva-charcoal dark:text-white hover:text-reviva-teal dark:hover:text-reviva-mint transition-colors" onClick={() => setIsMobileMenuOpen(false)}>Pet Care</Link>
-            <Link to="/mood-tracker" className="text-reviva-charcoal dark:text-white hover:text-reviva-teal dark:hover:text-reviva-mint transition-colors" onClick={() => setIsMobileMenuOpen(false)}>Mood Tracker</Link>
-            <Link to="/chatbot" className="text-reviva-charcoal dark:text-white hover:text-reviva-teal dark:hover:text-reviva-mint transition-colors" onClick={() => setIsMobileMenuOpen(false)}>AI Chatbot</Link>
-            <Link to="/blogs-podcasts" className="text-reviva-charcoal dark:text-white hover:text-reviva-teal dark:hover:text-reviva-mint transition-colors" onClick={() => setIsMobileMenuOpen(false)}>Blogs & Podcasts</Link>
-            <button className="reviva-button">Sign In</button>
+        <div className="md:hidden bg-white/95 dark:bg-reviva-charcoal/95 mt-0 border-t border-reviva-teal/20 animate-fade-in">
+          <div className="container mx-auto px-6">
+            <div className="flex flex-col space-y-4 py-4 relative">
+              <div className="absolute top-0 bottom-0 left-0 w-1 bg-gradient-to-b from-reviva-mint via-reviva-teal to-reviva-mint opacity-30"></div>
+              
+              <Link to="/features" className="text-reviva-charcoal dark:text-white hover:text-reviva-teal dark:hover:text-reviva-mint transition-colors pl-4" onClick={() => setIsMobileMenuOpen(false)}>Features</Link>
+              <Link to="/therapy" className="text-reviva-charcoal dark:text-white hover:text-reviva-teal dark:hover:text-reviva-mint transition-colors pl-4" onClick={() => setIsMobileMenuOpen(false)}>Therapy</Link>
+              <Link to="/pet-game" className="text-reviva-charcoal dark:text-white hover:text-reviva-teal dark:hover:text-reviva-mint transition-colors pl-4" onClick={() => setIsMobileMenuOpen(false)}>Pet Care</Link>
+              <Link to="/mood-tracker" className="text-reviva-charcoal dark:text-white hover:text-reviva-teal dark:hover:text-reviva-mint transition-colors pl-4" onClick={() => setIsMobileMenuOpen(false)}>Mood Tracker</Link>
+              <Link to="/chatbot" className="text-reviva-charcoal dark:text-white hover:text-reviva-teal dark:hover:text-reviva-mint transition-colors pl-4" onClick={() => setIsMobileMenuOpen(false)}>AI Chatbot</Link>
+              <Link to="/blogs-podcasts" className="text-reviva-charcoal dark:text-white hover:text-reviva-teal dark:hover:text-reviva-mint transition-colors pl-4" onClick={() => setIsMobileMenuOpen(false)}>Blogs & Podcasts</Link>
+              <button className="mx-4 mt-2 py-3 rounded-full bg-gradient-to-r from-reviva-teal to-reviva-mint text-white font-medium">Sign In</button>
+            </div>
           </div>
         </div>
       )}
