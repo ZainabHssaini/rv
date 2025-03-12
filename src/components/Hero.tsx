@@ -28,8 +28,8 @@ const Hero = () => {
   }, []);
 
   return (
-    <section className="pt-24 pb-16 md:py-32 relative overflow-hidden">
-      {/* Relaxing floating background animations */}
+<section className="pt-24 pb-8 md:pt-36 md:pb-16 relative overflow-hidden">
+{/* Relaxing floating background animations */}
       <div ref={floatingCirclesRef} className="absolute inset-0 overflow-hidden pointer-events-none">
         {[...Array(8)].map((_, index) => (
           <div 
