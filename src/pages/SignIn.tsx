@@ -1,22 +1,70 @@
-import { useForm } from 'react-hook-form'
-import { Link } from 'react-router-dom'
+import { useForm } from 'react-hook-form';
+import { Link, useNavigate } from 'react-router-dom';
+import { ArrowRight, User, ArrowLeft } from 'lucide-react'; // Import ArrowLeft
+import { useToast } from "@/hooks/use-toast"; // Import the useToast hook
 
 const SignIn = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm()
+  } = useForm();
 
-  const onSubmit = (data) => {
-    console.log(data)
-    // Ajouter la logique d'authentification ici
-  }
+  const navigate = useNavigate(); // Hook for navigation
+  const { toast } = useToast(); // Initialize the toast function
+
+  const onSubmit = async (data) => {
+    try {
+      const response = await fetch('http://localhost:8082/auth', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data), // Send form data
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const result = await response.json(); // Receive the response from the backend
+      console.log('Authentication successful:', result);
+
+      if (result.id != null) { // Assuming the backend returns { success: true, user: { firstname, lastname } }
+        // Store user data in localStorage
+        localStorage.setItem('user', JSON.stringify(result));
+
+        // Redirect to the home page
+        navigate('/');
+      } else {
+        // Trigger toast notification for incorrect credentials
+        toast({
+          title: "Email or Password incorrect",
+          description: "Try again...",
+        });
+      }
+    } catch (error) {
+      console.error('Error during sign-in:', error);
+      toast({
+        title: "Email or Password incorrect",
+        description: "Try again...",
+      });
+    }
+  };
 
   return (
     <div className="min-h-screen bg-reviva-beige/10 flex items-center justify-center p-4">
       <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8 relative">
-        {/* Décoration arrière-plan */}
+        {/* Bouton de retour en haut à gauche */}
+        <Link
+          to="/"
+          className="absolute top-4 left-4 text-reviva-charcoal hover:text-reviva-teal transition-colors"
+        >
+          <ArrowLeft size={24} /> {/* Icône de retour */}
+        </Link>
+
+        {/* Décors d'arrière-plan */}
+        {/* Background decoration */}
         <div className="absolute -top-4 -right-4 w-16 h-16 bg-reviva-mint/30 rounded-full blur-xl animate-pulse-gentle"></div>
         <div className="absolute -bottom-4 -left-4 w-20 h-20 bg-reviva-teal/20 rounded-full blur-xl animate-pulse-gentle"></div>
 
@@ -33,9 +81,8 @@ const SignIn = () => {
             <input
               {...register('email', { required: 'Email is required' })}
               type="email"
-              className={`w-full px-4 py-3 rounded-lg border ${
-                errors.email ? 'border-red-500' : 'border-gray-300'
-              } focus:border-reviva-teal focus:ring-2 focus:ring-reviva-teal/30`}
+              className={`w-full px-4 py-3 rounded-lg border ${errors.email ? 'border-red-500' : 'border-gray-300'
+                } focus:border-reviva-teal focus:ring-2 focus:ring-reviva-teal/30`}
               placeholder="name@example.com"
             />
             {errors.email && (
@@ -57,9 +104,8 @@ const SignIn = () => {
             <input
               {...register('password', { required: 'Password is required' })}
               type="password"
-              className={`w-full px-4 py-3 rounded-lg border ${
-                errors.password ? 'border-red-500' : 'border-gray-300'
-              } focus:border-reviva-teal focus:ring-2 focus:ring-reviva-teal/30`}
+              className={`w-full px-4 py-3 rounded-lg border ${errors.password ? 'border-red-500' : 'border-gray-300'
+                } focus:border-reviva-teal focus:ring-2 focus:ring-reviva-teal/30`}
               placeholder="••••••••"
             />
             {errors.password && (
@@ -99,7 +145,7 @@ const SignIn = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default SignIn
+export default SignIn;
