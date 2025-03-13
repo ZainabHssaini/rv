@@ -97,22 +97,19 @@ const Footer = () => {
             <h3 className="font-medium text-lg mb-4 text-reviva-deep-teal">Contact Us</h3>
             <ul className="space-y-2">
               <li className="text-reviva-charcoal/80 dark:text-white/80">
-                support@reviva.com
-              </li>
+reviva.ma7@gmail.com              </li>
               <li className="text-reviva-charcoal/80 dark:text-white/80">
-                +1 (800) 123-4567
-              </li>
++212 (7-62908598)              </li>
               <li className="text-reviva-charcoal/80 dark:text-white/80">
-                123 Wellness Street<br />
-                Mindful City, MC 12345
-              </li>
+                Ecole Mohammadia d'Ingénieurs<br />
+Rabat-Agdal              </li>
             </ul>
           </div>
         </div>
         
         <div className="border-t border-reviva-teal/20 pt-8 flex flex-col md:flex-row justify-between items-center">
           <p className="text-sm text-reviva-charcoal/70 dark:text-white/70 mb-4 md:mb-0">
-            © 2023 Reviva. All rights reserved.
+            © 2025 Reviva. All rights reserved.
           </p>
           <div className="flex space-x-6">
             <a href="#" className="text-sm text-reviva-charcoal/70 dark:text-white/70 hover:text-reviva-teal dark:hover:text-reviva-mint transition-colors">

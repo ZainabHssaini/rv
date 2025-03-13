@@ -221,7 +221,7 @@ const BlogsPodcastsPage = () => {
                     id: 'blog5',
                     image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
                     category: 'Stress',
-                    date: 'May 15, 2023',
+                    date: 'March 11, 2025',
                     readTime: '9',
                     title: 'Stress Relief Strategies',
                     excerpt: 'Incorporate these proven stress management techniques into your daily routine to reduce stress levels and improve your overall mental wellbeing.',
