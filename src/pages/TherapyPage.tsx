@@ -3,6 +3,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { Calendar, Video, MessageSquare, CheckCircle, Star, Users, MapPin } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 type Therapist = {
   id: number;
@@ -274,13 +275,23 @@ const TherapyPage = () => {
                           </div>
                           
                           <div className="flex items-center gap-2 mt-4">
-                            <button className="flex-1 px-4 py-2 bg-reviva-teal text-white rounded-lg font-medium flex items-center justify-center">
-                              <Video className="h-4 w-4 mr-1" /> Book Video
-                            </button>
-                            <button className="flex-1 px-4 py-2 border border-reviva-teal text-reviva-teal rounded-lg font-medium flex items-center justify-center">
-                              <MessageSquare className="h-4 w-4 mr-1" /> Chat
-                            </button>
-                          </div>
+                          <Link
+                            to="/book"
+                            state={{ therapist }} // Bien passer l'objet complet
+                            className="px-4 py-2 bg-reviva-teal text-white rounded-lg flex items-center gap-2"
+                          >
+                            <Video className="h-4 w-4" />
+                            Book Video
+                          </Link>
+                            
+                            <Link 
+                              to="/chat" 
+                              className="flex-1 px-4 py-2 border border-reviva-teal text-reviva-teal rounded-lg font-medium flex items-center justify-center hover:bg-reviva-beige/10 transition-colors"
+                            >
+                              <MessageSquare className="h-4 w-4 mr-1" /> 
+                              Chat
+                            </Link>
+                          </div>  
                         </div>
                       </div>
                     ))}
