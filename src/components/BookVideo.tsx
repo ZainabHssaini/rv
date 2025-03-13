@@ -1,4 +1,5 @@
-import { useLocation, Link } from 'react-router-dom';
+import { useLocation, Link, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 interface Therapist {
     id: number
@@ -13,9 +14,18 @@ interface Therapist {
 const BookVideo = () => {
   const { state } = useLocation()
   const therapist = state?.therapist as Therapist
+  const navigate = useNavigate();
+  const [showPopup, setShowPopup] = useState(false);
 
   // Ajoutez ce log pour debugger
   console.log('Received therapist:', therapist)
+
+  const handleConfirmBooking = () => {
+    setShowPopup(true);
+    setTimeout(() => {
+      navigate('/therapy');
+    }, 2000);
+  };
 
   if (!therapist) {
     return (
@@ -75,16 +85,29 @@ const BookVideo = () => {
 
         <div className="flex gap-3 justify-end">
           <Link 
-            to="/therapists" 
+            to="/therapy" 
             className="px-4 py-2 text-reviva-charcoal hover:bg-gray-100 rounded-lg"
           >
             Cancel
           </Link>
-          <button className="px-4 py-2 bg-reviva-teal text-white rounded-lg hover:bg-reviva-deep-teal">
+          <button 
+            className="px-4 py-2 bg-reviva-teal text-white rounded-lg hover:bg-reviva-deep-teal"
+            onClick={handleConfirmBooking}
+          >
             Confirm Booking
           </button>
         </div>
       </div>
+
+      {showPopup && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg">
+            <h3 className="text-xl font-semibold mb-4">Session booked</h3>
+            <p className="mb-2">Your session has been successfully booked.</p>
+            <p className="text-sm text-gray-500">Redirecting to therapy page...</p>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
