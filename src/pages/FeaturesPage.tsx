@@ -144,7 +144,9 @@ const FeaturesPage = () => {
                   <p className="text-reviva-charcoal/80 dark:text-white/80 mb-4">
                     Reviva provides a safe, supportive environment for you to explore mental health resources, connect with professionals, and build healthy habits.
                   </p>
-                  <button className="reviva-button animate-pulse-gentle">
+                  <button className="reviva-button animate-pulse-gentle"             onClick={() => window.location.replace('/therapy')}
+
+>
                     Get Started Today
                   </button>
                 </div>
