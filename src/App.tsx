@@ -12,6 +12,7 @@ import TherapyPage from "./pages/TherapyPage";
 import PetGamePage from "./pages/PetGamePage";
 import MoodTrackerPage from "./pages/MoodTrackerPage";
 import BlogsPodcastsPage from "./pages/BlogsPodcastsPage";
+import { PetGameProvider } from "./contexts/PetGameContext";
 
 const queryClient = new QueryClient();
 
@@ -26,7 +27,11 @@ const App = () => (
           <Route path="/chatbot" element={<ChatbotPage />} />
           <Route path="/features" element={<FeaturesPage />} />
           <Route path="/therapy" element={<TherapyPage />} />
-          <Route path="/pet-game" element={<PetGamePage />} />
+          <Route path="/pet-game" element={
+            <PetGameProvider>
+              <PetGamePage />
+            </PetGameProvider>
+          } />
           <Route path="/mood-tracker" element={<MoodTrackerPage />} />
           <Route path="/blogs-podcasts" element={<BlogsPodcastsPage />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

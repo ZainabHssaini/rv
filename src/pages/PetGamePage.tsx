@@ -1,21 +1,25 @@
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { Heart, Fish, Coffee, Gift, Star, Award, Crown, ThumbsUp, Check, ChevronUp, XCircle } from 'lucide-react';
+import { PetGameContext } from '@/contexts/PetGameContext';
+import { useToast } from "@/hooks/use-toast";
 
 const PetGamePage = () => {
-  const [petName, setPetName] = useState("Whiskers");
-  const [happiness, setHappiness] = useState(70);
-  const [hunger, setHunger] = useState(60);
-  const [energy, setEnergy] = useState(80);
-  const [points, setPoints] = useState(120);
-  const [level, setLevel] = useState(1);
-  const [streak, setStreak] = useState(3);
+  const { 
+    petName, setPetName,
+    happiness, setHappiness,
+    hunger, setHunger,
+    energy, setEnergy,
+    points, setPoints,
+    level, setLevel,
+    streak, setStreak
+  } = useContext(PetGameContext);
+  
   const [showLevelUp, setShowLevelUp] = useState(false);
-  const [showToast, setShowToast] = useState(false);
-  const [toastMessage, setToastMessage] = useState("");
   const [animation, setAnimation] = useState("");
+  const { toast } = useToast();
   
   // Randomize pet image positions
   const [petPosition, setPetPosition] = useState({ x: 0, y: 0 });
@@ -39,12 +43,14 @@ const PetGamePage = () => {
       setHappiness(prev => Math.min(prev + 5, 100));
       setPoints(prev => prev + 5);
       setAnimation("eating");
-      setToastMessage("+5 points for feeding your pet!");
-      setShowToast(true);
+      
+      toast({
+        title: "Pet Fed!",
+        description: "+5 points for feeding your pet!",
+      });
       
       setTimeout(() => {
         setAnimation("");
-        setShowToast(false);
       }, 3000);
     }
   };
@@ -56,12 +62,14 @@ const PetGamePage = () => {
       setHunger(prev => Math.max(prev - 5, 0));
       setPoints(prev => prev + 10);
       setAnimation("playing");
-      setToastMessage("+10 points for playing with your pet!");
-      setShowToast(true);
+      
+      toast({
+        title: "Play Time!",
+        description: "+10 points for playing with your pet!",
+      });
       
       setTimeout(() => {
         setAnimation("");
-        setShowToast(false);
       }, 3000);
     }
   };
@@ -70,12 +78,14 @@ const PetGamePage = () => {
     setEnergy(prev => Math.min(prev + 30, 100));
     setPoints(prev => prev + 5);
     setAnimation("sleeping");
-    setToastMessage("+5 points for letting your pet rest!");
-    setShowToast(true);
+    
+    toast({
+      title: "Rest Time!",
+      description: "+5 points for letting your pet rest!",
+    });
     
     setTimeout(() => {
       setAnimation("");
-      setShowToast(false);
     }, 3000);
   };
   
