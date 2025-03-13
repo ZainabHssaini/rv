@@ -76,9 +76,9 @@ const Navbar = () => {
             <div className="flex items-center gap-8">
               <Link 
                 to="/signin" 
-                className="ml-auto px-5 py-2 rounded-full font-medium 
+                className="ml-auto px-5 py-2 rounded-full bg-gradient-to-r from-reviva-teal to-reviva-mint text-white font-medium 
                           text-reviva-charcoal hover:text-reviva-teal
-                          hover:bg-reviva-beige/10 transition-colors"
+                          hover:bg-white transition-colors border border-reviva-white shadow-lg hover:shadow-xl"
               >
                 Sign In
               </Link>
