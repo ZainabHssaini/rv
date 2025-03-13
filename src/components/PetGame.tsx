@@ -12,6 +12,8 @@ const PetGame = () => {
   const [selectedReward, setSelectedReward] = useState<{name: string, cost: number} | null>(null);
   const [showTaskModal, setShowTaskModal] = useState(false);
   const [selectedTask, setSelectedTask] = useState<{name: string, points: number} | null>(null);
+  const [completedTasks, setCompletedTasks] = useState<string[]>([]);
+  const [redeemedRewards, setRedeemedRewards] = useState<string[]>([]);
   
   const { toast } = useToast();
   
@@ -73,6 +75,8 @@ const PetGame = () => {
   const confirmRedemption = () => {
     if (selectedReward && points >= selectedReward.cost) {
       setPoints(prev => prev - selectedReward.cost);
+      setRedeemedRewards(prev => [...prev, selectedReward.name]);
+      
       toast({
         title: "Reward Redeemed!",
         description: `You've successfully redeemed ${selectedReward.name}`,
@@ -89,6 +93,14 @@ const PetGame = () => {
   };
   
   const handleTaskClick = (task: {name: string, points: number}) => {
+    if (completedTasks.includes(task.name)) {
+      toast({
+        title: "Task Already Completed",
+        description: "You've already completed this task today",
+        variant: "destructive",
+      });
+      return;
+    }
     setSelectedTask(task);
     setShowTaskModal(true);
   };
@@ -96,6 +108,9 @@ const PetGame = () => {
   const confirmTaskCompletion = () => {
     if (selectedTask) {
       setPoints(prev => prev + selectedTask.points);
+      setCompletedTasks(prev => [...prev, selectedTask.name]);
+      setHappiness(prev => Math.min(prev + 5, 100));
+      
       toast({
         title: "Task Completed!",
         description: `You've earned ${selectedTask.points} points for completing ${selectedTask.name}`,
@@ -103,6 +118,16 @@ const PetGame = () => {
     }
     setShowTaskModal(false);
     setSelectedTask(null);
+  };
+  
+  const cancelTaskModal = () => {
+    setShowTaskModal(false);
+    setSelectedTask(null);
+  };
+  
+  const cancelRedeemModal = () => {
+    setShowRedeemModal(false);
+    setSelectedReward(null);
   };
 
   return (
@@ -243,12 +268,18 @@ const PetGame = () => {
                     </p>
                     <div className="flex items-center justify-between">
                       <span className="text-xs text-reviva-teal">+{task.points} points</span>
-                      <button 
-                        onClick={() => handleTaskClick(task)}
-                        className="text-xs px-2 py-1 bg-reviva-mint/30 text-reviva-deep-teal rounded-full hover:bg-reviva-mint/50 transition-colors"
-                      >
-                        Complete
-                      </button>
+                      {completedTasks.includes(task.name) ? (
+                        <span className="text-xs px-2 py-1 bg-green-100 text-green-600 rounded-full flex items-center gap-1">
+                          <Check className="h-3 w-3" /> Completed
+                        </span>
+                      ) : (
+                        <button 
+                          onClick={() => handleTaskClick(task)}
+                          className="text-xs px-2 py-1 bg-reviva-mint/30 text-reviva-deep-teal rounded-full hover:bg-reviva-mint/50 transition-colors"
+                        >
+                          Complete
+                        </button>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -277,17 +308,23 @@ const PetGame = () => {
                 </p>
                 <div className="flex items-center justify-between">
                   <span className="font-medium text-reviva-teal">{reward.cost} points</span>
-                  <button 
-                    onClick={() => handleRedeemClick(reward)}
-                    className={`text-xs px-3 py-1.5 rounded-full ${
-                      points >= reward.cost 
-                        ? 'bg-reviva-teal text-white hover:bg-reviva-teal/80'
-                        : 'bg-gray-200 text-gray-500 cursor-not-allowed dark:bg-gray-700'
-                    }`}
-                    disabled={points < reward.cost}
-                  >
-                    Redeem
-                  </button>
+                  {redeemedRewards.includes(reward.name) ? (
+                    <span className="text-xs px-3 py-1.5 bg-green-100 text-green-600 rounded-full flex items-center gap-1">
+                      <Check className="h-3 w-3" /> Redeemed
+                    </span>
+                  ) : (
+                    <button 
+                      onClick={() => handleRedeemClick(reward)}
+                      className={`text-xs px-3 py-1.5 rounded-full ${
+                        points >= reward.cost 
+                          ? 'bg-reviva-teal text-white hover:bg-reviva-teal/80'
+                          : 'bg-gray-200 text-gray-500 cursor-not-allowed dark:bg-gray-700'
+                      }`}
+                      disabled={points < reward.cost}
+                    >
+                      Redeem
+                    </button>
+                  )}
                 </div>
               </div>
             ))}
@@ -302,7 +339,7 @@ const PetGame = () => {
             <div className="flex justify-between items-center mb-4">
               <h3 className="text-xl font-medium text-reviva-deep-teal">Confirm Redemption</h3>
               <button 
-                onClick={() => setShowRedeemModal(false)}
+                onClick={cancelRedeemModal}
                 className="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800"
               >
                 <X className="h-5 w-5 text-gray-500" />
@@ -333,7 +370,7 @@ const PetGame = () => {
             
             <div className="flex gap-3">
               <button 
-                onClick={() => setShowRedeemModal(false)}
+                onClick={cancelRedeemModal}
                 className="flex-1 py-2 rounded-lg border border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
               >
                 Cancel
@@ -362,7 +399,7 @@ const PetGame = () => {
             <div className="flex justify-between items-center mb-4">
               <h3 className="text-xl font-medium text-reviva-deep-teal">Complete Task</h3>
               <button 
-                onClick={() => setShowTaskModal(false)}
+                onClick={cancelTaskModal}
                 className="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800"
               >
                 <X className="h-5 w-5 text-gray-500" />
@@ -387,7 +424,7 @@ const PetGame = () => {
             
             <div className="flex gap-3">
               <button 
-                onClick={() => setShowTaskModal(false)}
+                onClick={cancelTaskModal}
                 className="flex-1 py-2 rounded-lg border border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
               >
                 Cancel
