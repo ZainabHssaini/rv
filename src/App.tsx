@@ -14,6 +14,8 @@ import BlogsPodcastsPage from "./pages/BlogsPodcastsPage";
 import SignIn from "./pages/SignIn";
 import { PetGameProvider } from "./context/PetGameContext";
 import SignUp from "./pages/SignUp";
+import ChatTherapist from "./components/ChatTherapist";
+import BookVideo from "./components/BookVideo";
 
 const queryClient = new QueryClient();
 
@@ -37,6 +39,8 @@ const App = () => (
           } />
           <Route path="/mood-tracker" element={<MoodTrackerPage />} />
           <Route path="/blogs-podcasts" element={<BlogsPodcastsPage />} />
+          <Route path="/chat" element={<ChatTherapist />} />
+          <Route path="/book" element={<BookVideo />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
