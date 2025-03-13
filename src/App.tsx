@@ -11,7 +11,9 @@ import TherapyPage from "./pages/TherapyPage";
 import PetGamePage from "./pages/PetGamePage";
 import MoodTrackerPage from "./pages/MoodTrackerPage";
 import BlogsPodcastsPage from "./pages/BlogsPodcastsPage";
+import SignIn from "./pages/SignIn";
 import { PetGameProvider } from "./context/PetGameContext";
+import SignUp from "./pages/SignUp";
 
 const queryClient = new QueryClient();
 
@@ -25,6 +27,8 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/chatbot" element={<ChatbotPage />} />
           <Route path="/features" element={<FeaturesPage />} />
+          <Route path="/signin" element={<SignIn />} />
+          <Route path="/signup" element={<SignUp />} />
           <Route path="/therapy" element={<TherapyPage />} />
           <Route path="/pet-game" element={
             <PetGameProvider>

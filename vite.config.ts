@@ -8,7 +8,7 @@ export default defineConfig(({ mode }) => ({
     host: "::",
     port: 8080,
     fs: {
-      strict: false, // Ensures Vite serves files properly
+      strict: false, 
     },
   },
   plugins: [

@@ -12,11 +12,9 @@ const ChatbotPage = () => {
   const [input, setInput] = useState("");
   const [isThinking, setIsThinking] = useState(false);
 
-  // Function to generate a contextual response based on user input
   const generateResponse = (userMessage: string) => {
     const lowercaseMessage = userMessage.toLowerCase();
     
-    // Check for different emotional states and concerns
     if (lowercaseMessage.includes('anxious') || lowercaseMessage.includes('anxiety') || lowercaseMessage.includes('worried')) {
       return "I can see you're feeling anxious. Anxiety is a common experience, and there are several strategies that might help. Deep breathing exercises can be effective in the moment. Would you like me to guide you through a quick breathing exercise?";
     }
@@ -57,26 +55,21 @@ const ChatbotPage = () => {
       return "I'm happy to hear you're feeling good! It's important to acknowledge and celebrate positive emotions too. What's contributing to your positive mood today?";
     }
     
-    // Generic responses for when no specific patterns are matched
     if (userMessage.endsWith('?')) {
       return "That's a thoughtful question. I'd like to understand more about your situation to provide a helpful response. Could you share a bit more about what prompted this question?";
     }
     
-    // Default response when no patterns are matched
     return "Thank you for sharing that with me. Your mental wellbeing is important. Can you tell me more about what you're experiencing, so I can better support you?";
   };
 
   const handleSendMessage = () => {
     if (!input.trim()) return;
     
-    // Add user message
     setMessages(prev => [...prev, { isUser: true, text: input }]);
     setInput("");
     
-    // Simulate AI thinking
     setIsThinking(true);
     
-    // Generate contextual response
     setTimeout(() => {
       const aiResponse = generateResponse(input);
       setMessages(prev => [...prev, { isUser: false, text: aiResponse }]);
@@ -110,7 +103,6 @@ const ChatbotPage = () => {
           </div>
           
           <div className="glass-card dark:glass-card-dark rounded-2xl overflow-hidden shadow-lg mb-6 animate-scale-in">
-            {/* Chat messages */}
             <div className="h-[400px] overflow-y-auto p-4 bg-white/40 dark:bg-reviva-charcoal/40" id="chat-container">
               <div className="space-y-4">
                 {messages.map((msg, index) => (
@@ -157,7 +149,6 @@ const ChatbotPage = () => {
               </div>
             </div>
             
-            {/* Input area */}
             <div className="p-4 border-t border-gray-200 dark:border-gray-700">
               <div className="flex items-center">
                 <input
