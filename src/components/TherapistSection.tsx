@@ -1,5 +1,6 @@
 
 import { Calendar, Star, ArrowRight } from 'lucide-react';
+import { useEffect } from 'react';
 
 const TherapistSection = () => {
   const therapists = [
@@ -27,7 +28,10 @@ const TherapistSection = () => {
       reviews: 156,
       nextAvailable: "In 2 days"
     }
+
   ];
+
+  
 
   return (
     <section id="therapy" className="py-20">

@@ -2,52 +2,56 @@
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { Calendar, Video, MessageSquare, CheckCircle, Star, Users, MapPin } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 type Therapist = {
   id: number;
-  name: string;
+  lastname: string;
+  firstname: string;
   title: string;
   specialties: string[];
   rating: number;
-  sessions: number;
+  numberOfSessions: number;
   image: string;
-  available: boolean;
+  nextAvailable: boolean;
 };
 
 const TherapyPage = () => {
   const [activeTab, setActiveTab] = useState<'individual' | 'group'>('individual');
   
-  const therapists: Therapist[] = [
+  const therapists: any[] = [
     {
       id: 1,
-      name: "Dr. Ihssan Yousfi",
+      lastname: "Dr. Yousfi",
+      firstname: "Ihssan",
       title: "Clinical Psychologist",
       specialties: ["Anxiety", "Depression", "Trauma"],
       rating: 4.9,
-      sessions: 324,
+      numberOfSessions: 324,
       image: "/reviva/woman (1).png" ,
-      available: true
+      nextAvailable: true
     },
     {
       id: 2,
-      name: "Dr. Sami Chakour",
+      lastname: "Dr.hakour",
+      firstname: "Sami",
       title: "Psychiatrist",
       specialties: ["Mood Disorders", "Medication Management", "Anxiety"],
       rating: 4.8,
-      sessions: 287,
+      numberOfSessions: 287,
       image: "/reviva/man.png" ,
-      available: true
+      nextAvailable: true
     },
     {
       id: 3,
-      name: "Inass EL Bouchikhi",
+      lastname: "Dr.EL Bouchikhi",
+      firstname: "Inass",
       title: "Family Therapist",
       specialties: ["Relationships", "Family Counseling", "Couples Therapy"],
       rating: 4.7,
-      sessions: 198,
+      numberOfSessions: 198,
       image: "/reviva/woman (1).png" ,
-      available: false
+      nextAvailable: false
     }
   ];
   
@@ -77,6 +81,49 @@ const TherapyPage = () => {
       topics: ["Bereavement", "Coping Strategies", "Emotional Processing"]
     }
   ];
+
+  useEffect(() => {
+    console.log('Sending therapists data to the server...');
+    sendTherapistsData();
+  }, []);
+
+  const sendTherapistsData = async () => {
+    for(let t of therapists){
+        console.log(JSON.stringify(t))
+      try {
+        const response = await fetch('http://localhost:8082/therapists/new', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(t)
+        });
+        const text = await response.text();
+        const data = text ? JSON.parse(text) : null;
+        console.log(data);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  };  
+
+
+  const getAllData = async () => {
+    console.log('Fetching all therapists data...');
+    try {
+      const response = await fetch('http://localhost:8082/therapists/');
+      const data = await response.json();
+      console.log(data);
+      // for(let t of data){
+      //   therapists.push(t);
+      // }
+      therapists.clear();
+
+      console.log(therapists);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-white dark:bg-reviva-charcoal">
@@ -171,10 +218,10 @@ const TherapyPage = () => {
                         <div className="relative">
                           <img 
                             src={therapist.image} 
-                            alt={therapist.name} 
+                            alt={therapist.lastname} 
                             className="w-full h-48 object-cover"
                           />
-                          {therapist.available ? (
+                          {therapist.nextAvailable ? (
                             <div className="absolute top-3 right-3 bg-green-100 text-green-600 dark:bg-green-900/50 dark:text-green-400 px-2 py-1 rounded-full text-xs font-medium">
                               Available Today
                             </div>
@@ -187,7 +234,7 @@ const TherapyPage = () => {
                         
                         <div className="p-5">
                           <h3 className="text-lg font-bold text-reviva-deep-teal mb-1">
-                            {therapist.name}
+                            {therapist.lastname} {therapist.firstname}
                           </h3>
                           <p className="text-sm text-reviva-charcoal/70 dark:text-white/70 mb-3">
                             {therapist.title}
@@ -199,7 +246,7 @@ const TherapyPage = () => {
                               <span className="text-sm font-medium">{therapist.rating}</span>
                             </div>
                             <div className="text-sm text-reviva-charcoal/70 dark:text-white/70">
-                              {therapist.sessions}+ sessions
+                              {therapist.numberOfSessions}+ sessions
                             </div>
                           </div>
                           
@@ -231,7 +278,7 @@ const TherapyPage = () => {
                   </div>
                   
                   <div className="text-center mt-8">
-                    <button className="px-6 py-3 bg-white dark:bg-reviva-charcoal border border-reviva-teal text-reviva-teal rounded-lg font-medium hover:bg-reviva-mint/10 transition-colors">
+                    <button onClick={getAllData} className="px-6 py-3 bg-white dark:bg-reviva-charcoal border border-reviva-teal text-reviva-teal rounded-lg font-medium hover:bg-reviva-mint/10 transition-colors">
                       View All Therapists
                     </button>
                   </div>

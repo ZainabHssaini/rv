@@ -9,7 +9,7 @@ type Challenge = {
   points: number;
   completed: boolean;
   type: 'meditation' | 'gratitude' | 'breathing' | 'mood';
-  duration?: number; // in seconds
+  duration?: number;
 };
 
 type Reward = {
@@ -61,7 +61,7 @@ export const PetGameContext = createContext<PetGameContextType | null>(null);
 export const PetGameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const { toast } = useToast();
   
-  // Pet stats
+
   const [id, setId] = useState(null);
   const [petName, setPetName] = useState("Whiskers");
   const [happiness, setHappiness] = useState(70);
@@ -73,15 +73,15 @@ export const PetGameProvider: React.FC<{ children: ReactNode }> = ({ children })
   const [animation, setAnimation] = useState("");
   const [showLevelUp, setShowLevelUp] = useState(false);
   
-  // Challenge-related state
+
   const [activeChallenge, setActiveChallenge] = useState<Challenge | null>(null);
   const [challengeCompleted, setChallengeCompleted] = useState(false);
   const [challengeProgress, setChallengeProgress] = useState(0);
   
-  // Pet position
+
   const [petPosition, setPetPosition] = useState({ x: 0, y: 0 });
   
-  // Challenges
+
   const [challenges, setChallenges] = useState<Challenge[]>([
     {
       id: '1',
@@ -90,7 +90,7 @@ export const PetGameProvider: React.FC<{ children: ReactNode }> = ({ children })
       points: 15,
       completed: true,
       type: 'meditation',
-      duration: 120 // 2 minutes for demo, would be 300 in production
+      duration: 120
     },
     {
       id: '2',
@@ -119,7 +119,7 @@ export const PetGameProvider: React.FC<{ children: ReactNode }> = ({ children })
     }
   ]);
   
-  // Rewards
+
   const [rewards, setRewards] = useState<Reward[]>([
     {
       id: '1',
@@ -144,7 +144,6 @@ export const PetGameProvider: React.FC<{ children: ReactNode }> = ({ children })
     }
   ]);
   
-  // Pet movement animation
   useEffect(() => {
     const interval = setInterval(() => {
       if (Math.random() > 0.7) {
@@ -220,13 +219,13 @@ export const PetGameProvider: React.FC<{ children: ReactNode }> = ({ children })
     }
 
     console.log(petData.id == null ? "Pet data sent successfully" : "Pet data updated successfully");
+    console.log(petData);
   } catch (error) {
     console.error("Error sending pet data", error);
   }
 };
 
   
-  // Pet actions
   const feed = () => {
     if (hunger < 100) {
       setHunger(prev => Math.min(prev + 20, 100));
@@ -311,7 +310,7 @@ export const PetGameProvider: React.FC<{ children: ReactNode }> = ({ children })
         description: `+${challenge.points} points for completing ${challenge.title}!`,
       });
       
-      // Increase happiness as a bonus for completing challenges
+    
       setHappiness(prev => Math.min(prev + 5, 100));
     }
   };
@@ -326,7 +325,7 @@ export const PetGameProvider: React.FC<{ children: ReactNode }> = ({ children })
         description: `You've unlocked: ${reward.title}`,
       });
       
-      // Happiness bonus for redeeming rewards
+    
       setHappiness(prev => Math.min(prev + 10, 100));
     } else {
       toast({
