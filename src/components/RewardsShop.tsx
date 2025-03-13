@@ -2,7 +2,6 @@ import React from 'react';
 import { Star, Award, Gift } from 'lucide-react';
 import { usePetGame } from '@/context/PetGameContext';
 
-// Map reward icon names to components
 const iconMap = {
   Star: <Star className="h-6 w-6 text-yellow-600 dark:text-yellow-400" />,
   Award: <Award className="h-6 w-6 text-purple-600 dark:text-purple-400" />,

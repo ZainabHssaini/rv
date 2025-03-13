@@ -9,7 +9,6 @@ import PetGame from '@/components/PetGame';
 import Footer from '@/components/Footer';
 
 const Index = () => {
-  // Smooth scroll functionality
   useEffect(() => {
     const handleAnchorClick = (e: MouseEvent) => {
       const target = e.target as HTMLElement;

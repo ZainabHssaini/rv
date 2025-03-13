@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { ArrowRight, Brain, Heart, Shield } from 'lucide-react';
+
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -71,11 +73,16 @@ const Navbar = () => {
               Blogs & Podcasts
               <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-reviva-teal group-hover:w-full transition-all duration-300 rounded-full"></span>
             </Link>
-            <button className="px-6 py-3 rounded-full bg-gradient-to-r from-reviva-teal to-reviva-mint text-white font-medium hover:shadow-lg transition-shadow relative overflow-hidden group">
-              <span className="relative z-10">Sign In</span>
-              {/* Moroccan-inspired decorative pattern on hover */}
-              <span className="absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity duration-500 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCI+PHBhdGggZD0iTTAgMGg0MHY0MEgweiIgZmlsbD0ibm9uZSIvPjxwYXRoIGQ9Ik0yMCAwTDAgMjBoMjBsMjAgMjBWMjBIMjB6IiBmaWxsPSIjZmZmIiBmaWxsLW9wYWNpdHk9Ii4yIi8+PC9zdmc+')]"></span>
-            </button>
+            <div className="flex items-center gap-8">
+              <Link 
+                to="/signin" 
+                className="ml-auto px-5 py-2 rounded-full bg-gradient-to-r from-reviva-teal to-reviva-mint text-white font-medium 
+                          text-reviva-charcoal hover:text-reviva-teal
+                          hover:bg-white transition-colors border border-reviva-white shadow-lg hover:shadow-xl"
+              >
+                Sign In
+              </Link>
+            </div>
           </div>
 
           {/* Mobile Menu Button */}
