@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -12,7 +11,7 @@ import TherapyPage from "./pages/TherapyPage";
 import PetGamePage from "./pages/PetGamePage";
 import MoodTrackerPage from "./pages/MoodTrackerPage";
 import BlogsPodcastsPage from "./pages/BlogsPodcastsPage";
-import { PetGameProvider } from "./contexts/PetGameContext";
+import { PetGameProvider } from "./context/PetGameContext";
 
 const queryClient = new QueryClient();
 

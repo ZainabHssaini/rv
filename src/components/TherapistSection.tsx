@@ -20,7 +20,7 @@ const TherapistSection = () => {
       nextAvailable: "Tomorrow"
     },
     {
-      name: "Dr. INasse ElBouchikhi",
+      name: "Dr. Inasse El Bouchikhi",
       specialty: "Relationship Counseling",
       image: "https://media.licdn.com/dms/image/v2/D4E03AQFSEDP7BaeMKA/profile-displayphoto-shrink_200_200/B4EZQ48u.8G4Ac-/0/1736122233315?e=1747267200&v=beta&t=8CCmYEIZiXpCiE-bs_4H9ggfo4ocIzdHWTBevEeQOFM",
       rating: 4.9,
