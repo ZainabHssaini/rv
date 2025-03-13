@@ -1,103 +1,55 @@
 
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import { Heart, Fish, Coffee, Gift, Star, Award, Crown, ThumbsUp, Check, ChevronUp, XCircle } from 'lucide-react';
-import { PetGameContext } from '@/contexts/PetGameContext';
-import { useToast } from "@/hooks/use-toast";
+import { Heart, Fish, Coffee, Gift, Star, Award, Crown, ThumbsUp, Check, ChevronUp, XCircle, X } from 'lucide-react';
+import { usePetGame } from '@/contexts/PetGameContext';
 
 const PetGamePage = () => {
   const { 
     petName, setPetName,
-    happiness, setHappiness,
-    hunger, setHunger,
-    energy, setEnergy,
-    points, setPoints,
-    level, setLevel,
-    streak, setStreak
-  } = useContext(PetGameContext);
+    happiness, hunger, energy,
+    points, level, streak,
+    animation, challenges, completeChallenge,
+    rewards, redeemReward, feed, play, rest,
+    levelUp, showLevelUp, setShowLevelUp,
+    petPosition
+  } = usePetGame();
   
-  const [showLevelUp, setShowLevelUp] = useState(false);
-  const [animation, setAnimation] = useState("");
-  const { toast } = useToast();
-  
-  // Randomize pet image positions
-  const [petPosition, setPetPosition] = useState({ x: 0, y: 0 });
-  
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if (Math.random() > 0.7) {
-        setPetPosition({
-          x: Math.floor(Math.random() * 40) - 20,
-          y: Math.floor(Math.random() * 20) - 10,
-        });
-      }
-    }, 3000);
-    
-    return () => clearInterval(interval);
-  }, []);
-  
-  const feed = () => {
-    if (hunger < 100) {
-      setHunger(prev => Math.min(prev + 20, 100));
-      setHappiness(prev => Math.min(prev + 5, 100));
-      setPoints(prev => prev + 5);
-      setAnimation("eating");
-      
-      toast({
-        title: "Pet Fed!",
-        description: "+5 points for feeding your pet!",
-      });
-      
-      setTimeout(() => {
-        setAnimation("");
-      }, 3000);
+  const [selectedChallenge, setSelectedChallenge] = useState<string | null>(null);
+  const [showChallengeModal, setShowChallengeModal] = useState(false);
+  const [selectedReward, setSelectedReward] = useState<string | null>(null);
+  const [showRewardModal, setShowRewardModal] = useState(false);
+
+  const handleChallengeClick = (id: string) => {
+    const challenge = challenges.find(c => c.id === id);
+    if (challenge && !challenge.completed) {
+      setSelectedChallenge(id);
+      setShowChallengeModal(true);
     }
   };
-  
-  const play = () => {
-    if (energy > 20) {
-      setHappiness(prev => Math.min(prev + 15, 100));
-      setEnergy(prev => Math.max(prev - 10, 0));
-      setHunger(prev => Math.max(prev - 5, 0));
-      setPoints(prev => prev + 10);
-      setAnimation("playing");
-      
-      toast({
-        title: "Play Time!",
-        description: "+10 points for playing with your pet!",
-      });
-      
-      setTimeout(() => {
-        setAnimation("");
-      }, 3000);
+
+  const handleRewardClick = (id: string) => {
+    const reward = rewards.find(r => r.id === id);
+    if (reward) {
+      setSelectedReward(id);
+      setShowRewardModal(true);
     }
   };
-  
-  const rest = () => {
-    setEnergy(prev => Math.min(prev + 30, 100));
-    setPoints(prev => prev + 5);
-    setAnimation("sleeping");
-    
-    toast({
-      title: "Rest Time!",
-      description: "+5 points for letting your pet rest!",
-    });
-    
-    setTimeout(() => {
-      setAnimation("");
-    }, 3000);
+
+  const confirmChallengeCompletion = () => {
+    if (selectedChallenge) {
+      completeChallenge(selectedChallenge);
+      setShowChallengeModal(false);
+      setSelectedChallenge(null);
+    }
   };
-  
-  const levelUp = () => {
-    if (points >= level * 100) {
-      setPoints(prev => prev - level * 100);
-      setLevel(prev => prev + 1);
-      setShowLevelUp(true);
-      
-      setTimeout(() => {
-        setShowLevelUp(false);
-      }, 3000);
+
+  const confirmRewardRedemption = () => {
+    if (selectedReward) {
+      redeemReward(selectedReward);
+      setShowRewardModal(false);
+      setSelectedReward(null);
     }
   };
 
@@ -316,85 +268,40 @@ const PetGamePage = () => {
             </h2>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-              <div className="glass-card dark:glass-card-dark p-4 rounded-xl animate-scale-in">
-                <div className="flex items-start gap-3">
-                  <div className="p-2 bg-green-100 dark:bg-green-900/30 rounded-full">
-                    <Check className="h-5 w-5 text-green-600 dark:text-green-400" />
-                  </div>
-                  <div>
-                    <h3 className="font-medium text-reviva-deep-teal">5-Minute Meditation</h3>
-                    <p className="text-sm text-reviva-charcoal/80 dark:text-white/80 mb-2">
-                      Practice mindfulness for just 5 minutes today
-                    </p>
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs text-reviva-teal">+15 points</span>
-                      <button className="text-xs px-2 py-1 bg-green-100 text-green-600 dark:bg-green-900/30 dark:text-green-400 rounded-full">
-                        Completed
-                      </button>
+              {challenges.map((challenge) => (
+                <div key={challenge.id} className="glass-card dark:glass-card-dark p-4 rounded-xl animate-scale-in">
+                  <div className="flex items-start gap-3">
+                    <div className={`p-2 ${challenge.completed ? 'bg-green-100 dark:bg-green-900/30' : 'bg-reviva-mint/30'} rounded-full`}>
+                      {challenge.completed ? (
+                        <Check className="h-5 w-5 text-green-600 dark:text-green-400" />
+                      ) : (
+                        <XCircle className="h-5 w-5 text-reviva-teal" />
+                      )}
+                    </div>
+                    <div>
+                      <h3 className="font-medium text-reviva-deep-teal">{challenge.title}</h3>
+                      <p className="text-sm text-reviva-charcoal/80 dark:text-white/80 mb-2">
+                        {challenge.description}
+                      </p>
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs text-reviva-teal">+{challenge.points} points</span>
+                        {challenge.completed ? (
+                          <span className="text-xs px-2 py-1 bg-green-100 text-green-600 dark:bg-green-900/30 dark:text-green-400 rounded-full">
+                            Completed
+                          </span>
+                        ) : (
+                          <button 
+                            onClick={() => handleChallengeClick(challenge.id)}
+                            className="text-xs px-2 py-1 bg-reviva-mint/30 text-reviva-deep-teal rounded-full hover:bg-reviva-mint/50 transition-colors"
+                          >
+                            Complete
+                          </button>
+                        )}
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              
-              <div className="glass-card dark:glass-card-dark p-4 rounded-xl animate-scale-in delay-100">
-                <div className="flex items-start gap-3">
-                  <div className="p-2 bg-reviva-mint/30 rounded-full">
-                    <XCircle className="h-5 w-5 text-reviva-teal" />
-                  </div>
-                  <div>
-                    <h3 className="font-medium text-reviva-deep-teal">Gratitude Journal</h3>
-                    <p className="text-sm text-reviva-charcoal/80 dark:text-white/80 mb-2">
-                      Write down 3 things you're grateful for
-                    </p>
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs text-reviva-teal">+20 points</span>
-                      <button className="text-xs px-2 py-1 bg-reviva-mint/30 text-reviva-deep-teal rounded-full hover:bg-reviva-mint/50 transition-colors">
-                        Complete
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="glass-card dark:glass-card-dark p-4 rounded-xl animate-scale-in delay-200">
-                <div className="flex items-start gap-3">
-                  <div className="p-2 bg-reviva-mint/30 rounded-full">
-                    <XCircle className="h-5 w-5 text-reviva-teal" />
-                  </div>
-                  <div>
-                    <h3 className="font-medium text-reviva-deep-teal">Deep Breathing</h3>
-                    <p className="text-sm text-reviva-charcoal/80 dark:text-white/80 mb-2">
-                      Practice deep breathing for 2 minutes
-                    </p>
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs text-reviva-teal">+10 points</span>
-                      <button className="text-xs px-2 py-1 bg-reviva-mint/30 text-reviva-deep-teal rounded-full hover:bg-reviva-mint/50 transition-colors">
-                        Complete
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="glass-card dark:glass-card-dark p-4 rounded-xl animate-scale-in delay-300">
-                <div className="flex items-start gap-3">
-                  <div className="p-2 bg-reviva-mint/30 rounded-full">
-                    <XCircle className="h-5 w-5 text-reviva-teal" />
-                  </div>
-                  <div>
-                    <h3 className="font-medium text-reviva-deep-teal">Mood Check-in</h3>
-                    <p className="text-sm text-reviva-charcoal/80 dark:text-white/80 mb-2">
-                      Track your mood in the mood tracker
-                    </p>
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs text-reviva-teal">+15 points</span>
-                      <button className="text-xs px-2 py-1 bg-reviva-mint/30 text-reviva-deep-teal rounded-full hover:bg-reviva-mint/50 transition-colors">
-                        Complete
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
           
@@ -407,64 +314,165 @@ const PetGamePage = () => {
             </p>
             
             <div className="max-w-4xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-              <div className="glass-card dark:glass-card-dark p-4 rounded-xl animate-scale-in">
-                <div className="p-3 bg-yellow-100 dark:bg-yellow-900/30 rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-3">
-                  <Star className="h-6 w-6 text-yellow-600 dark:text-yellow-400" />
+              {rewards.map((reward) => (
+                <div key={reward.id} className="glass-card dark:glass-card-dark p-4 rounded-xl animate-scale-in">
+                  <div className="p-3 bg-yellow-100 dark:bg-yellow-900/30 rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-3">
+                    {reward.icon === 'Star' && <Star className="h-6 w-6 text-yellow-600 dark:text-yellow-400" />}
+                    {reward.icon === 'Award' && <Award className="h-6 w-6 text-purple-600 dark:text-purple-400" />}
+                    {reward.icon === 'Gift' && <Gift className="h-6 w-6 text-blue-600 dark:text-blue-400" />}
+                  </div>
+                  <h3 className="font-medium text-reviva-deep-teal">{reward.title}</h3>
+                  <p className="text-sm text-reviva-charcoal/80 dark:text-white/80 mb-3">
+                    {reward.description}
+                  </p>
+                  <div className="flex items-center justify-between">
+                    <span className="font-medium text-reviva-teal">{reward.points} points</span>
+                    <button 
+                      onClick={() => handleRewardClick(reward.id)}
+                      className={`text-xs px-3 py-1.5 rounded-full ${
+                        points >= reward.points 
+                          ? 'bg-reviva-teal text-white hover:bg-reviva-teal/80' 
+                          : 'bg-gray-200 text-gray-500 cursor-not-allowed dark:bg-gray-700'
+                      }`}
+                      disabled={points < reward.points}
+                    >
+                      Redeem
+                    </button>
+                  </div>
                 </div>
-                <h3 className="font-medium text-reviva-deep-teal">10% Therapy Discount</h3>
-                <p className="text-sm text-reviva-charcoal/80 dark:text-white/80 mb-3">
-                  Get 10% off your next therapy session
-                </p>
-                <div className="flex items-center justify-between">
-                  <span className="font-medium text-reviva-teal">200 points</span>
-                  <button className="text-xs px-3 py-1.5 bg-reviva-teal text-white rounded-full">
-                    Redeem
-                  </button>
-                </div>
-              </div>
-              
-              <div className="glass-card dark:glass-card-dark p-4 rounded-xl animate-scale-in delay-100">
-                <div className="p-3 bg-purple-100 dark:bg-purple-900/30 rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-3">
-                  <Award className="h-6 w-6 text-purple-600 dark:text-purple-400" />
-                </div>
-                <h3 className="font-medium text-reviva-deep-teal">Premium Cat Costume</h3>
-                <p className="text-sm text-reviva-charcoal/80 dark:text-white/80 mb-3">
-                  Unlock a special costume for your pet
-                </p>
-                <div className="flex items-center justify-between">
-                  <span className="font-medium text-reviva-teal">150 points</span>
-                  <button className="text-xs px-3 py-1.5 bg-reviva-teal text-white rounded-full">
-                    Redeem
-                  </button>
-                </div>
-              </div>
-              
-              <div className="glass-card dark:glass-card-dark p-4 rounded-xl animate-scale-in delay-200">
-                <div className="p-3 bg-blue-100 dark:bg-blue-900/30 rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-3">
-                  <Gift className="h-6 w-6 text-blue-600 dark:text-blue-400" />
-                </div>
-                <h3 className="font-medium text-reviva-deep-teal">Free Guided Meditation</h3>
-                <p className="text-sm text-reviva-charcoal/80 dark:text-white/80 mb-3">
-                  Unlock a premium guided meditation
-                </p>
-                <div className="flex items-center justify-between">
-                  <span className="font-medium text-reviva-teal">100 points</span>
-                  <button className="text-xs px-3 py-1.5 bg-reviva-teal text-white rounded-full">
-                    Redeem
-                  </button>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
         </div>
       </main>
       
-      {/* Toast notification */}
-      {showToast && (
-        <div className="fixed bottom-4 right-4 bg-white dark:bg-reviva-charcoal shadow-lg rounded-lg p-4 animate-slide-up">
-          <div className="flex items-center gap-2">
-            <Star className="h-5 w-5 text-yellow-500" />
-            <p className="font-medium">{toastMessage}</p>
+      {/* Challenge Completion Modal */}
+      {showChallengeModal && selectedChallenge && (
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black/30 backdrop-blur-sm">
+          <div className="bg-white dark:bg-reviva-charcoal rounded-xl p-6 shadow-2xl max-w-md w-full mx-4 animate-scale-in">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-xl font-medium text-reviva-deep-teal">Complete Challenge</h3>
+              <button 
+                onClick={() => setShowChallengeModal(false)}
+                className="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800"
+              >
+                <X className="h-5 w-5 text-gray-500" />
+              </button>
+            </div>
+            
+            <div className="mb-6">
+              {(() => {
+                const challenge = challenges.find(c => c.id === selectedChallenge);
+                return challenge ? (
+                  <>
+                    <div className="p-3 bg-green-100 dark:bg-green-900/30 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                      <Award className="h-8 w-8 text-green-600 dark:text-green-400" />
+                    </div>
+                    
+                    <h4 className="text-lg font-medium text-center mb-2">{challenge.title}</h4>
+                    <p className="text-center text-reviva-charcoal/80 dark:text-white/80 mb-4">
+                      Confirm that you have completed this challenge to earn {challenge.points} points.
+                    </p>
+                    
+                    <div className="flex items-center justify-center gap-2 text-sm mb-4">
+                      <Gift className="h-4 w-4 text-reviva-teal" />
+                      <span>Your current balance: <strong>{points} points</strong></span>
+                    </div>
+                  </>
+                ) : null;
+              })()}
+            </div>
+            
+            <div className="flex gap-3">
+              <button 
+                onClick={() => setShowChallengeModal(false)}
+                className="flex-1 py-2 rounded-lg border border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+              >
+                Cancel
+              </button>
+              <button 
+                onClick={confirmChallengeCompletion}
+                className="flex-1 py-2 rounded-lg bg-green-600 text-white hover:bg-green-700 flex items-center justify-center gap-2"
+              >
+                <Check className="h-4 w-4" />
+                Complete Task
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      
+      {/* Reward Redemption Modal */}
+      {showRewardModal && selectedReward && (
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black/30 backdrop-blur-sm">
+          <div className="bg-white dark:bg-reviva-charcoal rounded-xl p-6 shadow-2xl max-w-md w-full mx-4 animate-scale-in">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-xl font-medium text-reviva-deep-teal">Confirm Redemption</h3>
+              <button 
+                onClick={() => setShowRewardModal(false)}
+                className="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800"
+              >
+                <X className="h-5 w-5 text-gray-500" />
+              </button>
+            </div>
+            
+            <div className="mb-6">
+              {(() => {
+                const reward = rewards.find(r => r.id === selectedReward);
+                return reward ? (
+                  <>
+                    <div className="p-3 bg-yellow-100 dark:bg-yellow-900/30 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                      {reward.icon === 'Star' && <Star className="h-8 w-8 text-yellow-600 dark:text-yellow-400" />}
+                      {reward.icon === 'Award' && <Award className="h-8 w-8 text-purple-600 dark:text-purple-400" />}
+                      {reward.icon === 'Gift' && <Gift className="h-8 w-8 text-blue-600 dark:text-blue-400" />}
+                    </div>
+                    
+                    <h4 className="text-lg font-medium text-center mb-2">{reward.title}</h4>
+                    <p className="text-center text-reviva-charcoal/80 dark:text-white/80 mb-4">
+                      You are about to redeem this reward for {reward.points} points.
+                    </p>
+                    
+                    <div className="flex items-center justify-center gap-2 text-sm mb-4">
+                      <Gift className="h-4 w-4 text-reviva-teal" />
+                      <span>Your current balance: <strong>{points} points</strong></span>
+                    </div>
+                    
+                    {points < reward.points && (
+                      <div className="p-3 bg-red-100 dark:bg-red-900/30 rounded-lg text-sm text-red-700 dark:text-red-300 text-center mb-4">
+                        You don't have enough points to redeem this reward.
+                      </div>
+                    )}
+                  </>
+                ) : null;
+              })()}
+            </div>
+            
+            <div className="flex gap-3">
+              <button 
+                onClick={() => setShowRewardModal(false)}
+                className="flex-1 py-2 rounded-lg border border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+              >
+                Cancel
+              </button>
+              <button 
+                onClick={confirmRewardRedemption}
+                disabled={(() => {
+                  const reward = rewards.find(r => r.id === selectedReward);
+                  return reward ? points < reward.points : true;
+                })()}
+                className={`flex-1 py-2 rounded-lg flex items-center justify-center gap-2 ${
+                  (() => {
+                    const reward = rewards.find(r => r.id === selectedReward);
+                    return reward && points >= reward.points
+                      ? 'bg-reviva-teal text-white hover:bg-reviva-teal/80'
+                      : 'bg-gray-200 text-gray-500 cursor-not-allowed dark:bg-gray-700';
+                  })()
+                }`}
+              >
+                <Check className="h-4 w-4" />
+                Confirm
+              </button>
+            </div>
           </div>
         </div>
       )}
@@ -485,7 +493,7 @@ const PetGamePage = () => {
             </p>
             <button 
               onClick={() => setShowLevelUp(false)}
-              className="reviva-button"
+              className="bg-reviva-teal text-white px-4 py-2 rounded-lg hover:bg-reviva-teal/80 transition-colors"
             >
               Continue
             </button>
