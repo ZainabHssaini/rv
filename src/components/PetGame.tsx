@@ -13,7 +13,6 @@ const PetGame = () => {
   const [animation, setAnimation] = useState("");
   const [showLevelUp, setShowLevelUp] = useState(false);
   
-  // Randomize pet image positions for more lively pet
   const [petPosition, setPetPosition] = useState({ x: 0, y: 0 });
   
   useEffect(() => {

@@ -6,7 +6,6 @@ import { cn } from '@/lib/utils';
 const TimerCircle = ({ progress }: { progress: number }) => (
   <div className="w-40 h-40 relative mx-auto mb-4">
     <svg className="w-full h-full" viewBox="0 0 100 100">
-      {/* Background circle */}
       <circle 
         cx="50" 
         cy="50" 
@@ -15,7 +14,6 @@ const TimerCircle = ({ progress }: { progress: number }) => (
         stroke="#E2E8F0" 
         strokeWidth="5"
       />
-      {/* Progress circle */}
       <circle 
         cx="50" 
         cy="50" 
