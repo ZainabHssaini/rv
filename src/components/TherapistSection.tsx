@@ -29,6 +29,7 @@ const TherapistSection = () => {
       reviews: 156,
       nextAvailable: "In 2 days"
     }
+
   ];
   
   const additionalTherapists = [
@@ -73,6 +74,8 @@ const TherapistSection = () => {
       return !prevState;
     });
   };
+
+  
 
   return (
     <section id="therapy" className="py-20">
