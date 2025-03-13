@@ -1,8 +1,10 @@
-
-import { Calendar, Star, ArrowRight } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Calendar, Star, ArrowRight, ChevronDown } from 'lucide-react';
 
 const TherapistSection = () => {
-  const therapists = [
+  const [showAllTherapists, setShowAllTherapists] = useState(false);
+  
+  const initialTherapists = [
     {
       name: "Dr. Sami Chakour",
       specialty: "Anxiety & Depression",
@@ -28,6 +30,49 @@ const TherapistSection = () => {
       nextAvailable: "In 2 days"
     }
   ];
+  
+  const additionalTherapists = [
+    {
+      name: "Dr. Rhita HYABI",
+      specialty: "Orthophonie, psychometricité et psychologie",
+      image: "https://media.licdn.com/dms/image/v2/D4E03AQHFcwIa1JRJIA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1666166328748?e=1747267200&v=beta&t=_lkf8dnmdLstVdHjo-imjpJFlsJw07Xo3CmDDfrIxWg",
+      rating: 4.7,
+      reviews: 112,
+      nextAvailable: "In 3 days"
+    },
+    {
+      name: "Dr. Kenza Nazih",
+      specialty: "psychothérapeute",
+      image: "https://media.licdn.com/dms/image/v2/C4E03AQEIv6HA-Biy4A/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1661371493211?e=1747267200&v=beta&t=7fBr6XYbV0jV7nGe2TZ3AqiSkILR9MTOJWC_CbRPBUE",
+      rating: 4.8,
+      reviews: 87,
+      nextAvailable: "Today"
+    },
+    {
+      name: "Dr. Chaimae touhami",
+      specialty: "Trauma Psychologist",
+      image: "https://media.licdn.com/dms/image/v2/D4E03AQEbIczGJLeK-Q/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1722775728087?e=1747267200&v=beta&t=w6V1pPxv4HMErF_rRhJyQXvWI2mS7x4coMpkE6TLDWU",
+      rating: 4.9,
+      reviews: 134,
+      nextAvailable: "Tomorrow"
+    }
+  ];
+
+  useEffect(() => {
+    console.log("État mis à jour :", showAllTherapists);
+  }, [showAllTherapists]);
+
+  const displayedTherapists = showAllTherapists 
+    ? [...initialTherapists, ...additionalTherapists]
+    : initialTherapists;
+
+  const toggleShowAllTherapists = () => {
+    console.log("Bouton cliqué, état avant :", showAllTherapists);
+    setShowAllTherapists(prevState => {
+      console.log("Changement d'état de", prevState, "à", !prevState);
+      return !prevState;
+    });
+  };
 
   return (
     <section id="therapy" className="py-20">
@@ -39,10 +84,15 @@ const TherapistSection = () => {
           <p className="text-lg text-reviva-charcoal/80 dark:text-white/80 max-w-3xl mx-auto">
             Schedule private consultations with our network of professional therapists specializing in various mental health areas.
           </p>
+          <p className="mt-4 p-2 bg-gray-100 rounded">
+            État actuel: {showAllTherapists ? "Affichant tous les thérapeutes" : "Affichant seulement les initials"}
+            <br />
+            Nombre de thérapeutes: {displayedTherapists.length}
+          </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-          {therapists.map((therapist, index) => (
+          {displayedTherapists.map((therapist, index) => (
             <div 
               key={index}
               className="reviva-card glass-card dark:glass-card-dark animate-scale-in"
@@ -82,9 +132,18 @@ const TherapistSection = () => {
         </div>
 
         <div className="text-center">
-          <button className="inline-flex items-center text-reviva-teal hover:text-reviva-deep-teal transition-colors font-medium">
-            View all therapists <ArrowRight className="ml-2 h-4 w-4" />
+          <button 
+            onClick={toggleShowAllTherapists}
+            className="inline-flex items-center px-4 py-2 bg-reviva-teal text-white hover:bg-reviva-deep-teal transition-colors font-medium rounded-lg"
+          >
+            {showAllTherapists ? "Show fewer therapists" : "View all therapists"} 
+            {showAllTherapists ? (
+              <ChevronDown className="ml-2 h-4 w-4 transform rotate-180" />
+            ) : (
+              <ArrowRight className="ml-2 h-4 w-4" />
+            )}
           </button>
+
         </div>
       </div>
     </section>

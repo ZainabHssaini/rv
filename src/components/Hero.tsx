@@ -1,9 +1,9 @@
-
-import { ArrowRight, Brain, Heart, Shield } from 'lucide-react';
-import { useEffect, useRef } from 'react';
+import { ArrowRight, Brain, Heart, Shield, X } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
 
 const Hero = () => {
-  const floatingCirclesRef = useRef<HTMLDivElement>(null);
+  const floatingCirclesRef = useRef(null);
+  const [showLearnMore, setShowLearnMore] = useState(false);
   
   useEffect(() => {
     if (!floatingCirclesRef.current) return;
@@ -11,7 +11,7 @@ const Hero = () => {
     const circles = floatingCirclesRef.current.querySelectorAll('.floating-circle');
     
     circles.forEach((circle) => {
-      const element = circle as HTMLElement;
+      const element = circle;
       
       element.style.left = `${Math.random() * 90}%`;
       element.style.top = `${Math.random() * 90}%`;
@@ -23,10 +23,12 @@ const Hero = () => {
     });
   }, []);
 
-  return (
-<section className="min-h-screen pt-32 pb-12 md:pt-48 md:pb-24 relative overflow-hidden">
-     
+  const toggleLearnMore = () => {
+    setShowLearnMore(!showLearnMore);
+  };
 
+  return (
+    <section className="min-h-screen pt-32 pb-12 md:pt-48 md:pb-24 relative overflow-hidden">
       <div className="absolute top-0 right-0 w-1/3 h-1/2 bg-reviva-mint/30 rounded-bl-full -z-300 blur-3xl animate-pulse-gentle"></div>
       <div className="absolute bottom-0 left-0 w-1/4 h-1/3 bg-reviva-beige/40 rounded-tr-full -z-10 blur-3xl animate-pulse-gentle" style={{ animationDelay: '2s' }}></div>
       
@@ -43,13 +45,63 @@ const Hero = () => {
               Reviva offers AI-powered support, professional therapy, and a caring community to help you thrive mentally and emotionally.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
-              <button className="reviva-button animate-pulse-gentle">
+              <button 
+                className="reviva-button animate-pulse-gentle"   
+                onClick={() => window.location.replace('/Features')}
+              >
                 Get Started
               </button>
-              <button className="px-6 py-3 rounded-full font-medium flex items-center justify-center gap-2 hover:bg-reviva-mint/20 transition-colors border border-reviva-teal text-reviva-teal">
+              <button 
+                className="px-6 py-3 rounded-full font-medium flex items-center justify-center gap-2 hover:bg-reviva-mint/20 transition-colors border border-reviva-teal text-reviva-teal"
+                onClick={toggleLearnMore}
+                aria-expanded={showLearnMore}
+              >
                 Learn More <ArrowRight size={18} />
               </button>
             </div>
+            
+            {/* Learn More Modal/Dropdown */}
+            {showLearnMore && (
+              <div className="bg-white dark:bg-reviva-charcoal rounded-xl p-6 shadow-lg border border-reviva-mint mt-4 animate-fade-in">
+                <div className="flex justify-between items-center mb-4">
+                  <h3 className="text-xl font-bold text-reviva-teal">About Reviva</h3>
+                  <button 
+                    className="p-1 rounded-full hover:bg-reviva-mint/20 text-reviva-charcoal dark:text-white"
+                    onClick={toggleLearnMore}
+                    aria-label="Close learn more panel"
+                  >
+                    <X size={20} />
+                  </button>
+                </div>
+                <div className="space-y-4">
+                  <div className="border-l-4 border-reviva-teal pl-4">
+                    <h4 className="font-medium text-reviva-purple">Our Mission</h4>
+                    <p className="text-reviva-charcoal/80 dark:text-white/80">
+                      Reviva is dedicated to making mental health support accessible to everyone. 
+                      We combine AI technology with human expertise to provide personalized care.
+                    </p>
+                  </div>
+                  
+                  <div className="border-l-4 border-reviva-teal pl-4">
+                    <h4 className="font-medium text-reviva-purple">How It Works</h4>
+                    <p className="text-reviva-charcoal/80 dark:text-white/80">
+                      Our platform offers daily check-ins, mood tracking, guided meditations, 
+                      and on-demand support through our AI companion or licensed therapists.
+                    </p>
+                  </div>
+                  
+                  <div className="border-l-4 border-reviva-teal pl-4">
+                    <h4 className="font-medium text-reviva-purple">Who We Help</h4>
+                    <p className="text-reviva-charcoal/80 dark:text-white/80">
+                      Whether you're dealing with everyday stress, anxiety, depression, or 
+                      simply looking to enhance your mental wellbeing, Reviva is here for you.
+                    </p>
+                  </div>
+                  
+                  
+                </div>
+              </div>
+            )}
             
             <div className="grid grid-cols-3 gap-4 pt-8">
               <div className="flex flex-col items-center text-center p-4 glass-card dark:glass-card-dark rounded-xl animate-scale-in transform hover:scale-105 transition-transform">
@@ -87,7 +139,7 @@ const Hero = () => {
                 <div className="p-4">
                   <h3 className="font-medium text-xl mb-2">Start your journey today</h3>
                   <p className="text-reviva-charcoal/80 dark:text-white/80 mb-4">
-                    Join thousands who have improved their mental well-beiartg with Reviva.
+                    Join thousands who have improved their mental well-being with Reviva.
                   </p>
                   <div className="flex items-center space-x-2">
                     <div className="flex -space-x-2">
