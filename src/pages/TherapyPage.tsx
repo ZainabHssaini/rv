@@ -114,10 +114,10 @@ const TherapyPage = () => {
       const response = await fetch('http://localhost:8082/therapists/');
       const data = await response.json();
       console.log(data);
-      // for(let t of data){
-      //   therapists.push(t);
-      // }
-      therapists.clear();
+      for(let t of data){
+        therapists.push(t);
+      }
+
 
       console.log(therapists);
     } catch (error) {
