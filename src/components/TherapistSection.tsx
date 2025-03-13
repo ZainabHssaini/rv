@@ -36,25 +36,25 @@ const TherapistSection = () => {
   // Thérapeutes supplémentaires qui seront affichés après avoir cliqué sur "View all"
   const additionalTherapists = [
     {
-      name: "Dr. Amina Bouaziz",
-      specialty: "Cognitive Behavioral Therapy",
-      image: "/api/placeholder/200/200",
+      name: "Dr. Rhita HYABI",
+      specialty: "Orthophonie, psychometricité et psychologie",
+      image: "https://media.licdn.com/dms/image/v2/D4E03AQHFcwIa1JRJIA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1666166328748?e=1747267200&v=beta&t=_lkf8dnmdLstVdHjo-imjpJFlsJw07Xo3CmDDfrIxWg",
       rating: 4.7,
       reviews: 112,
       nextAvailable: "In 3 days"
     },
     {
-      name: "Dr. Karim Benali",
-      specialty: "Stress Management",
-      image: "/api/placeholder/200/200",
+      name: "Dr. Kenza Nazih",
+      specialty: "psychothérapeute",
+      image: "https://media.licdn.com/dms/image/v2/C4E03AQEIv6HA-Biy4A/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1661371493211?e=1747267200&v=beta&t=7fBr6XYbV0jV7nGe2TZ3AqiSkILR9MTOJWC_CbRPBUE",
       rating: 4.8,
       reviews: 87,
       nextAvailable: "Today"
     },
     {
-      name: "Dr. Nadia Mansouri",
-      specialty: "Family Therapy",
-      image: "/api/placeholder/200/200",
+      name: "Dr. Chaimae touhami",
+      specialty: "Trauma Psychologist",
+      image: "https://media.licdn.com/dms/image/v2/D4E03AQEbIczGJLeK-Q/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1722775728087?e=1747267200&v=beta&t=w6V1pPxv4HMErF_rRhJyQXvWI2mS7x4coMpkE6TLDWU",
       rating: 4.9,
       reviews: 134,
       nextAvailable: "Tomorrow"
