@@ -9,6 +9,7 @@ export interface Podcast {
     progress: number,
     currentTime: string,
     host: string
+    link: string,
     timeAdded: string,
 }
 

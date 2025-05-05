@@ -4,6 +4,7 @@ import Footer from '@/components/Footer';
 import { BookOpen, Headphones, Clock, Calendar, Heart, Share2, ArrowRight, User } from 'lucide-react';
 import { toast } from "sonner";
 import {Podcast, fetchPodcasts} from "@/services/podcastsService"; 
+import { link } from 'fs';
 
 
 
@@ -229,6 +230,7 @@ const BlogsPodcastsPage = () => {
             progress: 0, // Placeholder for progress
             currentTime: '0:00', // Placeholder for current time
             host: item.track.artists[0].name,
+            link: item.track.external_urls.spotify, // Spotify link
           };
         });
         setPodcasts(resultat);
@@ -495,9 +497,11 @@ const BlogsPodcastsPage = () => {
                         onClick={() => handlePlayPodcast(podcast.title)}
                         aria-label="Play podcast"
                       >
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                          <polygon points="5 3 19 12 5 21 5 3"></polygon>
-                        </svg>
+                        <a href={podcast.link} target="_blank" rel="noopener noreferrer">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                          </svg>
+                        </a>
                       </button>
                       <div className="h-1 bg-gray-200 dark:bg-gray-700 rounded-full flex-1">
                         <div 
