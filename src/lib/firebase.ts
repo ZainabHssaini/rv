@@ -9,14 +9,14 @@ import { getFirestore } from "firebase/firestore";
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyASi3TNbjxrLIQ_t14pRC-phaG6DTCRrBA",
-  authDomain: "reviva-2cb77.firebaseapp.com",
-  projectId: "reviva-2cb77",
-  storageBucket: "reviva-2cb77.firebasestorage.app",
-  messagingSenderId: "892854798565",
-  appId: "1:892854798565:web:34d0fe6f508a277ca6ac0c"
+  apiKey: "AIzaSyA6Z5wMVBw9nCpytqfDI8os1m7nY9pN168",
+  authDomain: "reviva-23c97.firebaseapp.com",
+  projectId: "reviva-23c97",
+  storageBucket: "reviva-23c97.firebasestorage.app",
+  messagingSenderId: "170254762522",
+  appId: "1:170254762522:web:b722f460b63754e0ab07a3",
+  measurementId: "G-GZBW4V3ZYW"
 };
-
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 // Safely initialize analytics only if supported
