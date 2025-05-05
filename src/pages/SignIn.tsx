@@ -2,6 +2,9 @@ import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import { ArrowRight, User, ArrowLeft } from 'lucide-react'; // Import ArrowLeft
 import { useToast } from "@/hooks/use-toast"; // Import the useToast hook
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { doc, getDoc } from "firebase/firestore";
+import { auth, db } from "@/lib/firebase"; // adapte le chemin si besoin
 
 const SignIn = () => {
   const {
@@ -13,42 +16,50 @@ const SignIn = () => {
   const navigate = useNavigate(); // Hook for navigation
   const { toast } = useToast(); // Initialize the toast function
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (data: any) => {
     try {
-      const response = await fetch('http://localhost:8082/auth', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data), // Send form data
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
+      // 1. Authentifier l'utilisateur via Firebase Auth
+      const userCredential = await signInWithEmailAndPassword(auth, data.email, data.password);
+      const user = userCredential.user;
+  
+      // 2. Récupérer les données utilisateur dans Firestore
+      const docRef = doc(db, "patients", user.uid);
+      const docSnap = await getDoc(docRef);
+  
+      if (!docSnap.exists()) {
+        throw new Error("User data not found in Firestore.");
       }
-
-      const result = await response.json(); // Receive the response from the backend
-      console.log('Authentication successful:', result);
-
-      if (result.id != null) { // Assuming the backend returns { success: true, user: { firstname, lastname } }
-        // Store user data in localStorage
-        localStorage.setItem('user', JSON.stringify(result));
-
-        // Redirect to the home page
-        navigate('/');
-      } else {
-        // Trigger toast notification for incorrect credentials
+  
+      const userData = docSnap.data();
+  
+      // 3. Stocker les données utilisateur localement
+      localStorage.setItem("user", JSON.stringify(userData));
+  
+      // 4. Rediriger vers la page d'accueil
+      navigate("/");
+  
+      // 5. Optionnel : message de succès
+      toast({
+        title: "Welcome back!",
+        description: `Hello ${userData.firstname}`,
+      });
+  
+    } catch (error: any) {
+      console.error("Error during sign-in:", error);
+      let message = error.message.toString().split("(")[1].split(")")[0]; // Extract error message
+      console.error("Error during sign-up:", message); // Log the error message
+      if(message == "auth/invalid-credential") { // Check if email is already in use
         toast({
-          title: "Email or Password incorrect",
-          description: "Try again...",
+          title: "Username or password incorrect",
+          description: "Please check your credentials and try again.",
         });
       }
-    } catch (error) {
-      console.error('Error during sign-in:', error);
+      else {   // Show error toast
       toast({
-        title: "Email or Password incorrect",
-        description: "Try again...",
+        title: "Error",
+        description:"Something went wrong. Please try again.",
       });
+    }
     }
   };
 
