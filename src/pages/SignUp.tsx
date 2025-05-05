@@ -3,6 +3,9 @@ import { ArrowRight, User, ArrowLeft } from 'lucide-react'; // Import ArrowLeft
 import { Link, useNavigate } from 'react-router-dom';
 import { useToast } from "@/hooks/use-toast"; // Import the useToast hook
 import { useState } from 'react';
+import { auth, db } from "@/lib/firebase"; // Import Firebase auth and db
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { doc, setDoc, collection } from 'firebase/firestore'; // Import Firestore functions
 
 const SignUp = () => {
   const {
@@ -15,39 +18,49 @@ const SignUp = () => {
   const navigate = useNavigate(); // Hook for navigation
   const { toast } = useToast(); // Initialize the toast function
 
-  const onSubmit = async (data) => {
-    data.id = 0;
-    let fullname: string[] = data.fullName.split(' ');
-    data.firstname = fullname[0];
-    data.lastname = fullname.slice(1).join(' ');
-    console.log('Data submitted:', data);
+  const onSubmit = async (data: any) => {
+    let fullname: string[] = data.fullName.trim().split(" ");
+    const firstname = fullname[0];
+    const lastname = fullname.slice(1).join(" ");
+    const email = data.email;
+    const password = data.password;
+
     try {
-      const response = await fetch('http://localhost:8082/patients/new', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
+      // 1. Create user with Firebase Auth
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+
+      // 2. Create a Firestore document for the user
+      const userData = {
+        id: user.uid,
+        firstname,
+        lastname,
+        email,
+        createdAt: new Date().toISOString(),
+      };
+
+      // 3. Store user data in Firestore
+      await setDoc(doc(collection(db, "patients"), user.uid), userData);
+
+      // 4. Store the user data in localStorage
+      localStorage.setItem("user", JSON.stringify(userData));
+
+      // 5. Redirect to the home page
+      navigate("/");
+
+      // Optional: Show success toast
+      toast({
+        title: "Account Created",
+        description: "Your account has been successfully created.",
       });
+    } catch (error: any) {
+      console.error("Error during sign-up:", error);
 
-      if (!response.ok) {
-        toast({
-          title: "Email deja existant",
-          description: "Try again...",
-        });
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-
-      const responseData = await response.json();
-      console.log('User created:', responseData);
-
-      // Store user data in localStorage
-      localStorage.setItem('user', JSON.stringify(responseData));
-
-      // Redirect to the home page
-      navigate('/');
-    } catch (error) {
-      console.error('Error during sign-up:', error);
+      // Show error toast
+      toast({
+        title: "Error",
+        description: error.message || "Something went wrong. Please try again.",
+      });
     }
   };
 
