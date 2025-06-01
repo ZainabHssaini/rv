@@ -134,17 +134,22 @@ const Navbar = () => {
               <Link to="/chatbot" className="text-reviva-charcoal dark:text-white hover:text-reviva-teal dark:hover:text-reviva-mint transition-colors pl-4" onClick={() => setIsMobileMenuOpen(false)}>AI Chatbot</Link>
               <Link to="/blogs-podcasts" className="text-reviva-charcoal dark:text-white hover:text-reviva-teal dark:hover:text-reviva-mint transition-colors pl-4" onClick={() => setIsMobileMenuOpen(false)}>Blogs & Podcasts</Link>
               {isLoggedIn ? (
-                // Afficher "Sign Out" dans le menu mobile si l'utilisateur est connecté
-                <button
-                  onClick={handleSignOut}
-                  className="mx-4 mt-2 py-3 rounded-full bg-gradient-to-r from-reviva-teal to-reviva-mint text-white font-medium"
-                >
-                  Sign Out
-                </button>
-              ) : (
-                // Afficher "Sign In" dans le menu mobile si l'utilisateur n'est pas connecté
-                <button className="mx-4 mt-2 py-3 rounded-full bg-gradient-to-r from-reviva-teal to-reviva-mint text-white font-medium">Sign In</button>
-              )}
+  <button
+    onClick={handleSignOut}
+    className="mx-4 mt-2 py-3 rounded-full bg-gradient-to-r from-reviva-teal to-reviva-mint text-white font-medium"
+  >
+    Sign Out
+  </button>
+) : (
+  <Link
+    to="/signin"
+    onClick={() => setIsMobileMenuOpen(false)}
+    className="mx-4 mt-2 py-3 text-center rounded-full bg-gradient-to-r from-reviva-teal to-reviva-mint text-white font-medium"
+  >
+    Sign In
+  </Link>
+)}
+
 
             </div>
           </div>

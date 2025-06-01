@@ -3,33 +3,33 @@ import { useEffect, useState } from 'react';
 const Welcome = () => {
   const [user, setUser] = useState<{ firstname: string; lastname: string } | null>(null);
 
-  // Récupérer les informations de l'utilisateur depuis le localStorage
   useEffect(() => {
     const userData = localStorage.getItem('user');
     console.log('userData:', userData);
 
-    if (userData) { // Vérifier que userData n'est ni null ni undefined
+    if (userData) {
       try {
-        const parsedUser = JSON.parse(userData); // Parser les données
+        const parsedUser = JSON.parse(userData);
         setUser(parsedUser);
       } catch (error) {
         console.error('Error parsing user data:', error);
-        // Si les données ne sont pas valides, nettoyer le localStorage
         localStorage.removeItem('user');
       }
     }
   }, []);
 
   return (
-    <div className="w-full py-12 bg-gradient-to-r from-reviva-teal to-reviva-mint text-white text-center mt-24">
-      {/* Ajout de mt-16 pour une marge en haut */}
-      <div className="container mx-auto px-6">
-        <h1 className="text-4xl font-bold mb-4 animate-fade-in">
-          Bienvenue, {user ? `${user.firstname} ${user.lastname}` : 'Cher Utilisateur'} !
+    <div className="w-full min-h-screen bg-gradient-to-br from-reviva-teal to-reviva-mint flex items-center justify-center text-white px-4">
+      <div className="max-w-2xl text-center p-8 bg-white/10 backdrop-blur-md rounded-2xl shadow-xl animate-fade-in">
+        <h1 className="text-5xl font-extrabold mb-6 drop-shadow-lg">
+          👋 Bienvenue, <span className="text-yellow-200">{user ? `${user.firstname}` : 'Cher Utilisateur'}</span> !
         </h1>
-        <p className="text-lg animate-fade-in delay-100">
-          Nous sommes ravis de vous revoir. Explorez nos fonctionnalités pour améliorer votre bien-être.
+        <p className="text-xl mb-8 font-light">
+          Nous sommes ravis de vous accueillir. Explorez les fonctionnalités pour améliorer votre bien-être 🌿
         </p>
+        <button className="bg-white text-reviva-teal font-semibold px-6 py-3 rounded-full shadow-md hover:scale-105 transition transform duration-300">
+          Commencer l’exploration
+        </button>
       </div>
     </div>
   );
