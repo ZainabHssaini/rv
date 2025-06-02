@@ -90,12 +90,12 @@ const BookVideo = () => {
           >
             Cancel
           </Link>
-          <button 
+          <Link
+            to="/virement"
             className="px-4 py-2 bg-reviva-teal text-white rounded-lg hover:bg-reviva-deep-teal"
-            onClick={handleConfirmBooking}
           >
             Confirm Booking
-          </button>
+          </Link>
         </div>
       </div>
 

@@ -16,6 +16,7 @@ import { PetGameProvider } from "./context/PetGameContext";
 import SignUp from "./pages/SignUp";
 import ChatTherapist from "./components/ChatTherapist";
 import BookVideo from "./components/BookVideo";
+import BankTransfer from "./pages/BankTransfer";
 
 const queryClient = new QueryClient();
 
@@ -41,6 +42,7 @@ const App = () => (
           <Route path="/blogs-podcasts" element={<BlogsPodcastsPage />} />
           <Route path="/chat" element={<ChatTherapist />} />
           <Route path="/book" element={<BookVideo />} />
+          <Route path="/virement" element={<BankTransfer />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
