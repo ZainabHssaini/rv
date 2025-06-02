@@ -128,8 +128,8 @@ const BankTransfer = () => {
 
           {/* Status Selection and Pricing */}
           <div className="space-y-6">
-            <Card className="border border-blue-100 shadow-sm hover:shadow-md transition-shadow">
-              <CardHeader className="bg-blue-600 text-white rounded-t-lg">
+            <Card className="border border-[#1d858d]/20 shadow-sm hover:shadow-md transition-shadow">
+              <CardHeader className="bg-[#10566e] text-white rounded-t-lg">
                 <CardTitle>Sélection du statut</CardTitle>
               </CardHeader>
               <CardContent className="p-6 space-y-6">
@@ -138,7 +138,7 @@ const BankTransfer = () => {
                     variant={userStatus === 'student' ? 'default' : 'outline'}
                     onClick={() => setUserStatus('student')}
                     className={`h-auto py-4 ${userStatus === 'student' 
-                      ? 'bg-teal-600 hover:bg-teal-700 text-white' 
+                      ? 'bg-[#279692] hover:bg-[#1b6d80] text-white' 
                       : 'border-gray-200 hover:bg-gray-50'}`}
                   >
                     <div className="text-center">
@@ -151,7 +151,7 @@ const BankTransfer = () => {
                     variant={userStatus === 'employee' ? 'default' : 'outline'}
                     onClick={() => setUserStatus('employee')}
                     className={`h-auto py-4 ${userStatus === 'employee' 
-                      ? 'bg-blue-600 hover:bg-blue-700 text-white' 
+                      ? 'bg-[#10566e] hover:bg-[#1d858d] text-white' 
                       : 'border-gray-200 hover:bg-gray-50'}`}
                   >
                     <div className="text-center">
@@ -165,12 +165,12 @@ const BankTransfer = () => {
                   <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
                     <div className="text-center">
                       <p className="text-sm text-gray-600">Séance individuelle</p>
-                      <p className="text-2xl font-bold text-teal-600 mt-2">
+                      <p className="text-2xl font-bold text-[#35a79b] mt-2">
                         {price} €
                       </p>
                       <Badge 
                         variant={userStatus === 'student' ? 'secondary' : 'default'} 
-                        className="mt-2"
+                        className="mt-2 bg-[#279692] hover:bg-[#1b6d80] text-white"
                       >
                         Tarif {userStatus === 'student' ? 'étudiant' : 'employé'}
                       </Badge>
@@ -181,12 +181,12 @@ const BankTransfer = () => {
             </Card>
 
             {userStatus && (
-              <Card className="border border-blue-100 shadow-sm hover:shadow-md transition-shadow">
+              <Card className="border border-[#1d858d]/20 shadow-sm hover:shadow-md transition-shadow">
                 <CardContent className="p-6">
                   {!transferConfirmed ? (
                     <Button 
                       onClick={handleConfirmTransfer}
-                      className="w-full bg-gradient-to-r from-teal-600 to-teal-700 hover:from-teal-700 hover:to-teal-800 text-white shadow-md"
+                      className="w-full bg-gradient-to-r from-[#279692] to-[#10566e] hover:from-[#1b6d80] hover:to-[#1d858d] text-white shadow-md"
                       size="lg"
                     >
                       <CheckCircle className="w-5 h-5 mr-2" />

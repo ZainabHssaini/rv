@@ -46,8 +46,8 @@ const PaymentProofUpload = () => {
   };
 
   return (
-    <Card className="border-green-200 shadow-lg">
-      <CardHeader className="bg-gradient-to-r from-green-600 to-teal-600 text-white">
+    <Card className="border-[#e0f7fa] shadow-lg">
+      <CardHeader className="bg-gradient-to-r from-[#1d858d] to-[#35a79b] text-white">
         <CardTitle className="flex items-center gap-2">
           <Upload className="w-5 h-5" />
           Preuve de paiement
@@ -60,8 +60,8 @@ const PaymentProofUpload = () => {
           </p>
           
           {!isUploaded ? (
-            <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-teal-400 transition-colors">
-              <Upload className="w-12 h-12 mx-auto text-gray-400 mb-4" />
+            <div className="border-2 border-dashed border-[#b2ebf2] rounded-lg p-8 text-center hover:border-[#35a79b] transition-colors">
+              <Upload className="w-12 h-12 mx-auto text-[#b2ebf2] mb-4" />
               <p className="text-gray-600 mb-4">
                 Glissez-déposez votre capture d'écran ici ou cliquez pour parcourir
               </p>
@@ -74,7 +74,7 @@ const PaymentProofUpload = () => {
               />
               <Button
                 variant="outline"
-                className="border-teal-300 text-teal-600 hover:bg-teal-50"
+                className="border-[#35a79b] text-[#1d858d] hover:bg-[#e0f7fa]"
                 onClick={() => document.getElementById('proof-upload')?.click()}
               >
                 <Upload className="w-4 h-4 mr-2" />
@@ -85,26 +85,26 @@ const PaymentProofUpload = () => {
               </p>
             </div>
           ) : (
-            <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+            <div className="bg-[#e8f5e9] border border-[#c8e6c9] rounded-lg p-4">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
-                    <FileImage className="w-5 h-5 text-green-600" />
+                  <div className="w-10 h-10 bg-[#c8e6c9] rounded-lg flex items-center justify-center">
+                    <FileImage className="w-5 h-5 text-[#1d858d]" />
                   </div>
                   <div>
-                    <p className="font-semibold text-green-800">{uploadedFile?.name}</p>
-                    <p className="text-sm text-green-600">
+                    <p className="font-semibold text-[#1d858d]">{uploadedFile?.name}</p>
+                    <p className="text-sm text-[#35a79b]">
                       {uploadedFile && (uploadedFile.size / 1024 / 1024).toFixed(2)} MB
                     </p>
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
-                  <CheckCircle className="w-5 h-5 text-green-600" />
+                  <CheckCircle className="w-5 h-5 text-[#35a79b]" />
                   <Button
                     variant="ghost"
                     size="sm"
                     onClick={removeFile}
-                    className="text-red-500 hover:text-red-700 hover:bg-red-50"
+                    className="text-[#ff7043] hover:text-[#e64a19] hover:bg-[#ffebee]"
                   >
                     <X className="w-4 h-4" />
                   </Button>
@@ -114,10 +114,10 @@ const PaymentProofUpload = () => {
           )}
 
           {isUploaded && (
-            <div className="pt-4 border-t">
+            <div className="pt-4 border-t border-[#e0f7fa]">
               <Button 
                 onClick={submitProof}
-                className="w-full bg-green-600 hover:bg-green-700 text-white"
+                className="w-full bg-gradient-to-r from-[#1d858d] to-[#35a79b] hover:from-[#10566e] hover:to-[#1b6d80] text-white"
               >
                 <CheckCircle className="w-4 h-4 mr-2" />
                 Envoyer la preuve de paiement
@@ -125,9 +125,9 @@ const PaymentProofUpload = () => {
             </div>
           )}
 
-          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-            <h4 className="font-semibold text-blue-800 mb-2">Instructions importantes :</h4>
-            <ul className="text-sm text-blue-700 space-y-1">
+          <div className="bg-[#e3f2fd] border border-[#bbdefb] rounded-lg p-4">
+            <h4 className="font-semibold text-[#0d47a1] mb-2">Instructions importantes :</h4>
+            <ul className="text-sm text-[#1976d2] space-y-1">
               <li>• Assurez-vous que le montant exact soit visible</li>
               <li>• Le nom du bénéficiaire (REVIVA SAS) doit être lisible</li>
               <li>• La date et l'heure du virement doivent être visibles</li>
