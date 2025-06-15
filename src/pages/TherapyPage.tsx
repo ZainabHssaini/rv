@@ -166,16 +166,16 @@ const TherapyPage = () => {
                     </li>
                   </ul>
                   <button 
-  className="reviva-button w-full md:w-auto animate-pulse-gentle"
-  onClick={() => {
-    const element = document.getElementById("individual-therapy");
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
-  }}
->
-  Book Your First Session
-</button>
+                    className="reviva-button w-full md:w-auto animate-pulse-gentle"
+                    onClick={() => {
+                      const element = document.getElementById("individual-therapy");
+                      if (element) {
+                        element.scrollIntoView({ behavior: "smooth" });
+                      }
+                    }}
+                  >
+                    Book Your First Session
+                  </button>
 
                 </div>
                 <div className="md:w-1/2 relative min-h-[300px]">

@@ -78,11 +78,12 @@ const Navbar = () => {
             <a href="/mood-tracker" className="text-reviva-charcoal dark:text-white hover:text-reviva-teal dark:hover:text-reviva-mint transition-colors relative group">
               Mood Tracker
             </a>
-            <a href="/chatbot" className="text-reviva-charcoal dark:text-white hover:text-reviva-teal dark:hover:text-reviva-mint transition-colors relative group">
-              AI Chatbot
-            </a>
+
             <a href="/blogs-podcasts" className="text-reviva-charcoal dark:text-white hover:text-reviva-teal dark:hover:text-reviva-mint transition-colors relative group">
               Blogs & Podcasts
+            </a>
+            <a href="/sol" className="text-reviva-charcoal dark:text-white hover:text-reviva-teal dark:hover:text-reviva-mint transition-colors relative group">
+              Reviva Solution
             </a>
             <div className="flex items-center gap-8">
               {isLoggedIn ? (
