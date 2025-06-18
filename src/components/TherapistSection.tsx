@@ -8,7 +8,7 @@ const TherapistSection = () => {
     {
       name: "Dr. Sami Chakour",
       specialty: "Anxiety & Depression",
-      image: "https://media.licdn.com/dms/image/v2/D4E03AQEiNgd7qj2XNQ/profile-displayphoto-shrink_200_200/B4EZP0Zw6sGcAY-/0/1734972215894?e=1747267200&v=beta&t=9ostmp6_91pEtaTEVQeJJfLJib86o1FCRmN5-0pRSZk",
+      image: "/reviva/man.png",
       rating: 4.9,
       reviews: 128,
       nextAvailable: "Today"
@@ -16,7 +16,7 @@ const TherapistSection = () => {
     {
       name: "Dr. Ihssan Yousfi",
       specialty: "Trauma Recovery",
-      image: "https://media.licdn.com/dms/image/v2/D4E03AQFVBnOGUCju2g/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1714003455639?e=1747267200&v=beta&t=wqrNmcrUf8wOW1ncnKiVdFBNJ16WrFQQG7LZ8myZJ98",
+      image: "/reviva/woman (1).png",
       rating: 4.8,
       reviews: 93,
       nextAvailable: "Tomorrow"
@@ -24,7 +24,7 @@ const TherapistSection = () => {
     {
       name: "Dr. Inasse El Bouchikhi",
       specialty: "Relationship Counseling",
-      image: "https://media.licdn.com/dms/image/v2/D4E03AQFSEDP7BaeMKA/profile-displayphoto-shrink_200_200/B4EZQ48u.8G4Ac-/0/1736122233315?e=1747267200&v=beta&t=8CCmYEIZiXpCiE-bs_4H9ggfo4ocIzdHWTBevEeQOFM",
+      image: "/reviva/woman (1).png",
       rating: 4.9,
       reviews: 156,
       nextAvailable: "In 2 days"
@@ -87,11 +87,7 @@ const TherapistSection = () => {
           <p className="text-lg text-reviva-charcoal/80 dark:text-white/80 max-w-3xl mx-auto">
             Schedule private consultations with our network of professional therapists specializing in various mental health areas.
           </p>
-          <p className="mt-4 p-2 bg-gray-100 rounded">
-            État actuel: {showAllTherapists ? "Affichant tous les thérapeutes" : "Affichant seulement les initials"}
-            <br />
-            Nombre de thérapeutes: {displayedTherapists.length}
-          </p>
+          
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">

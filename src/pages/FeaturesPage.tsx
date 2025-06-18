@@ -12,12 +12,6 @@ const FeaturesPage = () => {
       icon: <Brain className="h-10 w-10 text-reviva-teal" />,
       features: [
         {
-          title: "AI Chatbot Support",
-          description: "Get guidance, self-help exercises, and resources from our intelligent mental health chatbot.",
-          icon: <MessageCircle className="h-6 w-6 text-reviva-teal" />,
-          link: "/chatbot"
-        },
-        {
           title: "Progress Tracking",
           description: "Monitor your mental health journey with mood tracking and personalized insights.",
           icon: <BarChart className="h-6 w-6 text-reviva-teal" />,

@@ -241,7 +241,7 @@ const PetGame = () => {
             >
               <div className="relative">
                 <img 
-                  src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&q=80&w=400&h=400&ixlib=rb-4.0.3"
+                  src="/image/virtual-cat.jpg"
                   alt="Virtual Cat Pet" 
                   className={`rounded-2xl border-4 border-white dark:border-reviva-purple/20 shadow-lg w-full max-w-md mx-auto transition-all duration-300
                             ${animation === "playing" ? "animate-bounce" : ""} 
