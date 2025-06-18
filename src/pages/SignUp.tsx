@@ -30,6 +30,8 @@ const SignUp = () => {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
+      console.log("User created:", userCredential);
+
       // 2. Create a Firestore document for the user
       const userData = {
         id: user.uid,
@@ -54,6 +56,7 @@ const SignUp = () => {
         description: "Your account has been successfully created.",
       });
     } catch (error: any) {
+      console.error("Error during sign-up:", error);
       let message = error.message.toString().split("(")[1].split(")")[0]; // Extract error message
       console.error("Error during sign-up:", message); // Log the error message
       if(message == "auth/email-already-in-use") { // Check if email is already in use
