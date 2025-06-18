@@ -152,7 +152,7 @@ const BankTransfer = () => {
                   >
                     <div className="text-center">
                       <div className="font-semibold">Student</div>
-                      <div className="text-sm mt-1">{session.studentPrice} €</div>
+                      <div className="text-sm mt-1">{session.studentPrice} Dh</div>
                     </div>
                   </Button>
                   
@@ -165,7 +165,7 @@ const BankTransfer = () => {
                   >
                     <div className="text-center">
                       <div className="font-semibold">Employee</div>
-                      <div className="text-sm mt-1">{session.employeePrice} €</div>
+                      <div className="text-sm mt-1">{session.employeePrice} Dh</div>
                     </div>
                   </Button>
                 </div>
@@ -175,7 +175,7 @@ const BankTransfer = () => {
                     <div className="text-center">
                       <p className="text-sm text-gray-600">Individual Session</p>
                       <p className="text-2xl font-bold text-[#35a79b] mt-2">
-                        {price} €
+                        {price} Dh
                       </p>
                       <Badge 
                         variant={userStatus === 'student' ? 'secondary' : 'default'} 
