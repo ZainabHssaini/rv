@@ -2,7 +2,10 @@ import Navbar from "@/components/Navbar";
 import { Button } from "@/components/ui/button";
 import Footer from '@/components/Footer';
 import { Card } from "@/components/ui/card";
-import { Users, Lightbulb, Search, Plus, UserPlus, Star } from "lucide-react";
+import { Users, Lightbulb, Search, Plus, UserPlus, Star, ChevronLeft, ChevronRight } from "lucide-react";
+import { motion } from "framer-motion";
+import Image from "next/image";
+import { useState } from "react";
 
 const Entrepreneur = () => {
   const suggestedPeople = [
@@ -58,6 +61,70 @@ const Entrepreneur = () => {
       category: "Education"
     }
   ];
+  const testimonials = [
+  {
+    id: 1,
+    quote: "Social entrepreneurship isn't just about business - it's about changing lives. Reviva helped me understand that true leadership means empowering others while solving real community problems.",
+    author: "Dr. Amina Belkhir",
+    role: "Director, Moroccan Center for Social Innovation",
+    image: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80",
+    project: "Social Leadership Program"
+  },
+  {
+    id: 2,
+    quote: "As a single mother, I never dreamed I could start a business. Reviva's community believed in me - now my artisan cooperative employs 32 women preserving traditional crafts.",
+    author: "Samira El Idrissi",
+    role: "Founder, Heritage Hands",
+    image: "https://images.unsplash.com/photo-1551836022-d5d44eef8b76?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80",
+    project: "Traditional Craft Preservation"
+  },
+  {
+    id: 3,
+    quote: "The mentorship I found through Reviva helped scale my urban farming project from 1 rooftop to 12 locations across Casablanca, creating green jobs in food deserts.",
+    author: "Omar Benjelloun",
+    role: "Urban Agriculture Innovator",
+    image: "https://images.unsplash.com/photo-1540569014015-19a7be504e3a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80",
+    project: "City Harvest Initiative"
+  },
+  {
+    id: 4,
+    quote: "After my burnout, Reviva didn't just help me recover - it helped me rebuild with purpose. Today I lead mental health workshops for other entrepreneurs.",
+    author: "Lina Touahri",
+    role: "Wellbeing Coach",
+    image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80",
+    project: "Entrepreneur Mental Health Program"
+  },
+  {
+  id: 5,
+    quote: "Reviva did more than improve my wellbeing - it gave me the tools and connections to launch my dream project. From zero to fully-funded in 6 months, with the perfect team by my side!",
+    author: "Karim El Fassi",
+    role: "Founder, GreenTech Sahara",
+    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80",
+    project: "Solar-powered irrigation systems"
+  },
+  {
+    id: 6,
+    quote: "The cross-cultural connections I made through Reviva helped me adapt my disability tech solution for three different African markets - something I couldn't have done alone.",
+    author: "Dr. Kwame Nkrumah",
+    role: "Assistive Technology Specialist",
+    image: "https://images.unsplash.com/photo-1546820389-44d77e1f3b31?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80",
+    project: "Accessible Africa"
+  }
+];
+
+  const [currentTestimonial, setCurrentTestimonial] = useState(0);
+
+  const nextTestimonial = () => {
+    setCurrentTestimonial((prev) => 
+      prev === testimonials.length - 1 ? 0 : prev + 1
+    );
+  };
+
+  const prevTestimonial = () => {
+    setCurrentTestimonial((prev) => 
+      prev === 0 ? testimonials.length - 1 : prev - 1
+    );
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
@@ -212,6 +279,73 @@ const Entrepreneur = () => {
                 </Card>
               ))}
             </div>
+          </div>
+        
+        </div>
+        <div className="mt-24 mb-16">
+          <h2 className="text-3xl font-bold text-gray-800 text-center mb-12">
+            Success Stories From Our Community
+          </h2>
+          
+          <div className="relative">
+            <div className="overflow-hidden">
+              <motion.div
+                className="flex"
+                animate={{ 
+                  x: `-${currentTestimonial * 100}%`,
+                }}
+                transition={{ type: "spring", stiffness: 300, damping: 30 }}
+              >
+                {testimonials.map((testimonial) => (
+                  <div 
+                    key={testimonial.id}
+                    className="w-full flex-shrink-0 px-4"
+                  >
+                    <Card className="p-8 bg-gradient-to-br from-[#1d858d]/5 to-[#35a79b]/5 border-2 border-[#1d858d]/20 hover:shadow-lg transition-all duration-300">
+                      <div className="flex items-start mb-6">
+                        <div className="relative w-16 h-16 mr-6 rounded-full overflow-hidden">
+                          <img
+                            src={testimonial.image}
+                            alt={testimonial.author}
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                        <div className="flex-1">
+                          <div className="flex items-center mb-2">
+                            {[...Array(5)].map((_, i) => (
+                              <Star key={i} className="w-5 h-5 text-yellow-500 fill-yellow-500 mr-1" />
+                            ))}
+                          </div>
+                          <blockquote className="text-lg italic text-gray-700 mb-4">
+                            "{testimonial.quote}"
+                          </blockquote>
+                          <div className="font-semibold text-gray-800">{testimonial.author}</div>
+                          <div className="text-sm text-gray-600">{testimonial.role}</div>
+                          <div className="mt-2 text-xs text-[#1d858d] font-medium">
+                            {testimonial.project}
+                          </div>
+                        </div>
+                      </div>
+                    </Card>
+                  </div>
+                ))}
+              </motion.div>
+            </div>
+            {/* Navigation Arrows */}
+            <button 
+              onClick={prevTestimonial}
+              className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 bg-white p-2 rounded-full shadow-md hover:bg-gray-100 transition-colors z-10"
+              aria-label="Previous testimonial"
+            >
+              <ChevronLeft className="w-6 h-6 text-[#1d858d]" />
+            </button>
+            <button 
+              onClick={nextTestimonial}
+              className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 bg-white p-2 rounded-full shadow-md hover:bg-gray-100 transition-colors z-10"
+              aria-label="Next testimonial"
+            >
+              <ChevronRight className="w-6 h-6 text-[#1d858d]" />
+            </button>
           </div>
         </div>
       </div>

@@ -161,8 +161,8 @@ const CreateProjectPage = () => {
                 </Button>
                 
                 {step < 4 ? (
-                <Button className="bg-[#1d858d] hover:bg-[#10566e]">
-                    Continue
+                <Button className="bg-[#1d858d] hover:bg-[#10566e]" onClick={handleNext}>
+                    Continue 
                 </Button>
                 ) : (
                 <Button className="bg-gradient-to-r from-[#1d858d] to-[#10566e]">

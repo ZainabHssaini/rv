@@ -4,6 +4,7 @@ import Footer from '@/components/Footer';
 import { Calendar, Video, MessageSquare, CheckCircle, Star, Users, MapPin } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import MeetButton from '@/components/MeetButton';
 
 type Therapist = {
   id: number;
@@ -63,7 +64,8 @@ const TherapyPage = () => {
       description: "A safe space for sharing experiences and coping strategies for anxiety.",
       members: 24,
       nextSession: "Tomorrow at 6:00 PM",
-      topics: ["General Anxiety", "Social Anxiety", "Panic Attacks"]
+      topics: ["General Anxiety", "Social Anxiety", "Panic Attacks"],
+      meetLink: "https://meet.google.com/epz-enrt-vpv"
     },
     {
       id: 2,
@@ -71,7 +73,8 @@ const TherapyPage = () => {
       description: "Weekly guided mindfulness sessions to help manage stress and improve well-being.",
       members: 32,
       nextSession: "Wednesday at 7:30 PM",
-      topics: ["Meditation", "Breathing Techniques", "Present-Moment Awareness"]
+      topics: ["Meditation", "Breathing Techniques", "Present-Moment Awareness"],
+      meetLink: "https://meet.google.com/epz-enrt-vpv"
     },
     {
       id: 3,
@@ -79,7 +82,8 @@ const TherapyPage = () => {
       description: "A compassionate community for those experiencing grief and navigating loss.",
       members: 18,
       nextSession: "Friday at 5:00 PM",
-      topics: ["Bereavement", "Coping Strategies", "Emotional Processing"]
+      topics: ["Bereavement", "Coping Strategies", "Emotional Processing"],
+      meetLink: "https://meet.google.com/epz-enrt-vpv"
     }
   ];
 
@@ -345,9 +349,10 @@ const TherapyPage = () => {
                             </div>
                           </div>
                           
-                          <button className="w-full px-4 py-2 bg-reviva-teal text-white rounded-lg font-medium mt-2">
-                            Join Group
-                          </button>
+                          <MeetButton 
+                            meetLink={group.meetLink} 
+                            className="w-full"
+                          />
                         </div>
                       </div>
                     ))}

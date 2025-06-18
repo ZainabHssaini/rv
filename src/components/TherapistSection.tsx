@@ -135,18 +135,13 @@ const TherapistSection = () => {
         </div>
 
         <div className="text-center">
-          <button 
-            onClick={toggleShowAllTherapists}
+          <a
+            href="/therapy"
             className="inline-flex items-center px-4 py-2 bg-reviva-teal text-white hover:bg-reviva-deep-teal transition-colors font-medium rounded-lg"
           >
-            {showAllTherapists ? "Show fewer therapists" : "View all therapists"} 
-            {showAllTherapists ? (
-              <ChevronDown className="ml-2 h-4 w-4 transform rotate-180" />
-            ) : (
-              <ArrowRight className="ml-2 h-4 w-4" />
-            )}
-          </button>
-
+            View all therapists
+            <ArrowRight className="ml-2 h-4 w-4" />
+          </a>
         </div>
       </div>
     </section>

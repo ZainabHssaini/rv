@@ -6,7 +6,9 @@ import { toast } from "sonner";
 import {Podcast, fetchPodcasts} from "@/services/podcastsService"; 
 import { link } from 'fs';
 
-
+import { Dialog, Transition } from '@headlessui/react';
+import { Fragment } from 'react';
+import { X } from 'lucide-react';
 
 // Liste des blogs
 const blogPosts = [
@@ -207,6 +209,19 @@ const BlogsPodcastsPage = () => {
     return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
   }
   
+  const [selectedBlog, setSelectedBlog] = useState<null | typeof blogPosts[0]>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const openBlogModal = (blog: typeof blogPosts[0]) => {
+    setSelectedBlog(blog);
+    setIsModalOpen(true);
+  };
+
+  const closeBlogModal = () => {
+    setIsModalOpen(false);
+    setTimeout(() => {
+      setSelectedBlog(null);
+    }, 300); // Match this with your transition duration
+  };
 
   useEffect(() => {
     const loadPodcasts = async () => {
@@ -404,11 +419,11 @@ const BlogsPodcastsPage = () => {
                         <span className="text-sm font-medium text-reviva-charcoal dark:text-white">{blog.author.name}</span>
                       </div>
                       <button 
-                        className="text-reviva-teal hover:text-reviva-deep-teal transition-colors font-medium text-sm"
-                        onClick={() => handleReadMore(blog.title)}
-                      >
-                        Read More
-                      </button>
+                          className="text-reviva-teal hover:text-reviva-deep-teal transition-colors font-medium text-sm"
+                          onClick={() => openBlogModal(blog)}
+                        >
+                          Read More
+                        </button>
                     </div>
                   </div>
                 ))}
@@ -527,7 +542,173 @@ const BlogsPodcastsPage = () => {
               </div>
             )}
               </div>
-            )}
+        )}
+
+            {/* Blog Detail Modal */}
+        <Transition appear show={isModalOpen} as={Fragment}>
+          <Dialog as="div" className="relative z-50" onClose={closeBlogModal}>
+            <Transition.Child
+              as={Fragment}
+              enter="ease-out duration-300"
+              enterFrom="opacity-0"
+              enterTo="opacity-100"
+              leave="ease-in duration-200"
+              leaveFrom="opacity-100"
+              leaveTo="opacity-0"
+            >
+              <div className="fixed inset-0 bg-black/70 backdrop-blur-sm" />
+            </Transition.Child>
+
+            <div className="fixed inset-0 overflow-y-auto">
+              <div className="flex min-h-full items-center justify-center p-4 text-center">
+                <Transition.Child
+                  as={Fragment}
+                  enter="ease-out duration-300"
+                  enterFrom="opacity-0 scale-95"
+                  enterTo="opacity-100 scale-100"
+                  leave="ease-in duration-200"
+                  leaveFrom="opacity-100 scale-100"
+                  leaveTo="opacity-0 scale-95"
+                >
+                  <Dialog.Panel className="w-full max-w-4xl transform overflow-hidden rounded-2xl bg-white dark:bg-reviva-purple/90 text-left align-middle shadow-xl transition-all">
+                    {selectedBlog && (
+                      <div className="relative">
+                        {/* Close Button */}
+                        <button
+                          onClick={closeBlogModal}
+                          className="absolute top-4 right-4 z-10 p-2 rounded-full bg-white/80 dark:bg-reviva-charcoal/80 hover:bg-gray-100 dark:hover:bg-reviva-charcoal transition-colors"
+                          aria-label="Close"
+                        >
+                          <X className="text-reviva-charcoal dark:text-white" />
+                        </button>
+
+                        {/* Hero Image */}
+                        <div className="h-64 md:h-80 w-full relative overflow-hidden">
+                          <img
+                            src={selectedBlog.image}
+                            alt={selectedBlog.title}
+                            className="w-full h-full object-cover"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
+                          <div className="absolute bottom-0 left-0 p-6 md:p-8 text-white">
+                            <div className="flex items-center gap-2 mb-2">
+                              <span className="bg-reviva-teal text-white text-xs font-medium px-2 py-1 rounded-full">
+                                {selectedBlog.category}
+                              </span>
+                              <span className="text-sm flex items-center gap-1">
+                                <Calendar size={14} /> {selectedBlog.date}
+                              </span>
+                            </div>
+                            <Dialog.Title
+                              as="h3"
+                              className="text-2xl md:text-3xl font-bold mb-2"
+                            >
+                              {selectedBlog.title}
+                            </Dialog.Title>
+                            <div className="flex items-center gap-2">
+                              <img
+                                src={selectedBlog.author.image}
+                                alt={selectedBlog.author.name}
+                                className="w-8 h-8 rounded-full"
+                              />
+                              <span className="text-sm font-medium">
+                                {selectedBlog.author.name}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Content Area */}
+                        <div className="p-6 md:p-8">
+                          <div className="prose dark:prose-invert max-w-none">
+                            <p className="text-lg mb-4">{selectedBlog.excerpt}</p>
+                            
+                            {/* Expanded content */}
+                            <div className="space-y-4">
+                              <p>In this comprehensive guide, we explore practical techniques to help you manage daily stressors and improve your mental wellbeing. These methods have been clinically proven to reduce anxiety and promote relaxation.</p>
+                              
+                              <h3 className="text-xl font-bold text-reviva-purple dark:text-reviva-mint mt-6 mb-3">
+                                Understanding {selectedBlog.category}
+                              </h3>
+                              <p>Before diving into solutions, it's important to understand what {selectedBlog.category.toLowerCase()} really is and how it affects both mind and body.</p>
+                              
+                              <h3 className="text-xl font-bold text-reviva-purple dark:text-reviva-mint mt-6 mb-3">
+                                Practical Techniques
+                              </h3>
+                              <ul className="list-disc pl-5 space-y-2">
+                                <li>Deep breathing exercises to calm the nervous system</li>
+                                <li>Cognitive behavioral techniques to reframe negative thoughts</li>
+                                <li>Mindfulness practices to stay present</li>
+                                <li>Physical exercises that reduce stress hormones</li>
+                                <li>Dietary adjustments that support mental health</li>
+                              </ul>
+                              
+                              <h3 className="text-xl font-bold text-reviva-purple dark:text-reviva-mint mt-6 mb-3">
+                                Case Study
+                              </h3>
+                              <p>Sarah, a 32-year-old marketing executive, struggled with {selectedBlog.category.toLowerCase()} for years before implementing these techniques. Within 8 weeks, she reported a 60% reduction in symptoms.</p>
+                            </div>
+                          </div>
+
+                          {/* Action Buttons */}
+                          <div className="mt-8 flex items-center justify-between border-t border-reviva-mint/30 dark:border-white/10 pt-6">
+                            <div className="flex items-center gap-3">
+                              <button
+                                className={`p-2 rounded-full hover:bg-reviva-mint/20 transition-colors flex items-center gap-1 ${
+                                  likedPosts.includes(selectedBlog.id)
+                                    ? 'text-red-500'
+                                    : 'text-reviva-charcoal dark:text-white'
+                                }`}
+                                onClick={() => {
+                                  handleLike(selectedBlog.id);
+                                  toast.success(
+                                    likedPosts.includes(selectedBlog.id)
+                                      ? "Removed from favorites"
+                                      : "Added to favorites"
+                                  );
+                                }}
+                              >
+                                <Heart
+                                  size={20}
+                                  className={
+                                    likedPosts.includes(selectedBlog.id)
+                                      ? 'fill-current'
+                                      : ''
+                                  }
+                                />
+                                <span className="text-sm">Save</span>
+                              </button>
+                              <button
+                                className="p-2 rounded-full hover:bg-reviva-mint/20 transition-colors flex items-center gap-1 text-reviva-charcoal dark:text-white"
+                                onClick={() => {
+                                  handleShare(selectedBlog.title);
+                                  toast.success(`Sharing "${selectedBlog.title}"`);
+                                }}
+                              >
+                                <Share2 size={20} />
+                                <span className="text-sm">Share</span>
+                              </button>
+                            </div>
+                            <button
+                              className="reviva-button"
+                              onClick={() => {
+                                // This would link to the full article page in a real implementation
+                                toast.info(`Opening full article: ${selectedBlog.title}`);
+                                closeBlogModal();
+                              }}
+                            >
+                              Continue Reading
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </Dialog.Panel>
+                </Transition.Child>
+              </div>
+            </div>
+          </Dialog>
+        </Transition>
       </main>
 
       <Footer />
