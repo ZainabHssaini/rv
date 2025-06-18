@@ -1,55 +1,115 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Search, Filter, Users, Star, Clock, Flame } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import Navbar from '@/components/Navbar';
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from '@/lib/firebase';
 
 const ExploreProjectsPage = () => {
   const [activeFilter, setActiveFilter] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
+    const mockprojects = [
+  {
+    id: 1,
+    name: 'EcoDelivery Network',
+    description: 'Sustainable last-mile delivery solution using electric vehicles',
+    category: 'Sustainability',
+    skills: ['Logistics', 'EV Tech', 'App Development'],
+    popularity: 95,
+    createdAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(), // 2 days ago
+    isTrending: true
+  },
+  {
+    id: 2,
+    name: 'HealthAI Companion',
+    description: 'AI-powered personal health assistant with predictive analytics',
+    category: 'Health Tech',
+    skills: ['Machine Learning', 'Mobile Dev', 'UI/UX'],
+    popularity: 88,
+    createdAt: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(), // 1 week ago
+    isTrending: true
+  },
+  {
+    id: 3,
+    name: 'EduPlay Platform',
+    description: 'Gamified learning platform for K-12 education',
+    category: 'EdTech',
+    skills: ['Game Dev', 'Education', 'Frontend'],
+    popularity: 76,
+    createdAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(), // 3 days ago
+    isTrending: false
+  },
+  {
+    id: 4,
+    name: 'SmartFarm IoT',
+    description: 'IoT solution for precision agriculture and crop monitoring',
+    category: 'AgriTech',
+    skills: ['IoT', 'Data Science', 'Hardware'],
+    popularity: 82,
+    createdAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(), // 5 days ago
+    isTrending: false
+  }
+];
 
-  const projects = [
-    {
-      id: 1,
-      name: 'EcoDelivery Network',
-      description: 'Sustainable last-mile delivery solution using electric vehicles',
-      category: 'Sustainability',
-      skills: ['Logistics', 'EV Tech', 'App Development'],
-      popularity: 95,
-      recency: '2 days ago',
-      isTrending: true
-    },
-    {
-      id: 2,
-      name: 'HealthAI Companion',
-      description: 'AI-powered personal health assistant with predictive analytics',
-      category: 'Health Tech',
-      skills: ['Machine Learning', 'Mobile Dev', 'UI/UX'],
-      popularity: 88,
-      recency: '1 week ago',
-      isTrending: true
-    },
-    {
-      id: 3,
-      name: 'EduPlay Platform',
-      description: 'Gamified learning platform for K-12 education',
-      category: 'EdTech',
-      skills: ['Game Dev', 'Education', 'Frontend'],
-      popularity: 76,
-      recency: '3 days ago',
-      isTrending: false
-    },
-    {
-      id: 4,
-      name: 'SmartFarm IoT',
-      description: 'IoT solution for precision agriculture and crop monitoring',
-      category: 'AgriTech',
-      skills: ['IoT', 'Data Science', 'Hardware'],
-      popularity: 82,
-      recency: '5 days ago',
-      isTrending: false
+    // const mockprojects = [];
+
+const [projects, setProjects] = useState<any[]>(mockprojects);
+
+
+ function getRecency(createdAt: string): string {
+  const createdDate = new Date(createdAt);
+  const now = new Date();
+  const diffMs = now.getTime() - createdDate.getTime();
+
+  const seconds = Math.floor(diffMs / 1000);
+  const minutes = Math.floor(diffMs / (1000 * 60));
+  const hours = Math.floor(diffMs / (1000 * 60 * 60));
+  const days = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+  const weeks = Math.floor(days / 7);
+  const months = Math.floor(days / 30);
+  const years = Math.floor(days / 365);
+
+  if (seconds < 60) {
+    return "just now";
+  } else if (minutes < 60) {
+    return `${minutes} minute${minutes > 1 ? "s" : ""} ago`;
+  } else if (hours < 24) {
+    return `${hours} hour${hours > 1 ? "s" : ""} ago`;
+  } else if (days < 7) {
+    return `${days} day${days > 1 ? "s" : ""} ago`;
+  } else if (weeks < 5) {
+    return `${weeks} week${weeks > 1 ? "s" : ""} ago`;
+  } else if (months < 12) {
+    return `${months} month${months > 1 ? "s" : ""} ago`;
+  } else {
+    return `${years} year${years > 1 ? "s" : ""} ago`;
+  }
+}
+
+
+
+
+
+  useEffect(() => {
+  const fetchProjects = async () => {
+    try {
+      const querySnapshot = await getDocs(collection(db, "projects"));
+      const fetchedProjects: any[] = [];
+      querySnapshot.forEach((doc) => {
+        fetchedProjects.push({ id: doc.id, ...doc.data() });
+      });
+
+      setProjects((prevProjects) => [...prevProjects, ...fetchedProjects]);
+    } catch (error) {
+      console.error("Error fetching projects from Firestore:", error);
     }
-  ];
+  };
+
+  fetchProjects();
+}, []);
+
+
 
   const filteredProjects = projects.filter(project => {
     const matchesFilter = activeFilter === 'all' || 
@@ -148,7 +208,7 @@ const ExploreProjectsPage = () => {
                         <div className="mb-6">
                         <p className="text-sm text-[#279692] mb-2">Skills needed:</p>
                         <div className="flex flex-wrap gap-2">
-                            {project.skills.map((skill) => (
+                            {Array.isArray(project.skills) && project.skills.map((skill) => (
                             <span key={skill} className="px-2 py-1 bg-[#e0f2f1] text-[#10566e] text-xs rounded">
                                 {skill}
                             </span>
@@ -162,8 +222,8 @@ const ExploreProjectsPage = () => {
                             <span>3-5 members</span>
                         </div>
                         <div className="flex items-center">
-                            <Clock className="w-4 h-4 mr-1" />
-                            <span>{project.recency}</span>
+                        <Clock className="w-4 h-4 mr-1" />
+                        <span>{getRecency(project.createdAt)}</span>
                         </div>
                         </div>
                     </div>

@@ -3,9 +3,14 @@ import { Lightbulb, Users, Code, Palette, Rocket, Check } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import Navbar from '@/components/Navbar';
+import { useNavigate } from 'react-router-dom';
+import { toast } from '@/hooks/use-toast';
+import { auth, db } from '@/lib/firebase';
+import { addDoc, collection } from 'firebase/firestore';
 
 const CreateProjectPage = () => {
   const [step, setStep] = useState(1);
+    const navigate = useNavigate(); // Hook for navigation
   const [projectData, setProjectData] = useState({
     name: '',
     description: '',
@@ -23,6 +28,52 @@ const CreateProjectPage = () => {
 
   const handleNext = () => setStep(prev => Math.min(prev + 1, 4));
   const handleBack = () => setStep(prev => Math.max(prev - 1, 1));
+
+    const handleLaunch = async (): Promise<void> => {
+  if (!auth.currentUser) {
+    toast({
+      title: "Authentication Required",
+      description: "You must be logged in to launch a project.",
+    });
+    return;
+  }
+
+  const user = auth.currentUser;
+
+  console.log("Current User:", user);
+
+  const completeProjectData = {
+  ...projectData,
+  popularity: 0,          // Valeur initiale par défaut
+  isTrending: false,      // À ajuster selon ta logique métier
+  createdBy: {
+    uid: user.uid,
+    email: user.email,
+    displayName: user.displayName || "",
+  },
+  createdAt: new Date().toISOString(),
+};
+
+    console.log("Complete Project Data:", completeProjectData);
+
+  try {
+    await addDoc(collection(db, "projects"), completeProjectData);
+
+    toast({
+      title: "Project Launched",
+      description: "Your project has been successfully launched!",
+    });
+
+    navigate("/exploreProject");
+  } catch (error) {
+    console.error("Error adding project:", error);
+    toast({
+      title: "Error",
+      description: "Could not launch project. Please try again.",
+    });
+  }
+};
+
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#f0f9fa] to-[#e0f2f1]">
@@ -165,7 +216,9 @@ const CreateProjectPage = () => {
                     Continue 
                 </Button>
                 ) : (
-                <Button className="bg-gradient-to-r from-[#1d858d] to-[#10566e]">
+                <Button className="bg-gradient-to-r from-[#1d858d] to-[#10566e]"
+                    onClick={handleLaunch}
+                >
                     <Rocket className="w-5 h-5 mr-2" />
                     Launch Project
                 </Button>
