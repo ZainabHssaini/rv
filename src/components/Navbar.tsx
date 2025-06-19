@@ -91,7 +91,7 @@ const Navbar = () => {
               Blogs & Podcasts
               <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-reviva-teal group-hover:w-full transition-all duration-300 rounded-full"></span>
             </a>
-            <a to="/parents" className="text-reviva-charcoal dark:text-white hover:text-reviva-teal dark:hover:text-reviva-mint transition-colors relative group">
+            <a href="/parents" className="text-reviva-charcoal dark:text-white hover:text-reviva-teal dark:hover:text-reviva-mint transition-colors relative group">
               Espace Parents
               <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-reviva-teal group-hover:w-full transition-all duration-300 rounded-full"></span>
             </a>
