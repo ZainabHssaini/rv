@@ -15,100 +15,310 @@ const blogPosts = [
     image: 'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
     category: 'Anxiety',
     date: 'May 11, 2023',
-    readTime: '5',
-    title: 'Anxiety Management Techniques',
-    excerpt: 'Discover practical strategies to manage anxiety in everyday situations, from breathing exercises to cognitive reframing techniques that can help reduce stress.',
+    readTime: '8',
+    title: 'Comprehensive Guide to Anxiety Management',
+    excerpt: 'Evidence-based techniques to manage anxiety disorders, panic attacks, and daily stressors with practical exercises.',
     content: `
-      <h2 class="text-xl font-bold mb-3">Understanding Anxiety</h2>
-      <p class="mb-4">Anxiety is a natural response to stress but can become overwhelming. These techniques can help you regain control.</p>
+      <h2 class="text-2xl font-bold mb-4 text-reviva-teal">Understanding Anxiety Disorders</h2>
+      <p class="mb-4 text-gray-700">Anxiety affects 40 million adults worldwide. While normal in moderation, chronic anxiety can impair daily functioning.</p>
       
-      <h3 class="text-lg font-semibold mb-2">Breathing Exercises</h3>
-      <p class="mb-4">The 4-7-8 technique: Inhale for 4 seconds, hold for 7 seconds, exhale for 8 seconds. Repeat 5 times.</p>
+      <div class="bg-reviva-mint/10 p-4 rounded-lg mb-6">
+        <h3 class="text-xl font-semibold mb-3 text-reviva-purple">The Science Behind Anxiety</h3>
+        <p class="mb-3">Anxiety triggers the amygdala, activating the "fight or flight" response. Cortisol and adrenaline flood the body, causing physical symptoms:</p>
+        <ul class="list-disc pl-5 space-y-2 mb-4">
+          <li>Rapid heartbeat (tachycardia)</li>
+          <li>Shortness of breath (dyspnea)</li>
+          <li>Muscle tension and tremors</li>
+          <li>Gastrointestinal distress</li>
+        </ul>
+      </div>
+
+      <h3 class="text-xl font-semibold mb-3 text-reviva-purple">Clinical Techniques</h3>
       
-      <h3 class="text-lg font-semibold mb-2">Cognitive Reframing</h3>
-      <p class="mb-4">Challenge negative thoughts by examining evidence for and against them. Ask yourself: "Is this thought realistic?"</p>
-      
-      <h3 class="text-lg font-semibold mb-2">Grounding Techniques</h3>
-      <p class="mb-4">Use the 5-4-3-2-1 method: Name 5 things you see, 4 things you feel, 3 things you hear, 2 things you smell, 1 thing you taste.</p>
+      <div class="grid md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-100">
+          <h4 class="font-bold mb-2">1. Cognitive Behavioral Therapy (CBT)</h4>
+          <p>Challenge cognitive distortions using the 3Cs:</p>
+          <ol class="list-decimal pl-5 mt-2 space-y-1">
+            <li><strong>Catch</strong> the negative thought</li>
+            <li><strong>Check</strong> its validity</li>
+            <li><strong>Change</strong> it to a balanced thought</li>
+          </ol>
+        </div>
+        
+        <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-100">
+          <h4 class="font-bold mb-2">2. Exposure Therapy</h4>
+          <p>Gradual exposure hierarchy:</p>
+          <ul class="list-disc pl-5 mt-2 space-y-1">
+            <li>Create fear ladder (0-100 scale)</li>
+            <li>Start with 30-40 level exposures</li>
+            <li>Use relaxation techniques during</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3 class="text-xl font-semibold mb-3 text-reviva-purple">Emergency Techniques</h3>
+      <div class="bg-red-50 p-4 rounded-lg mb-6 border border-red-100">
+        <h4 class="font-bold text-red-700 mb-2">For Panic Attacks</h4>
+        <p class="mb-3">The 5-4-3-2-1 Grounding Method:</p>
+        <table class="w-full border-collapse">
+          <thead class="bg-red-100">
+            <tr>
+              <th class="p-2 text-left">Step</th>
+              <th class="p-2 text-left">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border-b border-red-100">
+              <td class="p-2">5</td>
+              <td class="p-2">Things you can see</td>
+            </tr>
+            <tr class="border-b border-red-100">
+              <td class="p-2">4</td>
+              <td class="p-2">Things you can touch</td>
+            </tr>
+            <tr class="border-b border-red-100">
+              <td class="p-2">3</td>
+              <td class="p-2">Things you can hear</td>
+            </tr>
+            <tr>
+              <td class="p-2">2</td>
+              <td class="p-2">Things you can smell</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     `,
     author: {
       name: 'Dr. Karim Moussaoui',
+      credentials: 'PhD, Clinical Psychology',
+      bio: 'Specialized in anxiety disorders with 15 years clinical experience',
       image: 'https://randomuser.me/api/portraits/men/22.jpg'
-    }
+    },
+    references: [
+      'American Psychological Association (2022)',
+      'Journal of Clinical Psychology (2021)'
+    ]
   },
   {
     id: 'blog2',
     image: 'https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
     category: 'Relationships',
     date: 'May 12, 2023',
-    readTime: '6',
-    title: 'Building Healthy Relationships',
-    excerpt: 'Learn the foundations of healthy relationships, including effective communication, setting boundaries, and nurturing trust with partners, family and friends.',
+    readTime: '10',
+    title: 'The Psychology of Healthy Relationships',
+    excerpt: 'Evidence-based strategies for building secure attachments and resolving conflicts in romantic and platonic relationships.',
     content: `
-      <h2 class="text-xl font-bold mb-3">Communication is Key</h2>
-      <p class="mb-4">Active listening and expressing needs clearly are essential for healthy relationships.</p>
+      <h2 class="text-2xl font-bold mb-4 text-reviva-teal">Attachment Theory Fundamentals</h2>
+      <p class="mb-4 text-gray-700">Our early bonds shape relationship patterns. The three primary attachment styles:</p>
       
-      <h3 class="text-lg font-semibold mb-2">Active Listening</h3>
-      <p class="mb-4">Practice reflective listening by paraphrasing what your partner says: "What I hear you saying is..."</p>
+      <div class="grid md:grid-cols-3 gap-4 mb-6">
+        <div class="bg-white p-4 rounded-lg shadow-sm border border-reviva-mint">
+          <h4 class="font-bold text-reviva-purple mb-2">Secure (55%)</h4>
+          <p class="text-sm">Comfortable with intimacy and autonomy</p>
+        </div>
+        <div class="bg-white p-4 rounded-lg shadow-sm border border-amber-100">
+          <h4 class="font-bold text-amber-700 mb-2">Anxious (20%)</h4>
+          <p class="text-sm">Seeks excessive closeness</p>
+        </div>
+        <div class="bg-white p-4 rounded-lg shadow-sm border border-red-100">
+          <h4 class="font-bold text-red-700 mb-2">Avoidant (25%)</h4>
+          <p class="text-sm">Distances emotionally</p>
+        </div>
+      </div>
+
+      <h3 class="text-xl font-semibold mb-3 text-reviva-purple">Communication Techniques</h3>
       
-      <h3 class="text-lg font-semibold mb-2">Setting Boundaries</h3>
-      <p class="mb-4">Clearly communicate your limits using "I" statements: "I feel... when... because..."</p>
+      <div class="mb-6">
+        <h4 class="font-bold mb-2">Nonviolent Communication (NVC)</h4>
+        <p class="mb-3">The 4-step OFNR model:</p>
+        <ol class="list-decimal pl-5 space-y-2">
+          <li><strong>Observation</strong>: "When I see the dishes piled up..."</li>
+          <li><strong>Feeling</strong>: "I feel overwhelmed..."</li>
+          <li><strong>Need</strong>: "...because I need order to relax"</li>
+          <li><strong>Request</strong>: "Would you be willing to wash them tonight?"</li>
+        </ol>
+      </div>
+
+      <div class="bg-reviva-beige/20 p-4 rounded-lg mb-6">
+        <h4 class="font-bold mb-2">Conflict Resolution</h4>
+        <p class="mb-2">The Gottman Institute's research identifies:</p>
+        <ul class="list-disc pl-5 space-y-1">
+          <li>4 Horsemen to avoid: Criticism, Contempt, Defensiveness, Stonewalling</li>
+          <li>5:1 positive:negative interaction ratio for healthy relationships</li>
+        </ul>
+      </div>
     `,
     author: {
       name: 'Dr. Leila Tazi',
+      credentials: 'PsyD, Couples Therapy',
+      bio: 'Relationships researcher and clinician specializing in multicultural couples',
       image: 'https://randomuser.me/api/portraits/women/23.jpg'
     }
   },
-  // Article en arabe
   {
     id: 'blog-ar1',
     image: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
     category: 'الصحة النفسية',
     date: 'يونيو 1, 2023',
-    readTime: '7',
-    title: 'إدارة التوتر في الحياة اليومية',
-    excerpt: 'اكتشف طرقًا عملية للتعامل مع التوتر في حياتك اليومية باستخدام تقنيات بسيطة وفعالة.',
+    readTime: '12',
+    title: 'العلاج المعرفي السلوكي للقلق',
+    excerpt: 'دليل شامل عن تقنيات العلاج المعرفي السلوكي المثبتة علمياً لإدارة اضطرابات القلق.',
     content: `
-      <h2 class="text-xl font-bold mb-3">فهم التوتر</h2>
-      <p class="mb-4">التوتر هو رد فعل طبيعي ولكن يمكن أن يصبح ساحقًا. هذه التقنيات يمكن أن تساعدك على استعادة السيطرة.</p>
+      <h2 class="text-2xl font-bold mb-4 text-reviva-teal">أسس العلاج المعرفي السلوكي</h2>
+      <p class="mb-4 text-gray-700">يستند هذا العلاج على تغيير أنماط التفكير والسلوك غير المفيدة.</p>
+
+      <div class="bg-reviva-mint/10 p-4 rounded-lg mb-6">
+        <h3 class="text-xl font-semibold mb-3 text-reviva-purple">المكونات الرئيسية</h3>
+        <div class="grid md:grid-cols-2 gap-4">
+          <div class="bg-white p-3 rounded border border-gray-200">
+            <h4 class="font-bold mb-1">الجانب المعرفي</h4>
+            <p class="text-sm">تحديد الأفكار المشوهة</p>
+          </div>
+          <div class="bg-white p-3 rounded border border-gray-200">
+            <h4 class="font-bold mb-1">الجانب السلوكي</h4>
+            <p class="text-sm">تمارين المواجهة التدريجية</p>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="text-xl font-semibold mb-3 text-reviva-purple">تمارين عملية</h3>
       
-      <h3 class="text-lg font-semibold mb-2">تمارين التنفس</h3>
-      <p class="mb-4">تقنية 4-7-8: شهيق لمدة 4 ثوانٍ، حبس النفس لمدة 7 ثوانٍ، زفير لمدة 8 ثوانٍ. كرر 5 مرات.</p>
-      
-      <h3 class="text-lg font-semibold mb-2">التأمل</h3>
-      <p class="mb-4">خصص 10 دقائق يوميًا للجلوس في مكان هادئ والتركيز على تنفسك.</p>
+      <div class="mb-6">
+        <h4 class="font-bold mb-2">سجل الأفكار</h4>
+        <table class="w-full border-collapse mb-4">
+          <thead class="bg-gray-100">
+            <tr>
+              <th class="p-2 text-right border">الموقف</th>
+              <th class="p-2 text-right border">الفكرة</th>
+              <th class="p-2 text-right border">المشاعر</th>
+              <th class="p-2 text-right border">بديل عقلاني</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="p-2 border">اجتماع عمل</td>
+              <td class="p-2 border">"سأفشل بالتأكيد"</td>
+              <td class="p-2 border">قلق 90%</td>
+              <td class="p-2 border">"لقد استعددت جيداً"</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     `,
     author: {
       name: 'د. أمينة العلوي',
+      credentials: 'دكتوراة في علم النفس السريري',
+      bio: 'أخصائية معتمدة في العلاج المعرفي السلوكي',
       image: 'https://randomuser.me/api/portraits/women/40.jpg'
     },
     isArabic: true
   },
   // Article en dialecte marocain
   {
-    id: 'blog-dz1',
-    image: 'https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
-    category: 'الصحة د العقل',
-    date: 'يونيو 5, 2023',
-    readTime: '8',
-    title: 'كيفاش نتعاملو معا الضغط ديال الحياة',
-    excerpt: 'بزاف د الناس كيعانوا من الضغط ديال الحياة اليومية. هاد المقال غادي يعطيك نصائح عملية.',
-    content: `
-      <h2 class="text-xl font-bold mb-3">الضغط ديال الحياة</h2>
-      <p class="mb-4">الضغط هو شيء طبيعي ولكن كيقد يولي مزعج. هاد النصائح غادي تساعدك.</p>
+  id: 'blog-dz1',
+  image: 'https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
+  category: 'الصحة د العقل',
+  date: 'يونيو 5, 2023',
+  readTime: '12',
+  title: 'كيفاش نتعاملو معا الضغط ديال الحياة اليومية',
+  excerpt: 'الضغط ديال الحياة كيتزايد هاد لوقت. هاد المقال غادي يقدم ليك نصائح عملية و تقنيات فعالة باش تقدر تتحكم فيه.',
+  content: `
+    <div class="mb-8">
+      <h2 class="text-2xl font-bold mb-4 text-reviva-teal">شنو هو الضغط (Stress) </h2>
+      <p class="mb-4 text-gray-700">الضغط (Stress) هو رد فعل طبيعي ديال الجسم، ولكن كيقد يصبح خطر على الصحة ديالك إذا دام بزاف.</p>
       
-      <h3 class="text-lg font-semibold mb-2">التنفس</h3>
-      <p class="mb-4">تقنية 4-7-8: تشد النفس 4 دقايق، تحبسو 7 دقايق، تزفر 8 دقايق. كررها 5 مرات.</p>
+      <div class="bg-reviva-mint/10 p-4 rounded-lg mb-6">
+        <h3 class="text-xl font-semibold mb-3 text-reviva-purple">أعراض ديال الضغط المزمن</h3>
+        <ul class="list-disc pr-5 space-y-2">
+          <li>الصداع المتكرر</li>
+          <li>الأرق و صعوبة فالنوم</li>
+          <li>القلق دايما</li>
+          <li>مشاكل فالهضم</li>
+          <li>التعب دائم حتى بعد الراحة</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mb-8">
+      <h2 class="text-2xl font-bold mb-4 text-reviva-teal"> كيفاش تعامل معاه </h2>
       
-      <h3 class="text-lg font-semibold mb-2">المشي</h3>
-      <p class="mb-4">30 دقيقة ديال المشي كل يوم كاتساعد على تخفيف الضغط.</p>
-    `,
-    author: {
-      name: 'د. يوسف المراكشي',
-      image: 'https://randomuser.me/api/portraits/men/30.jpg'
-    },
-    isArabic: true,
-    isDialect: true
+      <div class="grid md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-100">
+          <h3 class="text-lg font-semibold mb-2 text-reviva-purple">1. تقنية التنفس 4-7-8</h3>
+          <p class="mb-3">هاد التقنية كاتساعد فتهدئة الأعصاب فدقائق:</p>
+          <ol class="list-decimal pr-5 space-y-1">
+            <li>تشد النفس من الأنف (4 ثواني)</li>
+            <li>تحبس النفس (7 ثواني)</li>
+            <li>تزفر من الفم (8 ثواني)</li>
+          </ol>
+          <p class="mt-2 text-sm text-gray-600">كررها 5 مرات فاليوم أو وقت الضيق</p>
+        </div>
+        
+        <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-100">
+          <h3 class="text-lg font-semibold mb-2 text-reviva-purple">2. المشي العلاجي</h3>
+          <p class="mb-2">30 دقيقة ديال المشي كل يوم كاتفرز هرمونات السعادة:</p>
+          <ul class="list-disc pr-5 space-y-1">
+            <li>المشي فالصباح كايدير معاك اليوم</li>
+            <li>اختيار أماكن خضراء (الحدائق)</li>
+            <li>المشي ببطء مع التنفس العميق</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="mb-8">
+      <h2 class="text-2xl font-bold mb-4 text-reviva-teal">النظام الغذائي المضاد للضغط</h2>
+      
+      <div class="bg-reviva-beige/20 p-4 rounded-lg mb-6">
+        <h3 class="text-xl font-semibold mb-3 text-reviva-purple">أطعمة تخفف الضغط</h3>
+        <div class="grid md:grid-cols-3 gap-4">
+          <div class="bg-white p-3 rounded border border-gray-200">
+            <h4 class="font-bold mb-1">الموز</h4>
+            <p class="text-sm">غني بالبوتاسيوم و المغنيسيوم</p>
+          </div>
+          <div class="bg-white p-3 rounded border border-gray-200">
+            <h4 class="font-bold mb-1">الشوكولاتة السوداء</h4>
+            <p class="text-sm">تحتوي على مضادات الأكسدة</p>
+          </div>
+          <div class="bg-white p-3 rounded border border-gray-200">
+            <h4 class="font-bold mb-1">اللوز</h4>
+            <p class="text-sm">فيتامين E و الزنك</p>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="text-xl font-semibold mb-3 text-reviva-purple">أطعمة تتجنبها</h3>
+      <ul class="list-disc pr-5 space-y-2 mb-4">
+        <li>الكافيين بزاف (قهوة، شاي)</li>
+        <li>السكريات المصنعة</li>
+        <li>الأكلات السريعة</li>
+      </ul>
+    </div>
+
+    <div class="bg-blue-50 p-4 rounded-lg mb-6 border border-blue-100">
+      <h3 class="text-xl font-semibold mb-3 text-blue-700">حالة طوارئ: كيفاش تتصرف وقت الأزمة؟</h3>
+      <p class="mb-3">إذا حسيت بضغط قوي أو هجمة قلق:</p>
+      <ol class="list-decimal pr-5 space-y-2">
+        <li>غير المكان (اخرج للهواء الطلق)</li>
+        <li>ركز على 5 أشياء كاتسمع و 5 أشياء كاتشوف</li>
+        <li>اتصل بصديق مقرب</li>
+        <li>اشرب ماية باردة</li>
+      </ol>
+    </div>
+  `,
+  author: {
+    name: 'د. يوسف المراكشي',
+    credentials: 'أخصائي فالصحة النفسية',
+    bio: 'خبير فالتعامل مع الضغط و القلق عند المغاربة',
+    image: 'https://randomuser.me/api/portraits/men/30.jpg'
+  },
+  references: [
+    'دراسات جامعة محمد الخامس - الرباط',
+    'منظمة الصحة العالمية 2022'
+  ],
+  isArabic: true,
+  isDialect: true
   }
 ];
 
@@ -366,7 +576,7 @@ const BlogsPodcastsPage = () => {
                           onClick={() => openBlogModal(featuredPost)}
                         >
                           Read More
-                        </button>
+                        </button> 
                       </div>
                     </div>
                   </div>

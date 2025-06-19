@@ -6,8 +6,9 @@ const Welcome = () => {
   const floatingCirclesRef = useRef(null);
   const [showLearnMore, setShowLearnMore] = useState(false);
   const [user, setUser] = useState<{ firstname: string; lastname: string } | null>(null);
-  
+
   useEffect(() => {
+
     // Get user data
     const userData = localStorage.getItem('user');
     if (userData) {
@@ -20,7 +21,6 @@ const Welcome = () => {
       }
     }
 
-    // Floating circles animation
     if (!floatingCirclesRef.current) return;
     
     const circles = floatingCirclesRef.current.querySelectorAll('.floating-circle');
@@ -43,102 +43,113 @@ const Welcome = () => {
   };
 
   return (
-    <section className="min-h-screen pt-32 pb-12 md:pt-48 md:pb-24 relative overflow-hidden">
+    <section 
+      className="min-h-screen pt-32 pb-12 md:pt-48 md:pb-24 relative overflow-hidden"
+      style={{
+        backgroundImage: "url('image/design-removebg.png')",
+        backgroundSize: "50% auto",
+        backgroundPosition: "left center",
+        backgroundRepeat: "no-repeat",
+        backgroundAttachment: "fixed"
+      }}
+    >
+      {/* Overlay to reduce background image intensity */}
+      <div className="absolute inset-0 bg-white/80 z-0"></div>
+      
       <div className="absolute top-0 right-0 w-1/3 h-1/2 bg-reviva-mint/30 rounded-bl-full -z-300 blur-3xl animate-pulse-gentle"></div>
       <div className="absolute bottom-0 left-0 w-1/4 h-1/3 bg-reviva-beige/40 rounded-tr-full -z-10 blur-3xl animate-pulse-gentle" style={{ animationDelay: '2s' }}></div>
       
-      <div className="container mx-auto px-4 md:px-6">
+      <div className="container mx-auto px-4 md:px-6 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="space-y-6 animate-fade-in">
 
-<motion.div 
-  className="relative mb-8 p-6 bg-gradient-to-r from-[#10566e]/10 to-[#1d858d]/10 rounded-xl border-l-4 border-[#279692]"
-  initial={{ opacity: 0, x: -20 }}
-  animate={{ 
-    opacity: 1, 
-    x: 0,
-    transition: {
-      type: "spring",
-      stiffness: 300,
-      damping: 10
-    }
-  }}
->
- 
-  {/* Bubble accents */}
-  {[...Array(3)].map((_, i) => (
-    <motion.div
-      key={i}
-      className={`absolute rounded-full bg-[#1b6d80] opacity-20`}
-      style={{
-        width: `${5 + i * 3}px`,
-        height: `${5 + i * 3}px`,
-        left: `${10 + i * 15}%`,
-        top: `${20 + i * 10}%`
-      }}
-      animate={{
-        y: [0, -15, 0],
-        opacity: [0.2, 0.4, 0.2]
-      }}
-      transition={{
-        duration: 5 + i,
-        repeat: Infinity,
-        ease: "easeInOut",
-        delay: i * 0.5
-      }}
-    />
-  ))}
+            <motion.div 
+              className="relative mb-8 p-6 bg-gradient-to-r from-[#10566e]/10 to-[#1d858d]/10 rounded-xl border-l-4 border-[#279692]"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ 
+                opacity: 1, 
+                x: 0,
+                transition: {
+                  type: "spring",
+                  stiffness: 300,
+                  damping: 10
+                }
+              }}
+            >
+            
+              {/* Bubble accents */}
+              {[...Array(3)].map((_, i) => (
+                <motion.div
+                  key={i}
+                  className={`absolute rounded-full bg-[#1b6d80] opacity-20`}
+                  style={{
+                    width: `${5 + i * 3}px`,
+                    height: `${5 + i * 3}px`,
+                    left: `${10 + i * 15}%`,
+                    top: `${20 + i * 10}%`
+                  }}
+                  animate={{
+                    y: [0, -15, 0],
+                    opacity: [0.2, 0.4, 0.2]
+                  }}
+                  transition={{
+                    duration: 5 + i,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                    delay: i * 0.5
+                  }}
+                />
+              ))}
 
-  {/* Left-aligned content */}
-  <div className="relative z-10 text-left">
-    <h2 className="text-3xl font-semibold">
-      <motion.span 
-        className="inline-block mr-2"
-        animate={{
-          rotate: [0, 15, -15, 0],
-          scale: [1, 1.3, 1.3, 1],
-          y: [0, -5, 5, 0]
-        }}
-        transition={{
-          duration: 2,
-          repeat: Infinity,
-          ease: "easeInOut"
-        }}
-      >
-        ✨
-      </motion.span>
-      
-      <motion.span 
-        className="bg-gradient-to-r from-[#279692] to-[#35a79b] bg-clip-text text-transparent"
-        initial={{ x: -20 }}
-        animate={{ x: 0 }}
-        transition={{ 
-          delay: 0.3,
-          duration: 0.6
-        }}
-      >
-        Welcome,
-      </motion.span>
-      
-      <motion.span 
-        className="text-[#10566e] font-bold ml-2"
-        initial={{ x: 20 }}
-        animate={{ x: 0 }}
-        transition={{ 
-          delay: 0.5,
-          duration: 0.6
-        }}
-      >
-        {user ? `${user.firstname}` : 'Cher Utilisateur'}!
-      </motion.span>
-    </h2>
-  </div>
-</motion.div>
+              {/* Left-aligned content */}
+              <div className="relative z-10 text-left">
+                <h2 className="text-3xl font-semibold">
+                  <motion.span 
+                    className="inline-block mr-2"
+                    animate={{
+                      rotate: [0, 15, -15, 0],
+                      scale: [1, 1.3, 1.3, 1],
+                      y: [0, -5, 5, 0]
+                    }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                      ease: "easeInOut"
+                    }}
+                  >
+                    ✨
+                  </motion.span>
+                  
+                  <motion.span 
+                    className="bg-gradient-to-r from-[#279692] to-[#35a79b] bg-clip-text text-transparent"
+                    initial={{ x: -20 }}
+                    animate={{ x: 0 }}
+                    transition={{ 
+                      delay: 0.3,
+                      duration: 0.6
+                    }}
+                  >
+                    Welcome,
+                  </motion.span>
+                  
+                  <motion.span 
+                    className="text-[#10566e] font-bold ml-2"
+                    initial={{ x: 20 }}
+                    animate={{ x: 0 }}
+                    transition={{ 
+                      delay: 0.5,
+                      duration: 0.6
+                    }}
+                  >
+                    {user ? `${user.firstname}` : 'Cher Utilisateur'}!
+                  </motion.span>
+                </h2>
+              </div>
+            </motion.div>
 
             <div className="inline-block px-3 py-1 rounded-full bg-reviva-mint/30 text-reviva-deep-teal text-sm font-medium">
               Mental Health & Well-Being
             </div>
-            
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-reviva-purple leading-tight">
               Your Journey to <span className="text-reviva-teal">Mental Wellness</span> Starts Here
             </h1>

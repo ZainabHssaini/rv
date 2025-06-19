@@ -310,16 +310,6 @@ useEffect(() => {
               <Card className="p-6">
                 <div className="flex justify-between items-center mb-6">
                   <h3 className="text-xl font-bold text-gray-800">Recent Discussions</h3>
-                  <div className="flex gap-2">
-                    <Button variant="outline" size="sm">
-                      <TrendingUp className="w-4 h-4 mr-2" />
-                      Popular
-                    </Button>
-                    <Button variant="outline" size="sm">
-                      <Search className="w-4 h-4 mr-2" />
-                      Search
-                    </Button>
-                  </div>
                 </div>
 
                 <div className="space-y-4">
