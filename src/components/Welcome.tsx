@@ -51,23 +51,89 @@ const Welcome = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="space-y-6 animate-fade-in">
 
-            {/* Enhanced Welcome Message - Corrected with single parent */}
-            <motion.div 
-              className="mb-4"
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-            >
-              <h2 className="text-3xl font-semibold">
-                <span className="inline-block mr-2 animate-wiggle">✨</span>
-                <span className="bg-gradient-to-r from-reviva-teal to-reviva-mint bg-clip-text text-transparent">
-                  Bienvenue, 
-                </span>
-                <span className="text-reviva-purple font-bold ml-2">
-                  {user ? `${user.firstname}` : 'Cher Utilisateur'}!
-                </span>
-              </h2>
-            </motion.div>
+<motion.div 
+  className="relative mb-8 p-6 bg-gradient-to-r from-[#10566e]/10 to-[#1d858d]/10 rounded-xl border-l-4 border-[#279692]"
+  initial={{ opacity: 0, x: -20 }}
+  animate={{ 
+    opacity: 1, 
+    x: 0,
+    transition: {
+      type: "spring",
+      stiffness: 300,
+      damping: 10
+    }
+  }}
+>
+ 
+  {/* Bubble accents */}
+  {[...Array(3)].map((_, i) => (
+    <motion.div
+      key={i}
+      className={`absolute rounded-full bg-[#1b6d80] opacity-20`}
+      style={{
+        width: `${5 + i * 3}px`,
+        height: `${5 + i * 3}px`,
+        left: `${10 + i * 15}%`,
+        top: `${20 + i * 10}%`
+      }}
+      animate={{
+        y: [0, -15, 0],
+        opacity: [0.2, 0.4, 0.2]
+      }}
+      transition={{
+        duration: 5 + i,
+        repeat: Infinity,
+        ease: "easeInOut",
+        delay: i * 0.5
+      }}
+    />
+  ))}
+
+  {/* Left-aligned content */}
+  <div className="relative z-10 text-left">
+    <h2 className="text-3xl font-semibold">
+      <motion.span 
+        className="inline-block mr-2"
+        animate={{
+          rotate: [0, 15, -15, 0],
+          scale: [1, 1.3, 1.3, 1],
+          y: [0, -5, 5, 0]
+        }}
+        transition={{
+          duration: 2,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+      >
+        ✨
+      </motion.span>
+      
+      <motion.span 
+        className="bg-gradient-to-r from-[#279692] to-[#35a79b] bg-clip-text text-transparent"
+        initial={{ x: -20 }}
+        animate={{ x: 0 }}
+        transition={{ 
+          delay: 0.3,
+          duration: 0.6
+        }}
+      >
+        Welcome,
+      </motion.span>
+      
+      <motion.span 
+        className="text-[#10566e] font-bold ml-2"
+        initial={{ x: 20 }}
+        animate={{ x: 0 }}
+        transition={{ 
+          delay: 0.5,
+          duration: 0.6
+        }}
+      >
+        {user ? `${user.firstname}` : 'Cher Utilisateur'}!
+      </motion.span>
+    </h2>
+  </div>
+</motion.div>
 
             <div className="inline-block px-3 py-1 rounded-full bg-reviva-mint/30 text-reviva-deep-teal text-sm font-medium">
               Mental Health & Well-Being
