@@ -13,7 +13,7 @@ const PetGamePage = () => {
     animation, challenges, completeChallenge,
     rewards, redeemReward, feed, play, rest,
     levelUp, showLevelUp, setShowLevelUp,
-    petPosition, unlockedRewards
+    petPosition
   } = usePetGame();
   
   const [selectedChallenge, setSelectedChallenge] = useState<string | null>(null);
