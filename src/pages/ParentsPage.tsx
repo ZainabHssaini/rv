@@ -17,29 +17,29 @@ const ParentsPage = () => {
   const psychologists = [
     {
       id: 1,
-      name: "Dr. Amina Benali",
+      name: "Dr. Ihssan Yousfi",
       specialty: "Adolescent Psychology",
-      image: "https://randomuser.me/api/portraits/women/40.jpg",
+      image: "/image/ihssan.jpeg",
       rating: 4.9,
       reviews: 156,
-      price: 150,
+      price: 100,
       languages: ["English", "Darija", "French"]
     },
     {
       id: 2,
-      name: "Dr. Karim Moussaoui",
-      specialty: "Family Therapy",
-      image: "https://randomuser.me/api/portraits/men/22.jpg",
+      name: "Dr. Mohamed Bourhim",
+      specialty: "Family&Child Therapy",
+      image: "/image/mohamed.jpeg",
       rating: 4.8,
       reviews: 142,
-      price: 180,
+      price: 150,
       languages: ["English", "Darija"]
     },
     {
       id: 3,
-      name: "Dr. Leila Tazi",
+      name: "Dr. Touria Laghrib   ",
       specialty: "Parent-Child Communication",
-      image: "https://randomuser.me/api/portraits/women/23.jpg",
+      image: "/image/Touria.jpeg",
       rating: 4.9,
       reviews: 189,
       price: 160,

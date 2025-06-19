@@ -100,10 +100,12 @@ const RevivaSolution = () => {
             transition={{ duration: 0.8 }}
             className="text-center mb-16"
           >
-            <div className="inline-flex items-center justify-center mb-4">
-              <Sparkles className="text-reviva-purple mr-2" size={24} />
-              <span className="text-lg font-medium text-reviva-purple">Innovation Ecosystem</span>
-            </div>
+          <div className="inline-flex items-center justify-center mb-4">
+  <Sparkles className="text-[#FFD700] mr-2" size={24} />
+  <span className="text-lg font-bold text-reviva-purple">REVIVE YOURSELF — from darkness to purpose</span>
+  <Sparkles className="text-[#FFD700] ml-2" size={24} />
+</div>
+
             
             <h1 className="text-5xl md:text-6xl font-bold mb-6">
               <span className="text-4xl md:text-5xl font-bold text-reviva-purple mb-4">Mental Wellness </span>

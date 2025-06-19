@@ -14,9 +14,8 @@ const BankTransfer = () => {
   const navigate = useNavigate();
 
   const ribInfo = {
-    bankName: "FRVIVA",
-    iban: "FR76 3000 3000 1100 0000 0123 456",
-    bic: "FRVIFR21XXX",
+    bankName: "Société Générale",
+    iban: "022 450 0003160027931962 53",
     accountHolder: "REVIVA SAS",
     address: "Av. Ibn Sina, Agdal 10090 Rabat"
   };

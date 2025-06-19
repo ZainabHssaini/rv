@@ -1,7 +1,6 @@
-
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import { Calendar, Video, MessageSquare, CheckCircle, Star, Users, MapPin } from 'lucide-react';
+import { Calendar, Video, MessageSquare, CheckCircle, Star, Users, ChevronDown, ChevronUp } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import MeetButton from '@/components/MeetButton';
@@ -18,10 +17,22 @@ type Therapist = {
   nextAvailable: boolean;
 };
 
+type SupportGroup = {
+  id: number;
+  title: string;
+  description: string;
+  members: number;
+  nextSession: string;
+  topics: string[];
+  meetLink: string;
+};
+
 const TherapyPage = () => {
   const [activeTab, setActiveTab] = useState<'individual' | 'group'>('individual');
+  const [displayedTherapists, setDisplayedTherapists] = useState<Therapist[]>([]);
+  const [showAllTherapists, setShowAllTherapists] = useState(false);
   
-  const therapists: any[] = [
+  const allTherapists: Therapist[] = [
     {
       id: 1,
       lastname: "Dr. Yousfi",
@@ -30,34 +41,89 @@ const TherapyPage = () => {
       specialties: ["Anxiety", "Depression", "Trauma"],
       rating: 4.9,
       numberOfSessions: 324,
-      image: "/reviva/woman (1).png" ,
+      image: "/reviva/woman (1).png",
       nextAvailable: true
     },
     {
       id: 2,
-      lastname: "Dr.hakour",
+      lastname: "Dr. Hakour",
       firstname: "Sami",
       title: "Psychiatrist",
       specialties: ["Mood Disorders", "Medication Management", "Anxiety"],
       rating: 4.8,
       numberOfSessions: 287,
-      image: "/reviva/man.png" ,
+      image: "/reviva/man.png",
       nextAvailable: true
     },
     {
       id: 3,
-      lastname: "Dr.EL Bouchikhi",
+      lastname: "Dr. El Bouchikhi",
       firstname: "Inass",
       title: "Family Therapist",
       specialties: ["Relationships", "Family Counseling", "Couples Therapy"],
       rating: 4.7,
       numberOfSessions: 198,
-      image: "/reviva/woman (1).png" ,
+      image: "/reviva/woman (1).png",
+      nextAvailable: false
+    },
+    {
+      id: 4,
+      lastname: "Dr. Benjelloun",
+      firstname: "Karim",
+      title: "Cognitive Behavioral Therapist",
+      specialties: ["OCD", "Phobias", "Stress Management"],
+      rating: 4.8,
+      numberOfSessions: 156,
+      image: "/reviva/man.png",
+      nextAvailable: true
+    },
+    {
+      id: 5,
+      lastname: "Dr. El Mansouri",
+      firstname: "Fatima",
+      title: "Child Psychologist",
+      specialties: ["ADHD", "Autism", "Childhood Trauma"],
+      rating: 4.9,
+      numberOfSessions: 210,
+      image: "/reviva/woman (1).png",
+      nextAvailable: false
+    },
+    {
+      id: 6,
+      lastname: "Dr. Alaoui",
+      firstname: "Mehdi",
+      title: "Addiction Specialist",
+      specialties: ["Substance Abuse", "Behavioral Addictions", "Relapse Prevention"],
+      rating: 4.7,
+      numberOfSessions: 187,
+      image: "/reviva/man.png",
+      nextAvailable: true
+    },
+    {
+      id: 7,
+      lastname: "Dr. Zahidi",
+      firstname: "Amina",
+      title: "Psychoanalyst",
+      specialties: ["Personality Disorders", "Self-Esteem", "Identity Issues"],
+      rating: 4.6,
+      numberOfSessions: 132,
+      image: "/reviva/woman (1).png",
+      nextAvailable: true
+    },
+    {
+      id: 8,
+      lastname: "Dr. Cherkaoui",
+      firstname: "Omar",
+      title: "Trauma Specialist",
+      specialties: ["PTSD", "EMDR", "Grief Counseling"],
+      rating: 4.9,
+      numberOfSessions: 245,
+      image: "/reviva/man.png",
       nextAvailable: false
     }
   ];
-  
-  const supportGroups = [
+
+  const supportGroups: SupportGroup[] = [
     {
       id: 1,
       title: "Anxiety Support Circle",
@@ -88,13 +154,12 @@ const TherapyPage = () => {
   ];
 
   useEffect(() => {
-    console.log('Sending therapists data to the server...');
+    setDisplayedTherapists(allTherapists.slice(0, 3));
     sendTherapistsData();
   }, []);
 
   const sendTherapistsData = async () => {
-    for(let t of therapists){
-        console.log(JSON.stringify(t))
+    for(let t of allTherapists){
       try {
         const response = await fetch('http://localhost:8082/therapists/new', {
           method: 'POST',
@@ -110,23 +175,27 @@ const TherapyPage = () => {
         console.error(error);
       }
     }
-  };  
+  };
 
-
-  const getAllData = async () => {
-    console.log('Fetching all therapists data...');
-    try {
-      const response = await fetch('http://localhost:8082/therapists/');
-      const data = await response.json();
-      console.log(data);
-      for(let t of data){
-        therapists.push(t);
+  const toggleTherapistsView = async () => {
+    if (showAllTherapists) {
+      setDisplayedTherapists(allTherapists.slice(0, 3));
+      setShowAllTherapists(false);
+    } else {
+      try {
+        const response = await fetch('http://localhost:8082/therapists/');
+        if (response.ok) {
+          const backendTherapists = await response.json();
+          setDisplayedTherapists([...allTherapists, ...backendTherapists]);
+        } else {
+          setDisplayedTherapists(allTherapists);
+        }
+        setShowAllTherapists(true);
+      } catch (error) {
+        console.error(error);
+        setDisplayedTherapists(allTherapists);
+        setShowAllTherapists(true);
       }
-
-
-      console.log(therapists);
-    } catch (error) {
-      console.error(error);
     }
   };
 
@@ -180,7 +249,6 @@ const TherapyPage = () => {
                   >
                     Book Your First Session
                   </button>
-
                 </div>
                 <div className="md:w-1/2 relative min-h-[300px]">
                   <img 
@@ -227,7 +295,7 @@ const TherapyPage = () => {
                   </h2>
                   
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {therapists.map((therapist) => (
+                    {displayedTherapists.map((therapist) => (
                       <div key={therapist.id} className="glass-card dark:glass-card-dark rounded-xl overflow-hidden hover:shadow-lg transition-all duration-300 animate-scale-in">
                         <div className="relative">
                           <img 
@@ -279,14 +347,14 @@ const TherapyPage = () => {
                           </div>
                           
                           <div className="flex items-center gap-2 mt-4">
-                          <Link
-                            to="/book"
-                            state={{ therapist }} // Bien passer l'objet complet
-                            className="px-4 py-2 bg-reviva-teal text-white rounded-lg flex items-center gap-2"
-                          >
-                            <Video className="h-4 w-4" />
-                            Book Video
-                          </Link>
+                            <Link
+                              to="/book"
+                              state={{ therapist }}
+                              className="px-4 py-2 bg-reviva-teal text-white rounded-lg flex items-center gap-2"
+                            >
+                              <Video className="h-4 w-4" />
+                              Book Video
+                            </Link>
                             
                             <Link 
                               to="/chat" 
@@ -302,8 +370,21 @@ const TherapyPage = () => {
                   </div>
                   
                   <div className="text-center mt-8">
-                    <button onClick={getAllData} className="px-6 py-3 bg-white dark:bg-reviva-charcoal border border-reviva-teal text-reviva-teal rounded-lg font-medium hover:bg-reviva-mint/10 transition-colors">
-                      View All Therapists
+                    <button 
+                      onClick={toggleTherapistsView}
+                      className="px-6 py-3 bg-white dark:bg-reviva-charcoal border border-reviva-teal text-reviva-teal rounded-lg font-medium hover:bg-reviva-mint/10 transition-colors flex items-center justify-center mx-auto gap-2"
+                    >
+                      {showAllTherapists ? (
+                        <>
+                          <ChevronUp className="h-5 w-5" />
+                          Show Less
+                        </>
+                      ) : (
+                        <>
+                          <ChevronDown className="h-5 w-5" />
+                          View All Therapists
+                        </>
+                      )}
                     </button>
                   </div>
                 </div>
