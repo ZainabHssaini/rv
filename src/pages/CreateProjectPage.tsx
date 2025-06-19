@@ -10,6 +10,8 @@ import { addDoc, collection } from 'firebase/firestore';
 
 const CreateProjectPage = () => {
   const [step, setStep] = useState(1);
+  const [loading, setLoading] = useState(false);
+
     const navigate = useNavigate(); // Hook for navigation
   const [projectData, setProjectData] = useState({
     name: '',
@@ -29,7 +31,7 @@ const CreateProjectPage = () => {
   const handleNext = () => setStep(prev => Math.min(prev + 1, 4));
   const handleBack = () => setStep(prev => Math.max(prev - 1, 1));
 
-    const handleLaunch = async (): Promise<void> => {
+const handleLaunch = async (): Promise<void> => {
   if (!auth.currentUser) {
     toast({
       title: "Authentication Required",
@@ -39,22 +41,19 @@ const CreateProjectPage = () => {
   }
 
   const user = auth.currentUser;
-
-  console.log("Current User:", user);
-
   const completeProjectData = {
-  ...projectData,
-  popularity: 0,          // Valeur initiale par défaut
-  isTrending: false,      // À ajuster selon ta logique métier
-  createdBy: {
-    uid: user.uid,
-    email: user.email,
-    displayName: user.displayName || "",
-  },
-  createdAt: new Date().toISOString(),
-};
+    ...projectData,
+    popularity: 0,
+    isTrending: false,
+    createdBy: {
+      uid: user.uid,
+      email: user.email,
+      displayName: user.displayName || "",
+    },
+    createdAt: new Date().toISOString(),
+  };
 
-    console.log("Complete Project Data:", completeProjectData);
+  setLoading(true); // Start loading
 
   try {
     await addDoc(collection(db, "projects"), completeProjectData);
@@ -71,8 +70,11 @@ const CreateProjectPage = () => {
       title: "Error",
       description: "Could not launch project. Please try again.",
     });
+  } finally {
+    setLoading(false); // Stop loading
   }
 };
+
 
 
   return (
@@ -216,12 +218,26 @@ const CreateProjectPage = () => {
                     Continue 
                 </Button>
                 ) : (
-                <Button className="bg-gradient-to-r from-[#1d858d] to-[#10566e]"
-                    onClick={handleLaunch}
-                >
-                    <Rocket className="w-5 h-5 mr-2" />
-                    Launch Project
-                </Button>
+                <Button
+  className="bg-gradient-to-r from-[#1d858d] to-[#10566e]"
+  onClick={handleLaunch}
+  disabled={loading}
+>
+  {loading ? (
+    <>
+      <svg className="animate-spin h-4 w-4 mr-2 text-white" viewBox="0 0 24 24">
+        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
+      </svg>
+      Launching...
+    </>
+  ) : (
+    <>
+      <Rocket className="w-5 h-5 mr-2" />
+      Launch Project
+    </>
+  )}
+</Button>
                 )}
             </div>
             </Card>
