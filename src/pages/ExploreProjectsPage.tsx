@@ -246,6 +246,7 @@ const [projects, setProjects] = useState<any[]>(mockprojects);
                 )}
             </div>
         </div>
+        
     </div>
   );
 };
