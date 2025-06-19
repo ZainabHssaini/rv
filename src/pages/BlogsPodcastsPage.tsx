@@ -897,15 +897,6 @@ const BlogsPodcastsPage = () => {
                                 <span className="text-sm">Share</span>
                               </button>
                             </div>
-                            <button
-                              className="reviva-button"
-                              onClick={() => {
-                                toast.info(`Opening full article: ${selectedBlog.title}`);
-                                closeBlogModal();
-                              }}
-                            >
-                              Continue Reading
-                            </button>
                           </div>
                         </div>
                       </div>

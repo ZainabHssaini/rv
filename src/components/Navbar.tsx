@@ -91,10 +91,10 @@ const Navbar = () => {
               Blogs & Podcasts
               <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-reviva-teal group-hover:w-full transition-all duration-300 rounded-full"></span>
             </a>
-            <Link to="/parents" className="text-reviva-charcoal dark:text-white hover:text-reviva-teal dark:hover:text-reviva-mint transition-colors relative group">
+            <a to="/parents" className="text-reviva-charcoal dark:text-white hover:text-reviva-teal dark:hover:text-reviva-mint transition-colors relative group">
               Espace Parents
               <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-reviva-teal group-hover:w-full transition-all duration-300 rounded-full"></span>
-            </Link>
+            </a>
             <a href="/sol" className="text-reviva-charcoal dark:text-white hover:text-reviva-teal dark:hover:text-reviva-mint transition-colors relative group">
               Reviva Solutions
               <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-reviva-teal group-hover:w-full transition-all duration-300 rounded-full"></span>
@@ -156,6 +156,8 @@ const Navbar = () => {
               <Link to="/mood-tracker" className="text-reviva-charcoal dark:text-white hover:text-reviva-teal dark:hover:text-reviva-mint transition-colors pl-4" onClick={() => setIsMobileMenuOpen(false)}>Mood Tracker</Link>
               <Link to="/chatbot" className="text-reviva-charcoal dark:text-white hover:text-reviva-teal dark:hover:text-reviva-mint transition-colors pl-4" onClick={() => setIsMobileMenuOpen(false)}>AI Chatbot</Link>
               <Link to="/blogs-podcasts" className="text-reviva-charcoal dark:text-white hover:text-reviva-teal dark:hover:text-reviva-mint transition-colors pl-4" onClick={() => setIsMobileMenuOpen(false)}>Blogs & Podcasts</Link>
+              <Link to="/parents" className="text-reviva-charcoal dark:text-white hover:text-reviva-teal dark:hover:text-reviva-mint transition-colors pl-4" onClick={() => setIsMobileMenuOpen(false)}>Espace Parent</Link>
+              <Link to="/sol" className="text-reviva-charcoal dark:text-white hover:text-reviva-teal dark:hover:text-reviva-mint transition-colors pl-4" onClick={() => setIsMobileMenuOpen(false)}>Reviva Solutions</Link>
               
               {isLoggedIn ? (
                 <button

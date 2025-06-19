@@ -311,9 +311,6 @@ const handleViewDetails = (project: any) => {
                           >
                             Close
                           </Button>
-                          <Button className="bg-[#1d858d] hover:bg-[#10566e]">
-                            Join Project
-                          </Button>
                         </div>
                       </div>
                     </DialogContent>

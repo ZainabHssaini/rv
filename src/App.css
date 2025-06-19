@@ -67,3 +67,13 @@
 .animate-bounce-x {
   animation: bounce-x 1s infinite;
 }
+
+@media (max-width: 640px) {
+  .form-container {
+    padding: 1rem;
+    margin: 0.5rem;
+  }
+  input, select {
+    font-size: 16px; /* Empêche le zoom sur iOS */
+  }
+}
