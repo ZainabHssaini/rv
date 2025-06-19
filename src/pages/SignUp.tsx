@@ -24,6 +24,7 @@ const SignUp = () => {
     const lastname = fullname.slice(1).join(" ");
     const email = data.email;
     const password = data.password;
+    const gender = data.gender;
 
     try {
       // 1. Create user with Firebase Auth
@@ -36,6 +37,7 @@ const SignUp = () => {
         firstname,
         lastname,
         email,
+        gender,
         createdAt: new Date().toISOString(),
       };
 
@@ -154,6 +156,27 @@ const SignUp = () => {
               <p className="text-red-500 text-sm mt-1">{errors.password.message as string}</p>
             )}
           </div>
+          <div>
+          <label className="block text-sm font-medium text-reviva-charcoal mb-2">
+            Gender
+          </label>
+          <select
+            {...register('gender', { required: 'Gender is required' })}
+            className={`w-full px-4 py-3 rounded-lg border ${
+              errors.gender ? 'border-red-500' : 'border-gray-200'
+            } focus:border-reviva-teal focus:ring-2 focus:ring-reviva-teal/30`}
+            defaultValue=""
+          >
+            <option value="" disabled>
+              Select your gender
+            </option>
+            <option value="male">Homme</option>
+            <option value="female">Femme</option>
+          </select>
+          {errors.gender && (
+            <p className="text-red-500 text-sm mt-1">{errors.gender.message as string}</p>
+          )}
+        </div>
 
           <button
             type="submit"

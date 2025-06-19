@@ -5,11 +5,14 @@ import { ArrowRight, Brain, Heart, Shield } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast"; // Importer le hook useToast
 
 const Navbar = () => {
+  const user = JSON.parse(localStorage.getItem('user') || '{}'); // Récupérer l'utilisateur du localStorage
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false); // État pour vérifier si l'utilisateur est connecté
   const navigate = useNavigate(); // Hook pour la redirection
   const { toast } = useToast(); // Initialiser la fonction toast 
+  const userProfileImage = user?.photoURL || "/default-avatar.png";
+
 
   // Vérifier si un utilisateur est enregistré dans le localStorage au chargement du composant
   useEffect(() => {
@@ -92,14 +95,27 @@ const Navbar = () => {
             <div className="flex items-center gap-8">
               {isLoggedIn ? (
                 // Afficher "Sign Out" si l'utilisateur est connecté
-                <button
-                  onClick={handleSignOut}
-                  className="ml-auto px-5 py-2 rounded-full bg-gradient-to-r from-reviva-teal to-reviva-mint text-white font-medium 
-                            text-reviva-charcoal hover:text-reviva-teal
-                            hover:bg-white transition-colors border border-reviva-white shadow-lg hover:shadow-xl"
-                >
-                  Sign Out
-                </button>
+                <div className="flex items-center gap-4">
+                  <button
+                    onClick={handleSignOut}
+                    className="px-5 py-2 rounded-full bg-gradient-to-r from-reviva-teal to-reviva-mint text-white font-medium 
+                              text-reviva-charcoal hover:text-reviva-teal
+                              hover:bg-white transition-colors border border-reviva-white shadow-lg hover:shadow-xl"
+                  >
+                    Sign Out
+                  </button>
+                  <img
+                    src={
+                      user?.photoURL
+                        ? user.photoURL
+                        : user?.gender === "female"
+                        ? "/female avatar.jpg"
+                        : "/male avatar.png"
+                    }
+                    alt="User Profile"
+                    className="h-10 w-10 rounded-full border-2 border-reviva-teal object-cover"
+                  />
+                                </div>
               ) : (
                 // Afficher "Sign In" si l'utilisateur n'est pas connecté
                 <Link 
