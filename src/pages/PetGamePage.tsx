@@ -419,64 +419,8 @@ const PetGamePage = () => {
                 </motion.div>
               )}
 
-              {activeTab === 'unlocked' && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  transition={{ duration: 0.2 }}
-                  key="unlocked"
-                >
-                  <h2 className="text-2xl font-bold text-reviva-purple mb-4 text-center">
-                    My Unlocked Rewards
-                  </h2>
-                  <p className="text-reviva-charcoal/80 dark:text-white/80 mb-8 max-w-2xl mx-auto text-center">
-                    Here are all the rewards you've earned so far
-                  </p>
-                  
-                  {unlockedRewards.length === 0 ? (
-                    <div className="text-center py-8">
-                      <div className="inline-flex items-center justify-center p-4 bg-gray-100 dark:bg-gray-800 rounded-full mb-4">
-                        <Gift className="h-8 w-8 text-gray-400" />
-                      </div>
-                      <p className="text-gray-500 dark:text-gray-400">
-                        You haven't unlocked any rewards yet. Complete challenges to earn points!
-                      </p>
-                    </div>
-                  ) : (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                      {unlockedRewards.map((rewardId) => {
-                        const reward = rewards.find(r => r.id === rewardId);
-                        if (!reward) return null;
-                        
-                        return (
-                          <motion.div 
-                            key={reward.id} 
-                            className="glass-card dark:glass-card-dark p-4 rounded-xl border-2 border-reviva-teal/30"
-                            initial={{ scale: 0.9 }}
-                            animate={{ scale: 1 }}
-                          >
-                            <div className="p-3 bg-green-100 dark:bg-green-900/30 rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-3">
-                              {reward.icon === 'Star' && <Star className="h-6 w-6 text-green-600 dark:text-green-400" />}
-                              {reward.icon === 'Award' && <Award className="h-6 w-6 text-purple-600 dark:text-purple-400" />}
-                              {reward.icon === 'Gift' && <Gift className="h-6 w-6 text-blue-600 dark:text-blue-400" />}
-                            </div>
-                            <h3 className="font-medium text-reviva-deep-teal text-center">{reward.title}</h3>
-                            <p className="text-sm text-reviva-charcoal/80 dark:text-white/80 mb-3 text-center">
-                              {reward.description}
-                            </p>
-                            <div className="text-center">
-                              <span className="text-xs px-3 py-1 bg-green-100 text-green-600 dark:bg-green-900/30 dark:text-green-400 rounded-full">
-                                Unlocked!
-                              </span>
-                            </div>
-                          </motion.div>
-                        );
-                      })}
-                    </div>
-                  )}
-                </motion.div>
-              )}
+             
+            
             </AnimatePresence>
           </div>
         </div>
