@@ -17,8 +17,13 @@ const SignUp = () => {
   const [user, setUser] = useState(null); 
   const navigate = useNavigate(); // Hook for navigation
   const { toast } = useToast(); // Initialize the toast function
+  const [loading, setLoading] = useState(false);
+
 
   const onSubmit = async (data: any) => {
+    setLoading(true); // Activation du loading
+
+
     let fullname: string[] = data.fullName.trim().split(" ");
     const firstname = fullname[0];
     const lastname = fullname.slice(1).join(" ");
@@ -71,6 +76,9 @@ const SignUp = () => {
       });
     }
     }
+    finally {
+    setLoading(false); // Désactivation du loading
+  }
   };
 
   return (
@@ -179,14 +187,24 @@ const SignUp = () => {
         </div>
 
           <button
-            type="submit"
-            className="w-full bg-reviva-teal text-white py-3 px-6 rounded-lg font-semibold
-                     hover:bg-reviva-deep-teal transition-colors duration-200
-                     flex items-center justify-center gap-2"
-          >
-            <User size={18} />
-            Create Account
-          </button>
+  type="submit"
+  className="w-full bg-reviva-teal text-white py-3 px-6 rounded-lg font-semibold
+           hover:bg-reviva-deep-teal transition-colors duration-200
+           flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+  disabled={loading}
+>
+  {loading ? (
+    <>
+      <span className="animate-spin rounded-full h-4 w-4 border-t-2 border-white border-opacity-50"></span>
+      Creating...
+    </>
+  ) : (
+    <>
+      <User size={18} />
+      Create Account
+    </>
+  )}
+</button>
 
           <p className="text-center text-sm text-reviva-charcoal/70 mt-4">
             Already have an account?{' '}
