@@ -28,11 +28,23 @@ const Hero = () => {
   };
 
   return (
-    <section className="min-h-screen pt-32 pb-12 md:pt-48 md:pb-24 relative overflow-hidden">
+    <section 
+      className="min-h-screen pt-32 pb-12 md:pt-48 md:pb-24 relative overflow-hidden"
+      style={{
+        backgroundImage: "url('image/design-removebg.png')",
+        backgroundSize: "50% auto",
+        backgroundPosition: "left center",
+        backgroundRepeat: "no-repeat",
+        backgroundAttachment: "fixed"
+      }}
+    >
+      {/* Overlay to reduce background image intensity */}
+      <div className="absolute inset-0 bg-white/80 z-0 "></div>
+      
       <div className="absolute top-0 right-0 w-1/3 h-1/2 bg-reviva-mint/30 rounded-bl-full -z-300 blur-3xl animate-pulse-gentle"></div>
       <div className="absolute bottom-0 left-0 w-1/4 h-1/3 bg-reviva-beige/40 rounded-tr-full -z-10 blur-3xl animate-pulse-gentle" style={{ animationDelay: '2s' }}></div>
       
-      <div className="container mx-auto px-4 md:px-6">
+      <div className="container mx-auto px-4 md:px-6 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="space-y-6 animate-fade-in">
             <div className="inline-block px-3 py-1 rounded-full bg-reviva-mint/30 text-reviva-deep-teal text-sm font-medium">
@@ -97,8 +109,6 @@ const Hero = () => {
                       simply looking to enhance your mental wellbeing, Reviva is here for you.
                     </p>
                   </div>
-                  
-                  
                 </div>
               </div>
             )}

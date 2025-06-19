@@ -25,39 +25,39 @@ const Community = () => {
   const [discussions, setDiscussions] = useState<any[]>([
   {
     id: 1,
-    title: "How to manage stress during a hackathon?",
-    author: "Marie L.",
-    replies: 12,
-    category: "Wellness",
-    time: "2h ago",
-    isHot: true
-  },
-  {
-    id: 2,
-    title: "Looking for a web development mentor",
-    author: "Thomas K.",
-    replies: 5,
-    category: "Mentorship",
-    time: "4h ago",
-    isHot: false
-  },
-  {
-    id: 3,
-    title: "Experience sharing: My first ideathon",
-    author: "Sarah M.",
-    replies: 18,
-    category: "Experience",
-    time: "6h ago",
-    isHot: true
-  },
-  {
-    id: 4,
-    title: "Recommended tools for project management",
-    author: "Alex P.",
-    replies: 25,
-    category: "Resources",
-    time: "1d ago",
-    isHot: false
+      title: "Comment gérer le stress pendant un hackathon ?",
+      author: "Marie L.",
+      replies: 12,
+      category: "Question",
+      time: "il y a 2h",
+      isHot: true
+    },
+    {
+      id: 2,
+      title: "Recherche mentor en développement web",
+      author: "Thomas K.",
+      replies: 5,
+      category: "Question",
+      time: "il y a 4h",
+      isHot: false
+    },
+    {
+      id: 3,
+      title: "Partage d'expérience : Mon premier ideathon",
+      author: "Sarah M.",
+      replies: 18,
+      category: "Expérience",
+      time: "il y a 6h",
+      isHot: true
+    },
+    {
+      id: 4,
+      title: "Outils recommandés pour la gestion de projet",
+      author: "Alex P.",
+      replies: 25,
+      category: "Idée",
+      time: "il y a 1j",
+      isHot: false
   }
 ]);
 
@@ -187,14 +187,13 @@ interface Event {
 
   const getCategoryColor = (category: string) => {
     switch (category) {
-      case "Wellness": return "bg-green-100 text-green-800";
-      case "Mentorship": return "bg-blue-100 text-blue-800";
-      case "Experience": return "bg-purple-100 text-purple-800";
-      case "Resources": return "bg-orange-100 text-orange-800";
+      case "Question": return "bg-blue-100 text-blue-800";
+      case "Idée": return "bg-yellow-100 text-yellow-800";
+      case "Expérience": return "bg-purple-100 text-purple-800";
       default: return "bg-gray-100 text-gray-800";
     }
   };
-
+  
   const downloadResource = (fileUrl: string, fileName: string) => {
   // Create a temporary anchor element
   const link = document.createElement('a');
