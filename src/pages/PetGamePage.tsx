@@ -8,8 +8,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 const PetGamePage = () => {
   const { 
     petName, setPetName,
-    happiness, hunger, energy,
-    points, level, streak,
+    happiness, setHappiness, hunger, setHunger, energy, setEnergy,
+    points, setPoints, level, setLevel, streak, setStreak,
     animation, challenges, completeChallenge,
     rewards, redeemReward, feed, play, rest,
     levelUp, showLevelUp, setShowLevelUp,
@@ -61,6 +61,16 @@ const PetGamePage = () => {
     eating: { scale: [1, 1.05, 1], transition: { repeat: Infinity, duration: 0.5 } },
     sleeping: { opacity: 0.7, y: 0 }
   };
+
+  useEffect(() => {
+  localStorage.setItem("happiness", happiness.toString());
+  localStorage.setItem("hunger", hunger.toString());
+  localStorage.setItem("energy", energy.toString());
+  localStorage.setItem("points", points.toString());
+  localStorage.setItem("level", level.toString());
+}, [happiness, hunger, energy, points, level]);
+
+
 
   return (
     <div className="min-h-screen bg-white dark:bg-reviva-charcoal">

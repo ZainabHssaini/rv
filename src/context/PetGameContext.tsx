@@ -63,11 +63,11 @@ export const PetGameProvider: React.FC<{ children: ReactNode }> = ({ children })
 
   const [id, setId] = useState(null);
   const [petName, setPetName] = useState("Whiskers");
-  const [happiness, setHappiness] = useState(70);
-  const [hunger, setHunger] = useState(60);
-  const [energy, setEnergy] = useState(80);
-  const [points, setPoints] = useState(120);
-  const [level, setLevel] = useState(1);
+  const [happiness, setHappiness] = useState(() => Number(localStorage.getItem("happiness")) || 70);
+  const [hunger, setHunger] = useState(() => Number(localStorage.getItem("hunger")) || 60);
+  const [energy, setEnergy] = useState(() => Number(localStorage.getItem("energy")) || 80);
+  const [points, setPoints] = useState(() => Number(localStorage.getItem("points")) || 120);
+  const [level, setLevel] = useState(() => Number(localStorage.getItem("level")) || 1);
   const [streak, setStreak] = useState(3);
   const [animation, setAnimation] = useState("");
   const [showLevelUp, setShowLevelUp] = useState(false);
@@ -232,10 +232,13 @@ export const PetGameProvider: React.FC<{ children: ReactNode }> = ({ children })
       setPoints(prev => prev + 5);
       setAnimation("eating");
       
+
+
       toast({
         title: "Action completed!",
         description: "+5 points for feeding your pet!",
       });
+
 
       sendPetData();
       
@@ -253,6 +256,7 @@ export const PetGameProvider: React.FC<{ children: ReactNode }> = ({ children })
       setPoints(prev => prev + 10);
       setAnimation("playing");
       
+
       toast({
         title: "Action completed!",
         description: "+10 points for playing with your pet!",
