@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
@@ -30,6 +30,7 @@ const moodEmojis: Record<Mood, string> = {
 };
 
 const MoodTrackerPage = () => {
+  const [isEditing, setIsEditing] = useState(false);
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedMood, setSelectedMood] = useState<Mood | null>(null);
   const [moodNote, setMoodNote] = useState('');
@@ -61,31 +62,35 @@ const MoodTrackerPage = () => {
   });
   
   const handleSubmitMood = () => {
-    if (!selectedMood) return;
-    
-    const newEntry: MoodEntry = {
-      date: formattedDate,
-      mood: selectedMood,
-      note: moodNote,
-      timeOfDay: timeOfDay,
-    };
-    
-    const entryIndex = recentEntries.findIndex(entry => entry.date === formattedDate);
-    
-    if (entryIndex >= 0) {
-      const updatedEntries = [...recentEntries];
-      updatedEntries[entryIndex] = newEntry;
-      setRecentEntries(updatedEntries);
-    } else {
-      setRecentEntries([...recentEntries, newEntry]);
-    }
-    
-    setSelectedMood(null);
-    setMoodNote('');
-    
-    setShowSuccessMessage(true);
-    setTimeout(() => setShowSuccessMessage(false), 3000);
+  if (!selectedMood) return;
+
+  const newEntry: MoodEntry = {
+    date: formattedDate,
+    mood: selectedMood,
+    note: moodNote,
+    timeOfDay,
   };
+
+  const entryIndex = recentEntries.findIndex(entry => entry.date === formattedDate);
+  let updatedEntries: MoodEntry[];
+
+  if (entryIndex >= 0) {
+    updatedEntries = [...recentEntries];
+    updatedEntries[entryIndex] = newEntry;
+  } else {
+    updatedEntries = [...recentEntries, newEntry];
+  }
+
+  setRecentEntries(updatedEntries);
+  localStorage.setItem('moodEntries', JSON.stringify(updatedEntries));
+
+  setSelectedMood(null);
+  setMoodNote('');
+  setShowSuccessMessage(true);
+  setIsEditing(false);
+  setTimeout(() => setShowSuccessMessage(false), 3000);
+};
+
   
   const chartData = recentEntries
     .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
@@ -107,6 +112,20 @@ const MoodTrackerPage = () => {
     }
     return null;
   };
+  useEffect(() => {
+  const storedEntries = localStorage.getItem('moodEntries');
+  if (storedEntries) {
+    try {
+      const parsed = JSON.parse(storedEntries);
+      if (Array.isArray(parsed)) {
+        setRecentEntries(parsed);
+      }
+    } catch (e) {
+      console.error('Failed to parse mood entries from localStorage:', e);
+    }
+  }
+}, []);
+
   
   const streak = 7;
   
@@ -138,7 +157,7 @@ const MoodTrackerPage = () => {
                 </div>
               </div>
               
-              {todayEntry ? (
+              {todayEntry && !isEditing? (
                 <div className="text-center p-4 bg-reviva-mint/20 dark:bg-reviva-teal/10 rounded-xl mb-6">
                   <div className="text-5xl mb-2">{moodEmojis[todayEntry.mood]}</div>
                   <h3 className="text-lg font-medium text-reviva-deep-teal capitalize mb-1">
@@ -152,15 +171,17 @@ const MoodTrackerPage = () => {
                     "{todayEntry.note}"
                   </p>
                   <button
+                    className="mt-4 text-sm px-3 py-1 bg-reviva-teal text-white rounded-lg"
                     onClick={() => {
                       setSelectedMood(todayEntry.mood);
                       setMoodNote(todayEntry.note);
                       setTimeOfDay(todayEntry.timeOfDay);
+                      setIsEditing(true); // ⬅️ Afficher le formulaire
                     }}
-                    className="mt-4 text-sm px-3 py-1 bg-reviva-teal text-white rounded-lg"
                   >
                     Edit Entry
                   </button>
+
                 </div>
               ) : (
                 <div className="mb-6">

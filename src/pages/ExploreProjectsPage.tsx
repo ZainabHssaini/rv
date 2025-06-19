@@ -295,7 +295,7 @@ const handleViewDetails = (project: any) => {
                         <div>
                           <h3 className="font-medium text-[#1d858d] mb-2">Skills Needed</h3>
                           <div className="flex flex-wrap gap-2">
-                            {selectedProject.skills.map((skill: string) => (
+                            {Array.isArray(selectedProject.skills) && selectedProject.skills.map((skill: string) => (
                               <span key={skill} className="px-2 py-1 bg-[#e0f2f1] text-[#10566e] text-xs rounded">
                                 {skill}
                               </span>
