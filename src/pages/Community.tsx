@@ -88,7 +88,7 @@ const postToFirebase = async (newPost: any) => {
 
     try {
       await postToFirebase(newPost);
-      setDiscussions((prev) => [...prev, newPost]);
+      setDiscussions((prev) => [...prev, newPost].sort((a, b) => Number(b.id) - Number(a.id)));
       console.log("Post submitted");
       toast({
         title: "Post submitted",
@@ -213,15 +213,14 @@ useEffect(() => {
     }));
 
     setDiscussions((prevDiscussions) => {
-      // Extraire les ids existants
-      const existingIds = new Set(prevDiscussions.map(d => d.id));
+  const existingIds = new Set(prevDiscussions.map(d => d.id));
+  const newUniquePosts = firebasePosts.filter(post => !existingIds.has(post.id));
 
-      // Filtrer les posts Firestore pour ne garder que ceux pas dans prevDiscussions
-      const newUniquePosts = firebasePosts.filter(post => !existingIds.has(post.id));
+  // Fusionne et trie du plus récent au plus ancien
+  const allDiscussions = [...prevDiscussions, ...newUniquePosts];
 
-      // Retourner la concaténation (mockées + posts Firestore non dupliqués)
-      return [...prevDiscussions, ...newUniquePosts];
-    });
+  return allDiscussions.sort((a, b) => Number(b.id) - Number(a.id));
+});
   };
 
   fetchDiscussions();
