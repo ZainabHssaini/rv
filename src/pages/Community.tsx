@@ -1,116 +1,152 @@
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
+import { RegisterPopup } from "@/components/RegisterPopup";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import { MessageCircle, Users, BookOpen, Lightbulb, Heart, Search, Plus, TrendingUp, Calendar, MapPin, Clock } from "lucide-react";
+import { useState } from "react";
 
 const Community = () => {
+  const [showPopup, setShowPopup] = useState(false);
+  const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
   const discussions = [
     {
       id: 1,
-      title: "Comment gérer le stress pendant un hackathon ?",
+      title: "How to manage stress during a hackathon?",
       author: "Marie L.",
       replies: 12,
-      category: "Bien-être",
-      time: "il y a 2h",
+      category: "Wellness",
+      time: "2h ago",
       isHot: true
     },
     {
       id: 2,
-      title: "Recherche mentor en développement web",
+      title: "Looking for a web development mentor",
       author: "Thomas K.",
       replies: 5,
-      category: "Mentorat",
-      time: "il y a 4h",
+      category: "Mentorship",
+      time: "4h ago",
       isHot: false
     },
     {
       id: 3,
-      title: "Partage d'expérience : Mon premier ideathon",
+      title: "Experience sharing: My first ideathon",
       author: "Sarah M.",
       replies: 18,
-      category: "Expérience",
-      time: "il y a 6h",
+      category: "Experience",
+      time: "6h ago",
       isHot: true
     },
     {
       id: 4,
-      title: "Outils recommandés pour la gestion de projet",
+      title: "Recommended tools for project management",
       author: "Alex P.",
       replies: 25,
-      category: "Ressources",
-      time: "il y a 1j",
+      category: "Resources",
+      time: "1d ago",
       isHot: false
     }
   ];
-
-  const upcomingEvents = [
+interface Event {
+  id: number;
+  title: string;
+  date: string;
+  time: string;
+  location: string;
+  category: string;
+  participants: number;
+}
+  const upcomingEvents= [
     {
       id: 1,
-      title: "Atelier de Design Thinking",
-      date: "15 Mars 2023",
-      time: "14h - 17h",
-      location: "Espace Innovation, Paris",
-      category: "Atelier",
+      title: "Design Thinking Workshop",
+      date: "March 15, 2023",
+      time: "2PM - 5PM",
+      location: "Innovation Space, Paris",
+      category: "Workshop",
       participants: 24
     },
     {
       id: 2,
-      title: "Hackathon Annuel",
-      date: "22-24 Avril 2023",
-      time: "9h - 19h",
-      location: "Centre de Conférences, Lyon",
-      category: "Compétition",
+      title: "Annual Hackathon",
+      date: "April 22-24, 2023",
+      time: "9AM - 7PM",
+      location: "Conference Center, Lyon",
+      category: "Competition",
       participants: 120
     },
     {
       id: 3,
-      title: "Conférence sur l'IA Générative",
-      date: "5 Mai 2023",
-      time: "18h - 20h",
-      location: "En ligne",
-      category: "Conférence",
+      title: "Generative AI Conference",
+      date: "May 5, 2023",
+      time: "6PM - 8PM",
+      location: "Online",
+      category: "Conference",
       participants: 85
     }
   ];
 
   const resources = [
     {
-      title: "Guide du bien-être en innovation",
+      title: "Innovation Wellness Guide",
       type: "PDF",
       downloads: 1250,
-      category: "Bien-être"
+      category: "Wellness",
+      fileUrl: "/pdfs/PHAB_InnovationGuide_web.pdf"
     },
     {
-      title: "Techniques de brainstorming créatif",
-      type: "Vidéo",
+      title: "Creative Brainstorming Techniques",
+      type: "Video",
       downloads: 890,
-      category: "Créativité"
+      category: "Creativity",
+      fileUrl: "https://www.youtube.com/watch?v=FkvCBUvH6Zc"
     },
     {
-      title: "Template de pitch deck",
+      title: "Pitch Deck Template",
       type: "Template",
       downloads: 2100,
-      category: "Business"
+      category: "Business",
+      fileUrl: "https://pitch.com/templates/collections/Pitch-deck"
     },
     {
-      title: "Checklist pré-hackathon",
-      type: "Liste",
+      title: "Pre-Hackathon Checklist",
+      type: "Checklist",
       downloads: 650,
-      category: "Préparation"
+      category: "Preparation",
+      fileUrl: "https://docs.scs.community/community/hackathons/checklist/"
     }
   ];
+  const handleRegisterClick = (e: React.MouseEvent, event: Event) => {
+      e.preventDefault();
+      setSelectedEvent(event);
+      setShowPopup(true);
+    };
+  
+    const handlePopupClose = () => {
+      setShowPopup(false);
+      setSelectedEvent(null);
+    };
 
   const getCategoryColor = (category: string) => {
     switch (category) {
-      case "Bien-être": return "bg-green-100 text-green-800";
-      case "Mentorat": return "bg-blue-100 text-blue-800";
-      case "Expérience": return "bg-purple-100 text-purple-800";
-      case "Ressources": return "bg-orange-100 text-orange-800";
+      case "Wellness": return "bg-green-100 text-green-800";
+      case "Mentorship": return "bg-blue-100 text-blue-800";
+      case "Experience": return "bg-purple-100 text-purple-800";
+      case "Resources": return "bg-orange-100 text-orange-800";
       default: return "bg-gray-100 text-gray-800";
     }
   };
+
+  const downloadResource = (fileUrl: string, fileName: string) => {
+  // Create a temporary anchor element
+  const link = document.createElement('a');
+  link.href = fileUrl;
+  link.download = fileName || 'download.pdf';
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+};
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
@@ -120,13 +156,13 @@ const Community = () => {
           {/* Hero Section */}
           <div className="text-center mb-12 animate-fade-in">
             <h1 className="text-4xl md:text-5xl font-bold mb-6">
-              <span className="text-gray-800">Communauté </span>
+              <span className="text-gray-800">Interactive </span>
               <span className="bg-gradient-to-r from-[#35a79b] to-[#279692] bg-clip-text text-transparent">
-                Interactive
+                Community
               </span>
             </h1>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              Échangez, apprenez et grandissez ensemble dans notre communauté bienveillante d'innovateurs
+              Exchange, learn and grow together in our welcoming community of innovators
             </p>
           </div>
 
@@ -134,19 +170,19 @@ const Community = () => {
           <div className="grid md:grid-cols-4 gap-6 mb-12">
             <Card className="p-6 text-center">
               <div className="text-3xl font-bold text-[#35a79b] mb-2">2,847</div>
-              <div className="text-gray-600">Membres actifs</div>
+              <div className="text-gray-600">Active members</div>
             </Card>
             <Card className="p-6 text-center">
               <div className="text-3xl font-bold text-[#35a79b] mb-2">156</div>
-              <div className="text-gray-600">Discussions aujourd'hui</div>
+              <div className="text-gray-600">Discussions today</div>
             </Card>
             <Card className="p-6 text-center">
               <div className="text-3xl font-bold text-[#35a79b] mb-2">43</div>
-              <div className="text-gray-600">Mentors disponibles</div>
+              <div className="text-gray-600">Available mentors</div>
             </Card>
             <Card className="p-6 text-center">
               <div className="text-3xl font-bold text-[#35a79b] mb-2">1,250</div>
-              <div className="text-gray-600">Ressources partagées</div>
+              <div className="text-gray-600">Shared resources</div>
             </Card>
           </div>
 
@@ -155,10 +191,10 @@ const Community = () => {
             <div className="lg:col-span-2 space-y-8">
               {/* New Post Section */}
               <Card className="p-6">
-                <h3 className="text-xl font-bold text-gray-800 mb-4">Partager avec la communauté</h3>
+                <h3 className="text-xl font-bold text-gray-800 mb-4">Share with the community</h3>
                 <div className="space-y-4">
                   <Textarea 
-                    placeholder="Posez une question, partagez votre expérience ou demandez des conseils..."
+                    placeholder="Ask a question, share your experience or seek advice..."
                     className="min-h-[100px]"
                   />
                   <div className="flex justify-between items-center">
@@ -169,16 +205,16 @@ const Community = () => {
                       </Button>
                       <Button variant="outline" size="sm">
                         <Lightbulb className="w-4 h-4 mr-2" />
-                        Idée
+                        Idea
                       </Button>
                       <Button variant="outline" size="sm">
                         <Heart className="w-4 h-4 mr-2" />
-                        Expérience
+                        Experience
                       </Button>
                     </div>
                     <Button className="bg-[#35a79b] hover:bg-[#279692] text-white">
                       <Plus className="w-4 h-4 mr-2" />
-                      Publier
+                      Post
                     </Button>
                   </div>
                 </div>
@@ -187,15 +223,15 @@ const Community = () => {
               {/* Discussions */}
               <Card className="p-6">
                 <div className="flex justify-between items-center mb-6">
-                  <h3 className="text-xl font-bold text-gray-800">Discussions récentes</h3>
+                  <h3 className="text-xl font-bold text-gray-800">Recent Discussions</h3>
                   <div className="flex gap-2">
                     <Button variant="outline" size="sm">
                       <TrendingUp className="w-4 h-4 mr-2" />
-                      Populaires
+                      Popular
                     </Button>
                     <Button variant="outline" size="sm">
                       <Search className="w-4 h-4 mr-2" />
-                      Rechercher
+                      Search
                     </Button>
                   </div>
                 </div>
@@ -214,11 +250,11 @@ const Community = () => {
                             )}
                           </div>
                           <div className="flex items-center gap-4 text-sm text-gray-600">
-                            <span>Par {discussion.author}</span>
+                            <span>By {discussion.author}</span>
                             <span>{discussion.time}</span>
                             <span className="flex items-center gap-1">
                               <MessageCircle className="w-4 h-4" />
-                              {discussion.replies} réponses
+                              {discussion.replies} replies
                             </span>
                           </div>
                         </div>
@@ -232,7 +268,7 @@ const Community = () => {
 
                 <div className="text-center mt-6">
                   <Button variant="outline" className="border-[#35a79b] text-[#35a79b] hover:bg-[#35a79b] hover:text-white">
-                    Voir toutes les discussions
+                    View all discussions
                   </Button>
                 </div>
               </Card>
@@ -240,11 +276,11 @@ const Community = () => {
 
             {/* Sidebar */}
             <div className="space-y-6">
-              {/* Événements à Venir - Nouvelle Section */}
+              {/* Upcoming Events Section */}
               <Card className="p-6">
                 <h3 className="text-lg font-bold text-gray-800 mb-4 flex items-center">
                   <Calendar className="w-5 h-5 mr-2 text-[#35a79b]" />
-                  Événements à Venir
+                  Upcoming Events
                 </h3>
                 <div className="space-y-4">
                   {upcomingEvents.map((event) => (
@@ -266,8 +302,8 @@ const Community = () => {
                           </div>
                         </div>
                         <span className={`px-2 py-1 rounded-full text-xs ${
-                          event.category === "Atelier" ? "bg-blue-100 text-blue-800" :
-                          event.category === "Compétition" ? "bg-purple-100 text-purple-800" :
+                          event.category === "Workshop" ? "bg-blue-100 text-blue-800" :
+                          event.category === "Competition" ? "bg-purple-100 text-purple-800" :
                           "bg-green-100 text-green-800"
                         }`}>
                           {event.category}
@@ -275,37 +311,51 @@ const Community = () => {
                       </div>
                       <div className="flex justify-between items-center mt-3">
                         <span className="text-sm text-gray-500">
-                          {event.participants} participants inscrits
+                          {event.participants} registered participants
                         </span>
-                        <Button size="sm" className="bg-[#35a79b] hover:bg-[#279692] text-white">
-                          S'inscrire
+                        <Button size="sm" className="bg-[#35a79b] hover:bg-[#279692] text-white"
+                        onClick={(e) => handleRegisterClick(e, event)}
+                        >
+                          Register
                         </Button>
+                        
                       </div>
                     </div>
                   ))}
                 </div>
-                <a href = "/sol/Marathon">
+                <a href="/sol/Marathon">
                   <Button variant="outline" className="w-full mt-4 border-[#35a79b] text-[#35a79b] hover:bg-[#35a79b] hover:text-white">
-                    Voir tous les événements
+                    View all events
                   </Button>
                 </a>
               </Card>
+              {/* Register Popup - placed outside the main content */}
+              {showPopup && selectedEvent && (
+                <RegisterPopup 
+                  event={selectedEvent}
+                  onClose={handlePopupClose} 
+                />
+              )}
 
               {/* Resources Section */}
               <Card className="p-6">
                 <h3 className="text-lg font-bold text-gray-800 mb-4 flex items-center">
                   <BookOpen className="w-5 h-5 mr-2 text-[#35a79b]" />
-                  Ressources Populaires
+                  Popular Resources
                 </h3>
                 <div className="space-y-3">
                   {resources.map((resource, index) => (
-                    <div key={index} className="flex justify-between items-center p-3 border border-gray-100 rounded-lg hover:bg-gray-50 cursor-pointer">
+                    <div 
+                      key={index} 
+                      className="flex justify-between items-center p-3 border border-gray-100 rounded-lg hover:bg-gray-50 cursor-pointer"
+                      onClick={() => downloadResource(resource.fileUrl, resource.title)}
+                    >
                       <div className="flex-1">
                         <h4 className="font-medium text-gray-800 text-sm">{resource.title}</h4>
                         <div className="flex items-center gap-2 text-xs text-gray-500">
                           <span>{resource.type}</span>
                           <span>•</span>
-                          <span>{resource.downloads} téléchargements</span>
+                          <span>{resource.downloads} downloads</span>
                         </div>
                       </div>
                       <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">
@@ -314,9 +364,6 @@ const Community = () => {
                     </div>
                   ))}
                 </div>
-                <Button variant="outline" className="w-full mt-4 border-[#35a79b] text-[#35a79b] hover:bg-[#35a79b] hover:text-white">
-                  Explorer toutes les ressources
-                </Button>
               </Card>
             </div>
           </div>
