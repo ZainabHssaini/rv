@@ -1,5 +1,8 @@
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import { X, Clock, MessageCircle, Phone, CreditCard, Upload } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+
 import { 
   Calendar, 
   Video, 
@@ -15,9 +18,14 @@ import {
   Activity,
   Share2,
   Bookmark
-} from 'lucide-react';import { useEffect, useState } from 'react';
+} from 'lucide-react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import MeetButton from '@/components/MeetButton';
+import { ShoppingCart } from 'lucide-react';
+import { useRouter } from 'next/router';
+
+import { Podcast } from "@/services/podcastsService";
 
 type Therapist = {
   id: number;
@@ -47,13 +55,13 @@ type TherapeuticModel = {
   steps: string[];
   duration: string;
   image?: string;
+  price?: number;
 };
 
 const TherapyPage = () => {
   const [activeTab, setActiveTab] = useState<'individual' | 'group'>('individual');
   const [displayedTherapists, setDisplayedTherapists] = useState<Therapist[]>([]);
   const [showAllTherapists, setShowAllTherapists] = useState(false);
-
 
   const therapeuticModels: TherapeuticModel[] = [
     {
@@ -69,7 +77,8 @@ const TherapyPage = () => {
         "Practice mindfulness meditation"
       ],
       duration: "4-8 weeks",
-      image: "/image/stress-management.jpg"
+      image: "/image/stress-management.jpg",
+      price: 100
     },
     {
       id: 2,
@@ -84,8 +93,8 @@ const TherapyPage = () => {
         "Relapse prevention planning"
       ],
       duration: "6-12 weeks",
-      image: "/image/CBT.jpg"
-
+      image: "/image/CBT.jpg",
+      price: 150
     },
     {
       id: 3,
@@ -100,8 +109,8 @@ const TherapyPage = () => {
         "Use bed only for sleep and intimacy"
       ],
       duration: "3-4 weeks",
-      image: "/image/sleep.jpg"
-
+      image: "/image/sleep.jpg",
+      price: 100
     },
     {
       id: 4,
@@ -116,8 +125,8 @@ const TherapyPage = () => {
         "Apply distress tolerance skills"
       ],
       duration: "8-12 weeks",
-      image: "/image/emotion.jpg"
-
+      image: "/image/emotion.jpg",
+      price: 100
     },
     {
       id: 5,
@@ -132,8 +141,8 @@ const TherapyPage = () => {
         "Integration into daily activities"
       ],
       duration: "8 weeks",
-      image: "/image/reduce-stress.jpg"
-
+      image: "/image/reduce-stress.jpg",
+      price: 120
     },
     {
       id: 6,
@@ -148,8 +157,8 @@ const TherapyPage = () => {
         "Post-traumatic growth integration"
       ],
       duration: "12+ weeks",
-      image: "/image/trauma.jpg"
-
+      image: "/image/trauma.jpg",
+      price: 150
     }
   ];
   
@@ -297,7 +306,11 @@ const TherapyPage = () => {
       }
     }
   };
+  const navigate = useNavigate();
 
+
+
+  
   const toggleTherapistsView = async () => {
     if (showAllTherapists) {
       setDisplayedTherapists(allTherapists.slice(0, 3));
@@ -575,7 +588,6 @@ const TherapyPage = () => {
               </h2>
               
 
-
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div className="text-center glass-card dark:glass-card-dark p-6 rounded-xl animate-scale-in">
                   <div className="w-16 h-16 bg-reviva-mint/30 dark:bg-reviva-teal/10 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -609,76 +621,81 @@ const TherapyPage = () => {
               </div>
             </div>
 
+            {/* Therapeutic Models Section */}
+            <div className="max-w-6xl mx-auto mt-16">
+              <h2 className="text-2xl font-bold text-reviva-purple mb-8 text-center animate-fade-in">
+                <HeartPulse className="h-6 w-6 text-reviva-teal inline mr-3 animate-pulse" />
+                Evidence-Based Therapeutic Models
+                <HeartPulse className="h-6 w-6 text-reviva-teal inline ml-3 animate-pulse" />
+              </h2>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {therapeuticModels.map((model, index) => (
+                  <div 
+                    key={model.id} 
+                    className="glass-card dark:glass-card-dark p-6 rounded-xl hover:shadow-lg transition-all duration-300 hover:-translate-y-1 animate-fade-in"
+                    style={{ animationDelay: `${index * 100}ms` }}
+                  >
+                    <div className="relative h-48 mb-4 rounded-lg overflow-hidden group">
+                      <img 
+                        src={model.image || "/reviva/therapy-default.jpg"} 
+                        alt={model.title} 
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-4">
+                        <h3 className="text-xl font-bold text-white">{model.title}</h3>
+                      </div>
+                      <div className="absolute top-0 right-0 bg-reviva-teal text-white text-xs font-bold px-2 py-1 rounded-bl-lg">
+                        {model.duration}
+                      </div>
+                    </div>
+                    
+                    <p className="text-sm text-reviva-charcoal/80 dark:text-white/80 mb-4">
+                      {model.description}
+                    </p>
+                    
+                    <div className="mb-4">
+                      <h4 className="text-sm font-medium mb-2 flex items-center">
+                        <BookOpen className="h-4 w-4 text-reviva-teal mr-2" />
+                        Key Steps:
+                      </h4>
+                      <ul className="space-y-2 text-sm">
+                        {model.steps.map((step, idx) => (
+                          <li 
+                            key={idx} 
+                            className="flex items-start hover:bg-reviva-mint/10 dark:hover:bg-reviva-teal/10 p-2 rounded transition-colors"
+                          >
+                            <CheckCircle className="h-4 w-4 text-reviva-teal mr-2 mt-0.5 flex-shrink-0" />
+                            <span>{step}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    
+                    <div className="flex justify-between items-center">
+                      <span className="text-xs bg-reviva-mint/20 text-reviva-teal dark:bg-reviva-teal/10 dark:text-reviva-mint px-2 py-1 rounded-full flex items-center">
+                        <Calendar className="h-3 w-3 mr-1" />
+                        {model.duration}
+                      </span>
+                      <div className="text-lg font-bold text-reviva-purple">
+                        {model.price} DH
+                      </div>
+                    </div>
+                    
+                    <div className="mt-4">
 
-           {/* Therapeutic Models Section */}
-           {/* Therapeutic Models Section */}
-<div className="max-w-6xl mx-auto mt-16">
-  <h2 className="text-2xl font-bold text-reviva-purple mb-8 text-center animate-fade-in">
-    <HeartPulse className="h-6 w-6 text-reviva-teal inline mr-3 animate-pulse" />
-    Evidence-Based Therapeutic Models
-    <HeartPulse className="h-6 w-6 text-reviva-teal inline ml-3 animate-pulse" />
-  </h2>
-  
-  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-    {therapeuticModels.map((model, index) => (
-      <div 
-        key={model.id} 
-        className="glass-card dark:glass-card-dark p-6 rounded-xl hover:shadow-lg transition-all duration-300 hover:-translate-y-1 animate-fade-in"
-        style={{ animationDelay: `${index * 100}ms` }}
-      >
-        <div className="relative h-48 mb-4 rounded-lg overflow-hidden group">
-          <img 
-            src={model.image || "/reviva/therapy-default.jpg"} 
-            alt={model.title} 
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-4">
-            <h3 className="text-xl font-bold text-white">{model.title}</h3>
-          </div>
-          <div className="absolute top-0 right-0 bg-reviva-teal text-white text-xs font-bold px-2 py-1 rounded-bl-lg">
-            {model.duration}
-          </div>
-        </div>
-        
-        <p className="text-sm text-reviva-charcoal/80 dark:text-white/80 mb-4">
-          {model.description}
-        </p>
-        
-        <div className="mb-4">
-          <h4 className="text-sm font-medium mb-2 flex items-center">
-            <BookOpen className="h-4 w-4 text-reviva-teal mr-2" />
-            Key Steps:
-          </h4>
-          <ul className="space-y-2 text-sm">
-            {model.steps.map((step, idx) => (
-              <li 
-                key={idx} 
-                className="flex items-start hover:bg-reviva-mint/10 dark:hover:bg-reviva-teal/10 p-2 rounded transition-colors"
-              >
-                <CheckCircle className="h-4 w-4 text-reviva-teal mr-2 mt-0.5 flex-shrink-0" />
-                <span>{step}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-        
-        <div className="flex justify-between items-center">
-          <span className="text-xs bg-reviva-mint/20 text-reviva-teal dark:bg-reviva-teal/10 dark:text-reviva-mint px-2 py-1 rounded-full flex items-center">
-            <Calendar className="h-3 w-3 mr-1" />
-            {model.duration}
-          </span>
-          <button 
-            className="text-reviva-teal text-sm font-medium flex items-center hover:text-reviva-deep-teal transition-colors"
-            onClick={() => console.log(`Learn more about ${model.title}`)}
-          >
-            <PlayCircle className="h-4 w-4 mr-1 animate-bounce-x" />
-            Learn More
-          </button>
-        </div>
-      </div>
-    ))}
-  </div>
-</div>
+<button 
+  onClick={() => navigate('/virement1')}
+  className="flex-1 reviva-button flex items-center justify-center gap-2"
+>
+  <CreditCard className="h-4 w-4" />
+  Buy It
+</button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
 
             {/* Therapist-Recommended Resources */}
             <div className="max-w-4xl mx-auto mt-16 glass-card dark:glass-card-dark p-8 rounded-xl">

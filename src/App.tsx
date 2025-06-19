@@ -24,6 +24,8 @@ import ExploreProjectsPage from "./pages/ExploreProjectsPage";
 import Community from "./pages/Community";
 import MarathonPage from "./pages/MarathonPage";
 import Chatbot from "./components/Chatbot";
+import PaymentComponent from "./components/PaymentComponent";
+import BankTransfer2 from "./pages/BankTransfer2";
 
 
 const queryClient = new QueryClient();
@@ -52,6 +54,8 @@ const App = () => (
           <Route path="/chat" element={<ChatTherapist />} />
           <Route path="/book" element={<BookVideo />} />
           <Route path="/virement" element={<BankTransfer />} />
+          <Route path="/virement1" element={<BankTransfer2 />} />
+
           <Route path="/sol" element={<RevivaSolution />} />
           <Route path="/sol/entrepreneur" element={<Entrepreneur />} />
           <Route path="/createProject" element={<CreateProjectPage />} />
@@ -59,6 +63,7 @@ const App = () => (
 
           <Route path="/sol/marathon" element={<MarathonPage />} />
           <Route path="/sol/Community" element={<Community />} />
+
 
 =
 

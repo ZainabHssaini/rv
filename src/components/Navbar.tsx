@@ -1,20 +1,18 @@
 import { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
-import { Link, useNavigate } from 'react-router-dom'; // Import useNavigate pour la redirection
+import { Link, useNavigate } from 'react-router-dom';
 import { ArrowRight, Brain, Heart, Shield } from 'lucide-react';
-import { useToast } from "@/hooks/use-toast"; // Importer le hook useToast
+import { useToast } from "@/hooks/use-toast";
 
 const Navbar = () => {
-  const user = JSON.parse(localStorage.getItem('user') || '{}'); // Récupérer l'utilisateur du localStorage
+  const user = JSON.parse(localStorage.getItem('user') || '{}');
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // État pour vérifier si l'utilisateur est connecté
-  const navigate = useNavigate(); // Hook pour la redirection
-  const { toast } = useToast(); // Initialiser la fonction toast 
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate();
+  const { toast } = useToast();
   const userProfileImage = user?.photoURL || "/default-avatar.png";
 
-
-  // Vérifier si un utilisateur est enregistré dans le localStorage au chargement du composant
   useEffect(() => {
     const user = localStorage.getItem('user');
     if (user) {
@@ -22,15 +20,14 @@ const Navbar = () => {
     }
   }, []);
 
-  // Fonction pour gérer la déconnexion
   const handleSignOut = () => {
-    localStorage.removeItem('user'); // Supprimer l'utilisateur du localStorage
-    setIsLoggedIn(false); // Mettre à jour l'état de connexion
+    localStorage.removeItem('user');
+    setIsLoggedIn(false);
     navigate('/signin');
     toast({
       title: "Vous êtes déconnecté",
       description: "A la prochaine fois...",
-    }); // Rediriger vers la page d'accueil
+    });
   };
 
   useEffect(() => {
@@ -50,9 +47,10 @@ const Navbar = () => {
           : 'bg-transparent py-6'
       }`}
     >
-      <div className="container mx-auto px-6 md:px-8 lg:px-12">
+      <div className="container mx-auto px-4 md:px-6 lg:px-8"> {/* Réduit le padding horizontal */}
         <div className="flex items-center justify-between">
-          <a href="/" className="flex items-center">
+          {/* Logo et slogan décalés vers la gauche */}
+          <a href="/" className="flex items-center -ml-2 md:-ml-4"> {/* Ajout de marges négatives */}
             <div className="relative">
               <img 
                 src="/reviva/8d6035b5-8ccf-43b7-a612-84053242895a.png" 
@@ -61,33 +59,37 @@ const Navbar = () => {
               />
               <div className="absolute -inset-1 -z-10 border-2 border-reviva-teal/30 rounded-t-3xl opacity-0 hover:opacity-100 transition-opacity duration-500"></div>
             </div>
-            <div className="flex flex-col ml-3">
+            <div className="flex flex-col ml-2 md:ml-3"> {/* Réduit le margin-left */}
               <span className="text-reviva-charcoal dark:text-white text-xs italic">
                 صحّتك النفسية تهمنا
               </span>
               <span className="text-reviva-charcoal dark:text-white text-xs italic">
-                  <span>🇲🇦</span>
-                  Moroccan Initiative
-                </span>
+                <span>🇲🇦</span>
+                Moroccan Initiative
+              </span>
             </div>
           </a>
 
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden md:flex items-center space-x-6"> {/* Réduit l'espace entre les liens */}
             <a href="/features" className="text-reviva-charcoal dark:text-white hover:text-reviva-teal dark:hover:text-reviva-mint transition-colors relative group">
               Features
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-reviva-teal group-hover:w-full transition-all duration-300 rounded-full"></span>
             </a>
             <a href="/therapy" className="text-reviva-charcoal dark:text-white hover:text-reviva-teal dark:hover:text-reviva-mint transition-colors relative group">
               Therapy
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-reviva-teal group-hover:w-full transition-all duration-300 rounded-full"></span>
             </a>
             <a href="/pet-game" className="text-reviva-charcoal dark:text-white hover:text-reviva-teal dark:hover:text-reviva-mint transition-colors relative group">
               Pet Care
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-reviva-teal group-hover:w-full transition-all duration-300 rounded-full"></span>
             </a>
             <a href="/mood-tracker" className="text-reviva-charcoal dark:text-white hover:text-reviva-teal dark:hover:text-reviva-mint transition-colors relative group">
               Mood Tracker
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-reviva-teal group-hover:w-full transition-all duration-300 rounded-full"></span>
             </a>
-
             <a href="/blogs-podcasts" className="text-reviva-charcoal dark:text-white hover:text-reviva-teal dark:hover:text-reviva-mint transition-colors relative group">
               Blogs & Podcasts
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-reviva-teal group-hover:w-full transition-all duration-300 rounded-full"></span>
             </a>
             <Link to="/parents" className="text-reviva-charcoal dark:text-white hover:text-reviva-teal dark:hover:text-reviva-mint transition-colors relative group">
               Espace Parents
@@ -95,16 +97,16 @@ const Navbar = () => {
             </Link>
             <a href="/sol" className="text-reviva-charcoal dark:text-white hover:text-reviva-teal dark:hover:text-reviva-mint transition-colors relative group">
               Reviva Solutions
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-reviva-teal group-hover:w-full transition-all duration-300 rounded-full"></span>
             </a>
-            <div className="flex items-center gap-8">
+
+            <div className="flex items-center gap-4"> {/* Réduit l'espace entre les éléments */}
               {isLoggedIn ? (
-                // Afficher "Sign Out" si l'utilisateur est connecté
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-3"> {/* Réduit l'espace */}
                   <button
                     onClick={handleSignOut}
-                    className="px-5 py-2 rounded-full bg-gradient-to-r from-reviva-teal to-reviva-mint text-white font-medium 
-                              text-reviva-charcoal hover:text-reviva-teal
-                              hover:bg-white transition-colors border border-reviva-white shadow-lg hover:shadow-xl"
+                    className="px-4 py-1.5 rounded-full bg-gradient-to-r from-reviva-teal to-reviva-mint text-white font-medium text-sm
+                              hover:bg-white hover:text-reviva-teal transition-colors border border-white shadow hover:shadow-md"
                   >
                     Sign Out
                   </button>
@@ -117,21 +119,18 @@ const Navbar = () => {
                         : "/male avatar.png"
                     }
                     alt="User Profile"
-                    className="h-10 w-10 rounded-full border-2 border-reviva-teal object-cover"
+                    className="h-9 w-9 rounded-full border-2 border-reviva-teal object-cover"
                   />
-                                </div>
+                </div>
               ) : (
-                // Afficher "Sign In" si l'utilisateur n'est pas connecté
                 <Link 
                   to="/signin" 
-                  className="ml-auto px-5 py-2 rounded-full bg-gradient-to-r from-reviva-teal to-reviva-mint text-white font-medium 
-                            text-reviva-charcoal hover:text-reviva-teal
-                            hover:bg-white transition-colors border border-reviva-white shadow-lg hover:shadow-xl"
+                  className="px-4 py-1.5 rounded-full bg-gradient-to-r from-reviva-teal to-reviva-mint text-white font-medium text-sm
+                            hover:bg-white hover:text-reviva-teal transition-colors border border-white shadow hover:shadow-md"
                 >
                   Sign In
                 </Link>
               )}
-
             </div>
           </div>
 
@@ -147,35 +146,33 @@ const Navbar = () => {
 
       {isMobileMenuOpen && (
         <div className="md:hidden bg-white/95 dark:bg-reviva-charcoal/95 mt-0 border-t border-reviva-teal/20 animate-fade-in">
-          <div className="container mx-auto px-6">
+          <div className="container mx-auto px-4">
             <div className="flex flex-col space-y-4 py-4 relative">
               <div className="absolute top-0 bottom-0 left-0 w-1 bg-gradient-to-b from-reviva-mint via-reviva-teal to-reviva-mint opacity-30"></div>
               
-
               <Link to="/features" className="text-reviva-charcoal dark:text-white hover:text-reviva-teal dark:hover:text-reviva-mint transition-colors pl-4" onClick={() => setIsMobileMenuOpen(false)}>Features</Link>
               <Link to="/therapy" className="text-reviva-charcoal dark:text-white hover:text-reviva-teal dark:hover:text-reviva-mint transition-colors pl-4" onClick={() => setIsMobileMenuOpen(false)}>Therapy</Link>
               <Link to="/pet-game" className="text-reviva-charcoal dark:text-white hover:text-reviva-teal dark:hover:text-reviva-mint transition-colors pl-4" onClick={() => setIsMobileMenuOpen(false)}>Pet Care</Link>
               <Link to="/mood-tracker" className="text-reviva-charcoal dark:text-white hover:text-reviva-teal dark:hover:text-reviva-mint transition-colors pl-4" onClick={() => setIsMobileMenuOpen(false)}>Mood Tracker</Link>
               <Link to="/chatbot" className="text-reviva-charcoal dark:text-white hover:text-reviva-teal dark:hover:text-reviva-mint transition-colors pl-4" onClick={() => setIsMobileMenuOpen(false)}>AI Chatbot</Link>
               <Link to="/blogs-podcasts" className="text-reviva-charcoal dark:text-white hover:text-reviva-teal dark:hover:text-reviva-mint transition-colors pl-4" onClick={() => setIsMobileMenuOpen(false)}>Blogs & Podcasts</Link>
+              
               {isLoggedIn ? (
-  <button
-    onClick={handleSignOut}
-    className="mx-4 mt-2 py-3 rounded-full bg-gradient-to-r from-reviva-teal to-reviva-mint text-white font-medium"
-  >
-    Sign Out
-  </button>
-) : (
-  <Link
-    to="/signin"
-    onClick={() => setIsMobileMenuOpen(false)}
-    className="mx-4 mt-2 py-3 text-center rounded-full bg-gradient-to-r from-reviva-teal to-reviva-mint text-white font-medium"
-  >
-    Sign In
-  </Link>
-)}
-
-
+                <button
+                  onClick={handleSignOut}
+                  className="mx-4 mt-2 py-2.5 rounded-full bg-gradient-to-r from-reviva-teal to-reviva-mint text-white font-medium text-sm"
+                >
+                  Sign Out
+                </button>
+              ) : (
+                <Link
+                  to="/signin"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="mx-4 mt-2 py-2.5 text-center rounded-full bg-gradient-to-r from-reviva-teal to-reviva-mint text-white font-medium text-sm"
+                >
+                  Sign In
+                </Link>
+              )}
             </div>
           </div>
         </div>
