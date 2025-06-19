@@ -6,8 +6,140 @@ import { Users, Lightbulb, Search, Plus, UserPlus, Star, ChevronLeft, ChevronRig
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { useState } from "react";
+import { toast } from "sonner";
 
-const Entrepreneur = () => {
+
+const Entrepreneur = ({ teamId }: { teamId: string }) => {
+const handleInviteClick = () => {
+    // Simuler l'envoi de l'invitation
+    toast.success("Invitation sent successfully!", {
+      description: "Your collaborator will receive an email shortly.",
+      action: {
+        label: "Undo",
+        onClick: () => {
+          console.log("Undo invitation");
+          toast.info("Invitation cancelled");
+        },
+      },
+    });
+  };
+
+const handleJoinClick = async () => {
+    const toastId = toast.loading("Processing your request...");
+    
+    try {
+      // Simulate API call to join team
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      
+      // Randomly succeed or fail for demo purposes
+      const success = Math.random() > 0.3;
+      
+      if (success) {
+        toast.success("You've joined the team!", {
+          id: toastId,
+          description: "You now have access to team resources.",
+          action: {
+            label: "Leave Team",
+            onClick: () => handleLeaveTeam(teamId),
+          },
+        });
+      } else {
+        toast.warning("Request requires approval", {
+          id: toastId,
+          description: "The team admin will review your request.",
+          action: {
+            label: "Cancel Request",
+            onClick: () => handleCancelRequest(teamId),
+          },
+        });
+      }
+    } catch (error) {
+      toast.error("Failed to join team", {
+        id: toastId,
+        description: "Please try again later.",
+      });
+    }
+  };
+
+  const leaveTeam = async (teamId: string): Promise<boolean> => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(true); // Simulate success
+        // resolve(false); // Simulate failure
+      }, 1500);
+    });
+  };
+
+  // Simulate API call to cancel join request
+  const cancelJoinRequest = async (teamId: string): Promise<boolean> => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(true); // Simulate success
+        // resolve(false); // Simulate failure
+      }, 1200);
+    });
+  };
+
+  const handleLeaveTeam = async (teamId: string) => {
+    const toastId = toast.loading("Leaving team...");
+    
+    try {
+      const success = await leaveTeam(teamId);
+      
+      if (success) {
+        toast.success(`You've left`, {
+          id: toastId,
+          description: "You no longer have access to team resources.",
+          action: {
+            label: "Rejoin",
+            onClick: () => handleJoinClick(),
+          },
+        });
+      } else {
+        toast.error("Failed to leave team", {
+          id: toastId,
+          description: "Please try again later.",
+        });
+      }
+    } catch (error) {
+      toast.error("An error occurred", {
+        id: toastId,
+        description: error instanceof Error ? error.message : "Could not leave team",
+      });
+    }
+  };
+
+  const handleCancelRequest = async (teamId: string) => {
+    const toastId = toast.loading("Cancelling request...");
+    
+    try {
+      const success = await cancelJoinRequest(teamId);
+      
+      if (success) {
+        toast("Join request cancelled", {
+          id: toastId,
+          description: `Your request to join has been withdrawn.`,
+          action: {
+            label: "Request Again",
+            onClick: () => handleJoinClick(),
+          },
+        });
+      } else {
+        toast.warning("Cancellation failed", {
+          id: toastId,
+          description: "The request may have already been processed.",
+        });
+      }
+    } catch (error) {
+      toast.error("Error cancelling request", {
+        id: toastId,
+        description: "Please contact support if this persists.",
+      });
+    }
+  };
+
+
+
   const suggestedPeople = [
     {
       id: 1,
@@ -228,7 +360,9 @@ const Entrepreneur = () => {
                     </div>
                   </div>
 
-                  <Button className="w-full bg-[#1d858d] hover:bg-[#10566e] text-white">
+                  <Button className="w-full bg-[#1d858d] hover:bg-[#10566e] text-white"
+                  onClick={handleInviteClick}
+                  >
                     Invite to Collaborate
                   </Button>
                 </Card>
@@ -273,7 +407,9 @@ const Entrepreneur = () => {
                     </div>
                   </div>
 
-                  <Button className="w-full bg-[#279692] hover:bg-[#1b6d80] text-white">
+                  <Button className="w-full bg-[#279692] hover:bg-[#1b6d80] text-white"
+                  onClick={handleJoinClick}
+                  >
                     Join the Team
                   </Button>
                 </Card>
