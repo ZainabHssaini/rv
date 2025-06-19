@@ -9,22 +9,30 @@ import { useState } from "react";
 import { db } from "@/lib/firebase";
 import { collection, addDoc, getDocs } from "firebase/firestore";
 import { useEffect } from "react";
-import { useToast } from "@/hooks/use-toast"; // Import the useToast hook
-
+import { useToast } from "@/hooks/use-toast";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 const Community = () => {
-
-  const user = JSON.parse(localStorage.getItem('user') || '{}'); // Get user data from localStorage
-
+  const user = JSON.parse(localStorage.getItem('user') || '{}');
   const [showPopup, setShowPopup] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
   const [viewAll, setViewAll] = useState(false);
   const [newPostText, setNewPostText] = useState("");
-  const { toast } = useToast(); // Initialize the toast function
-  const [newPostCategory, setNewPostCategory] = useState("Question"); // Valeur par défaut
+  const { toast } = useToast();
+  const [newPostCategory, setNewPostCategory] = useState("Question");
+  const [showSignInAlert, setShowSignInAlert] = useState(false);
   const [discussions, setDiscussions] = useState<any[]>([
-  {
-    id: 1,
+    {
+      id: 1,
       title: "Comment gérer le stress pendant un hackathon ?",
       author: "Marie L.",
       replies: 12,
@@ -58,58 +66,67 @@ const Community = () => {
       category: "Idée",
       time: "il y a 1j",
       isHot: false
-  }
-]);
-
-const postToFirebase = async (newPost: any) => {
-  await addDoc(collection(db, "discussions"), newPost);
-};
-
-
-  const handlePostSubmit = async () => {
-    if (!newPostText.trim()) {
-      toast({
-        title: "Post cannot be empty",
-        description: "Please enter some text before submitting.",
-        variant: "destructive",
-      });
-      return;
     }
+  ]);
 
-    const newPost = {
-      id: Date.now(), // ou laisse Firebase générer l'id
-      title: newPostText,
-      author: user.firstname + user.lastname || "Unknown", // à remplacer par user réel si dispo
-      replies: 0,
-      category: newPostCategory,
-      time: "Just now",
-      isHot: false,
-    };
-
-    try {
-      await postToFirebase(newPost);
-      setDiscussions((prev) => [...prev, newPost].sort((a, b) => Number(b.id) - Number(a.id)));
-      console.log("Post submitted");
-      toast({
-        title: "Post submitted",
-        description: "Your post has been successfully added to the community.",
-      });
-      setNewPostText(""); // Réinitialiser le champ de texte
-    } catch (error) {
-      console.error("Error submitting post:", error);
+  const checkAuth = (action: () => void) => {
+    if (!user || !user.id) {
+      setShowSignInAlert(true);
+    } else {
+      action();
     }
   };
 
-interface Event {
-  id: number;
-  title: string;
-  date: string;
-  time: string;
-  location: string;
-  category: string;
-  participants: number;
-}
-  const upcomingEvents= [
+  const postToFirebase = async (newPost: any) => {
+    await addDoc(collection(db, "discussions"), newPost);
+  };
+
+  const handlePostSubmit = async () => {
+    checkAuth(async () => {
+      if (!newPostText.trim()) {
+        toast({
+          title: "Post cannot be empty",
+          description: "Please enter some text before submitting.",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      const newPost = {
+        id: Date.now(),
+        title: newPostText,
+        author: `${user.firstname} ${user.lastname}` || "Unknown",
+        replies: 0,
+        category: newPostCategory,
+        time: "Just now",
+        isHot: false,
+      };
+
+      try {
+        await postToFirebase(newPost);
+        setDiscussions((prev) => [...prev, newPost].sort((a, b) => Number(b.id) - Number(a.id)));
+        toast({
+          title: "Post submitted",
+          description: "Your post has been successfully added to the community.",
+        });
+        setNewPostText("");
+      } catch (error) {
+        console.error("Error submitting post:", error);
+      }
+    });
+  };
+
+  interface Event {
+    id: number;
+    title: string;
+    date: string;
+    time: string;
+    location: string;
+    category: string;
+    participants: number;
+  }
+
+  const upcomingEvents = [
     {
       id: 1,
       title: "Design Thinking Workshop",
@@ -170,20 +187,18 @@ interface Event {
     }
   ];
 
-  
-
   const handleRegisterClick = (e: React.MouseEvent, event: Event) => {
-      e.preventDefault();
+    e.preventDefault();
+    checkAuth(() => {
       setSelectedEvent(event);
       setShowPopup(true);
-    };
-  
-    const handlePopupClose = () => {
-      setShowPopup(false);
-      setSelectedEvent(null);
-    };
+    });
+  };
 
-    
+  const handlePopupClose = () => {
+    setShowPopup(false);
+    setSelectedEvent(null);
+  };
 
   const getCategoryColor = (category: string) => {
     switch (category) {
@@ -193,41 +208,34 @@ interface Event {
       default: return "bg-gray-100 text-gray-800";
     }
   };
-  
+
   const downloadResource = (fileUrl: string, fileName: string) => {
-  // Create a temporary anchor element
-  const link = document.createElement('a');
-  link.href = fileUrl;
-  link.download = fileName || 'download.pdf';
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-};
-
-useEffect(() => {
-  const fetchDiscussions = async () => {
-    const snapshot = await getDocs(collection(db, "discussions"));
-    const firebasePosts = snapshot.docs.map(doc => ({
-      id: doc.id,
-      ...doc.data()
-    }));
-
-    setDiscussions((prevDiscussions) => {
-  const existingIds = new Set(prevDiscussions.map(d => d.id));
-  const newUniquePosts = firebasePosts.filter(post => !existingIds.has(post.id));
-
-  // Fusionne et trie du plus récent au plus ancien
-  const allDiscussions = [...prevDiscussions, ...newUniquePosts];
-
-  return allDiscussions.sort((a, b) => Number(b.id) - Number(a.id));
-});
+    const link = document.createElement('a');
+    link.href = fileUrl;
+    link.download = fileName || 'download.pdf';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
-  fetchDiscussions();
-}, []);
+  useEffect(() => {
+    const fetchDiscussions = async () => {
+      const snapshot = await getDocs(collection(db, "discussions"));
+      const firebasePosts = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
 
+      setDiscussions((prevDiscussions) => {
+        const existingIds = new Set(prevDiscussions.map(d => d.id));
+        const newUniquePosts = firebasePosts.filter(post => !existingIds.has(post.id));
+        const allDiscussions = [...prevDiscussions, ...newUniquePosts];
+        return allDiscussions.sort((a, b) => Number(b.id) - Number(a.id));
+      });
+    };
 
-
+    fetchDiscussions();
+  }, []);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
@@ -296,7 +304,8 @@ useEffect(() => {
                         </Button>
                       ))}
                     </div>
-                    <Button className="bg-[#35a79b] hover:bg-[#279692] text-white"
+                    <Button 
+                      className="bg-[#35a79b] hover:bg-[#279692] text-white"
                       onClick={() => handlePostSubmit()}
                     >
                       <Plus className="w-4 h-4 mr-2" />
@@ -314,7 +323,6 @@ useEffect(() => {
 
                 <div className="space-y-4">
                   {(viewAll ? discussions : discussions.slice(0, 4)).map((discussion) => (
-
                     <div key={discussion.id} className="border-b border-gray-100 pb-4 last:border-b-0">
                       <div className="flex justify-between items-start mb-2">
                         <div className="flex-1">
@@ -329,10 +337,7 @@ useEffect(() => {
                           <div className="flex items-center gap-4 text-sm text-gray-600">
                             <span>By {discussion.author}</span>
                             <span>{discussion.time}</span>
-                            <span className="flex items-center gap-1">
-                              <MessageCircle className="w-4 h-4" />
-                              {discussion.replies} replies
-                            </span>
+                           
                           </div>
                         </div>
                         <span className={`px-3 py-1 rounded-full text-xs font-medium ${getCategoryColor(discussion.category)}`}>
@@ -344,8 +349,11 @@ useEffect(() => {
                 </div>
 
                 <div className="text-center mt-6">
-                  <Button variant="outline" className="border-[#35a79b] text-[#35a79b] hover:bg-[#35a79b] hover:text-white"
-                  onClick={() => setViewAll(true)}>
+                  <Button 
+                    variant="outline" 
+                    className="border-[#35a79b] text-[#35a79b] hover:bg-[#35a79b] hover:text-white"
+                    onClick={() => setViewAll(true)}
+                  >
                     View all discussions
                   </Button>
                 </div>
@@ -391,12 +399,13 @@ useEffect(() => {
                         <span className="text-sm text-gray-500">
                           {event.participants} registered participants
                         </span>
-                        <Button size="sm" className="bg-[#35a79b] hover:bg-[#279692] text-white"
-                        onClick={(e) => handleRegisterClick(e, event)}
+                        <Button 
+                          size="sm" 
+                          className="bg-[#35a79b] hover:bg-[#279692] text-white"
+                          onClick={(e) => handleRegisterClick(e, event)}
                         >
                           Register
                         </Button>
-                        
                       </div>
                     </div>
                   ))}
@@ -407,7 +416,8 @@ useEffect(() => {
                   </Button>
                 </a>
               </Card>
-              {/* Register Popup - placed outside the main content */}
+              
+              {/* Register Popup */}
               {showPopup && selectedEvent && (
                 <RegisterPopup 
                   event={selectedEvent}
@@ -448,6 +458,24 @@ useEffect(() => {
         </div>
       </div>
       <Footer />
+
+      {/* Sign In Alert Dialog */}
+      <AlertDialog open={showSignInAlert} onOpenChange={setShowSignInAlert}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Sign In Required</AlertDialogTitle>
+            <AlertDialogDescription>
+              You have to sign in to perform this action. Please log in or create an account.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={() => window.location.href = '/signin'}>
+              Sign In
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 };

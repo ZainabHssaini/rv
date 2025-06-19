@@ -60,7 +60,7 @@ const ParentsPage = () => {
       id: 2,
       title: "When should you see a psychologist?",
       titleAr: "إمتى نمشي للطبيب النفسي؟",
-      type: "Video",
+      type: "Article",
       duration: "12 min",
       downloadUrl: "/pdfs/consulter-psy.pdf"
     },

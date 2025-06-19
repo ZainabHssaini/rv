@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Calendar, Star, ArrowRight, ChevronDown } from 'lucide-react';
+import { useNavigate } from 'react-router';
 
 const TherapistSection = () => {
+    const navigate = useNavigate();
+  
   const [showAllTherapists, setShowAllTherapists] = useState(false);
   
   const initialTherapists = [
@@ -123,9 +126,7 @@ const TherapistSection = () => {
                 <span className="text-sm">Next available: <span className="font-medium">{therapist.nextAvailable}</span></span>
               </div>
               
-              <button className="w-full py-2 rounded-lg border border-reviva-teal text-reviva-teal hover:bg-reviva-teal hover:text-white transition-colors flex items-center justify-center">
-                Book Consultation
-              </button>
+              
             </div>
           ))}
         </div>

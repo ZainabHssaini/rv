@@ -125,7 +125,7 @@ const MarathonPage = () => {
     categories: ["Culture", "Technology", "Tourism"],
     prizes: ["30,000 MAD", "20,000 MAD", "10,000 MAD"],
     deadline: "Register before September 10, 2025",
-    image: "https://images.unsplash.com/photo-1553826059-7a090c4bd362?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1472&q=80",
+    image: "https://scontent.frba1-1.fna.fbcdn.net/v/t1.6435-9/175889350_3911975648888023_3406574642290961977_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeH0uFAwSbRZxcxu9PRds22v8uBESbzdyHny4ERJvN3IeRYiV_-M0co-3tXE2KbdX_vWZlXV6eB_t4L5lqCEohGS&_nc_ohc=cz0znAcJCeEQ7kNvwGTcw27&_nc_oc=AdmsdZnWLNVlgenyc01lqE_970ZgdorlZT5L4iaJlyGqWtrlpNL2V05Lyb9A_BU89HQ&_nc_zt=23&_nc_ht=scontent.frba1-1.fna&_nc_gid=jhXsNUQLh2mWeTQhsb4Brw&oh=00_AfOL4GxK76SMKDhjRkXFFQlxN8TP57hyUOMxgmhZxVS67A&oe=687BA219",
     status: "Coming soon",
     color: "bg-[#8e44ad]"
   },
@@ -176,14 +176,13 @@ const paginate = (pageNumber: number) => {
         <p className="text-xl max-w-2xl mx-auto mb-8 text-gray-600">
           Participate in unique events and push the boundaries of creativity
         </p>
-        <div className="flex justify-center gap-4">
-          <Link 
-            to="#events" 
-            className="bg-transparent border-2 border-[#1d858d] text-[#1d858d] hover:bg-[#1d858d] hover:text-white px-8 py-3 rounded-lg font-medium transition-colors"
-          >
-            Discover Events
-          </Link>
-        </div>
+     <div className="flex justify-center gap-2">
+      <div className="text-[#1d858d] text-sm p-2 font-medium 
+               border border-[#1d858d] rounded-md
+               cursor-default inline-block">
+  Discover Events
+</div>
+    </div>
       </div>
 
       <main className="max-w-6xl mx-auto px-4 py-12">
@@ -208,19 +207,23 @@ const paginate = (pageNumber: number) => {
                       <h3 className="text-2xl font-bold text-[#1b6d80] mb-2">{event.title}</h3>
                       <p className="text-gray-700 mb-4">{event.description}</p>
                     </div>
-                    <span className={`
-                      relative px-3 py-1 rounded-full text-xs font-semibold 
-                      ${event.color.replace('bg', 'text')} 
-                      ${event.color} bg-opacity-10
-                      border ${event.color.replace('bg', 'border')} border-opacity-30
-                      shadow-sm
-                      whitespace-nowrap
-                      overflow-hidden
-                      group
-                    `}>
-                      <span className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity duration-300"></span>
-                      {event.status}
-                    </span>
+                   <span className={`
+  relative px-3 py-1 rounded-full text-xs font-semibold 
+  ${event.color.replace('bg', 'text')} 
+  ${event.color} bg-opacity-10
+  border ${event.color.replace('bg', 'border')} border-opacity-30
+  shadow-sm
+  overflow-hidden
+  group
+  md:whitespace-nowrap
+  md:text-xs
+  sm:text-[0.6rem]
+  sm:px-2
+  sm:py-0.5
+`}>
+  <span className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity duration-300"></span>
+  {event.status}
+</span>
                   </div>
 
                   <div className="grid grid-cols-2 gap-4 mb-4">

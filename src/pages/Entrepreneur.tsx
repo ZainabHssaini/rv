@@ -199,23 +199,23 @@ const handleJoinClick = async () => {
   const testimonials = [
   {
     id: 1,
-    quote: "Social entrepreneurship isn't just about business - it's about changing lives. Reviva helped me understand that true leadership means empowering others while solving real community problems.",
-    author: "Dr. Amina Belkhir",
-    role: "Director, Moroccan Center for Social Innovation",
+    quote: "The experience was really nice specially when u are engaging with professionnals I really enjoyed my experience and I hope a lots of people give it a shot",
+    author: "Douae Belkhir",
+    role: "Student, Owner of small ArgiCare Startup",
     image: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80",
     project: "Social Leadership Program"
   },
   {
     id: 2,
-    quote: "As a single mother, I never dreamed I could start a business. Reviva's community believed in me - now my artisan cooperative employs 32 women preserving traditional crafts.",
+    quote: "Reviva 3awnatni bzaaf! bach ncreer l  business dyali o nkbro kter , Mercii REVEVIVA",
     author: "Samira El Idrissi",
     role: "Founder, Heritage Hands",
-    image: "https://images.unsplash.com/photo-1551836022-d5d44eef8b76?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80",
+    image: "https://media.licdn.com/dms/image/v2/C4E03AQGaSotgL0Y6xw/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1654257597138?e=1755734400&v=beta&t=bqc-dlin0uxw8p4vF3dwXlx9gFfg3y6Kz3uP97fWJQw",
     project: "Traditional Craft Preservation"
   },
   {
     id: 3,
-    quote: "The mentorship I found through Reviva helped scale my urban farming project from 1 rooftop to 12 locations across Casablanca, creating green jobs in food deserts.",
+    quote: "Saraha bonne expérience makontchi metweqa3 anani an9dar nehdar mertah mea une personne li machi mn sohabi wla nas li qrabin lili ms au début de la séance, j’ai ressenti une écoute attentive et un intérêt véritable, ce qui m’a permis de m’ouvrir progressivement au fil de notre conversation",
     author: "Omar Benjelloun",
     role: "Urban Agriculture Innovator",
     image: "https://images.unsplash.com/photo-1540569014015-19a7be504e3a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80",
@@ -223,8 +223,8 @@ const handleJoinClick = async () => {
   },
   {
     id: 4,
-    quote: "After my burnout, Reviva didn't just help me recover - it helped me rebuild with purpose. Today I lead mental health workshops for other entrepreneurs.",
-    author: "Lina Touahri",
+    quote: "Saraha kulshi daz zwine mme ihssan fenna ktkhlik t3awdi ga3 dekshi li mbrztek Je préfère ku kant presentiel hssn rak 3arfa kayn li ma3ndush lwifi kayn li 3ayech mea darhum mybghish ysm3uhSinn it was amazing ",
+    author: "Amina Touahri",
     role: "Wellbeing Coach",
     image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80",
     project: "Entrepreneur Mental Health Program"
@@ -322,9 +322,7 @@ const handleJoinClick = async () => {
           <div className="mb-16">
             <div className="flex items-center justify-between mb-8">
               <h2 className="text-3xl font-bold text-gray-800">AI Suggestions For You</h2>
-              <Button variant="outline" className="border-[#1d858d] text-[#1d858d] hover:bg-[#1d858d] hover:text-white">
-                See More
-              </Button>
+            
             </div>
 
             <div className="grid md:grid-cols-3 gap-6">
@@ -377,9 +375,7 @@ const handleJoinClick = async () => {
           <div>
             <div className="flex items-center justify-between mb-8">
               <h2 className="text-3xl font-bold text-gray-800">Teams Looking for Talent</h2>
-              <Button variant="outline" className="border-[#279692] text-[#279692] hover:bg-[#279692] hover:text-white">
-                View All Projects
-              </Button>
+             
             </div>
 
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">

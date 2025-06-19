@@ -280,8 +280,38 @@ const TherapyPage = () => {
       nextSession: "Friday at 5:00 PM",
       topics: ["Bereavement", "Coping Strategies", "Emotional Processing"],
       meetLink: "https://meet.google.com/epz-enrt-vpv"
+    },
+    {
+      id: 4,
+      title: "Depression Recovery Network",
+      description: "Supportive environment for individuals dealing with depression to share and heal together.",
+      members: 29,
+      nextSession: "Thursday at 4:00 PM",
+      topics: ["Depression Management", "Self-Care", "Positive Thinking"],
+      meetLink: "https://meet.google.com/epz-enrt-vpv"
+    },
+    {
+      id: 5,
+      title: "Parenting Stress Support",
+      description: "For parents navigating the challenges of parenting while maintaining mental wellness.",
+      members: 15,
+      nextSession: "Tuesday at 8:00 PM",
+      topics: ["Parental Burnout", "Work-Life Balance", "Child Development"],
+      meetLink: "https://meet.google.com/epz-enrt-vpv"
+    },
+    {
+      id: 6,
+      title: "Chronic Illness Warriors",
+      description: "Support group for individuals managing mental health alongside chronic physical conditions.",
+      members: 21,
+      nextSession: "Monday at 3:00 PM",
+      topics: ["Coping with Pain", "Mental Resilience", "Medical Trauma"],
+      meetLink: "https://meet.google.com/epz-enrt-vpv"
     }
   ];
+
+  const [displayedGroups, setDisplayedGroups] = useState<SupportGroup[]>(supportGroups.slice(0, 3));
+  const [showAllGroups, setShowAllGroups] = useState(false);
 
   useEffect(() => {
     setDisplayedTherapists(allTherapists.slice(0, 3));
@@ -308,9 +338,15 @@ const TherapyPage = () => {
   };
   const navigate = useNavigate();
 
+  const toggleGroupsView = () => {
+    if (showAllGroups) {
+      setDisplayedGroups(supportGroups.slice(0, 3));
+    } else {
+      setDisplayedGroups(supportGroups);
+    }
+    setShowAllGroups(!showAllGroups);
+  };
 
-
-  
   const toggleTherapistsView = async () => {
     if (showAllTherapists) {
       setDisplayedTherapists(allTherapists.slice(0, 3));
@@ -487,7 +523,7 @@ const TherapyPage = () => {
                               className="px-4 py-2 bg-reviva-teal text-white rounded-lg flex items-center gap-2"
                             >
                               <Video className="h-4 w-4" />
-                              Book Video
+                              Book Consultation
                             </Link>
                             
                             <Link 
@@ -529,7 +565,7 @@ const TherapyPage = () => {
                   </h2>
                   
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    {supportGroups.map((group) => (
+                    {displayedGroups.map((group) => (
                       <div key={group.id} className="glass-card dark:glass-card-dark rounded-xl overflow-hidden hover:shadow-lg transition-all duration-300 animate-scale-in">
                         <div className="p-6">
                           <h3 className="text-lg font-bold text-reviva-deep-teal mb-2">
@@ -574,8 +610,21 @@ const TherapyPage = () => {
                   </div>
                   
                   <div className="text-center mt-8">
-                    <button className="px-6 py-3 bg-white dark:bg-reviva-charcoal border border-reviva-teal text-reviva-teal rounded-lg font-medium hover:bg-reviva-mint/10 transition-colors">
-                      Browse All Groups
+                    <button 
+                      onClick={toggleGroupsView}
+                      className="px-6 py-3 bg-white dark:bg-reviva-charcoal border border-reviva-teal text-reviva-teal rounded-lg font-medium hover:bg-reviva-mint/10 transition-colors flex items-center justify-center mx-auto gap-2"
+                    >
+                      {showAllGroups ? (
+                        <>
+                          <ChevronUp className="h-5 w-5" />
+                          Show Less
+                        </>
+                      ) : (
+                        <>
+                          <ChevronDown className="h-5 w-5" />
+                          Browse All Groups
+                        </>
+                      )}
                     </button>
                   </div>
                 </div>
