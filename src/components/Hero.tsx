@@ -39,7 +39,7 @@ const Hero = () => {
       }}
     >
       {/* Overlay to reduce background image intensity */}
-      <div className="absolute inset-0 bg-white/80 z-0 "></div>
+      <div className="absolute inset-0 bg-white/80 z-0"></div>
       
       <div className="absolute top-0 right-0 w-1/3 h-1/2 bg-reviva-mint/30 rounded-bl-full -z-300 blur-3xl animate-pulse-gentle"></div>
       <div className="absolute bottom-0 left-0 w-1/4 h-1/3 bg-reviva-beige/40 rounded-tr-full -z-10 blur-3xl animate-pulse-gentle" style={{ animationDelay: '2s' }}></div>
