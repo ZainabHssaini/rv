@@ -16,16 +16,16 @@ const Footer = () => {
               Your journey to mental wellness begins with us. We're here to support you every step of the way.
             </p>
             <div className="flex space-x-4">
-              <a href="https://www.instagram.com/revi.vaa/" className="text-reviva-teal hover:text-reviva-deep-teal transition-colors">
+              <a href="https://www.instagram.com/reviva_ma/" className="text-reviva-teal hover:text-reviva-deep-teal transition-colors">
                 <Facebook size={20} />
               </a>
-              <a href="https://www.instagram.com/revi.vaa/" className="text-reviva-teal hover:text-reviva-deep-teal transition-colors">
+              <a href="https://www.instagram.com/reviva_ma/" className="text-reviva-teal hover:text-reviva-deep-teal transition-colors">
                 <Twitter size={20} />
               </a>
-              <a href="https://www.instagram.com/revi.vaa/" className="text-reviva-teal hover:text-reviva-deep-teal transition-colors">
+              <a href="https://www.instagram.com/reviva_ma/" className="text-reviva-teal hover:text-reviva-deep-teal transition-colors">
                 <Instagram size={20} />
               </a>
-              <a href="https://www.instagram.com/revi.vaa/" className="text-reviva-teal hover:text-reviva-deep-teal transition-colors">
+              <a href="" className="text-reviva-teal hover:text-reviva-deep-teal transition-colors">
                 <Linkedin size={20} />
               </a>
             </div>
@@ -39,26 +39,36 @@ const Footer = () => {
                   Home
                 </a>
               </li>
-              <li>
-                <a href="/features" className="text-reviva-charcoal/80 dark:text-white/80 hover:text-reviva-teal dark:hover:text-reviva-mint transition-colors">
-                  Features
-                </a>
-              </li>
+          
               <li>
                 <a href="/therapy" className="text-reviva-charcoal/80 dark:text-white/80 hover:text-reviva-teal dark:hover:text-reviva-mint transition-colors">
                   Therapy
                 </a>
               </li>
-              <li>
-                <a href="/pet-game" className="text-reviva-charcoal/80 dark:text-white/80 hover:text-reviva-teal dark:hover:text-reviva-mint transition-colors">
-                  Pet Care
-                </a>
-              </li>
+            
               <li>
                 <a href="/mood-tracker" className="text-reviva-charcoal/80 dark:text-white/80 hover:text-reviva-teal dark:hover:text-reviva-mint transition-colors">
                   Mood Tracker
                 </a>
               </li>
+              <li>
+                <a href="/blogs-podcasts" className="text-reviva-charcoal/80 dark:text-white/80 hover:text-reviva-teal dark:hover:text-reviva-mint transition-colors">
+                  Blogs&Podcasts
+                </a>
+              </li>
+              
+              <li>
+                <a href="/sol" className="text-reviva-charcoal/80 dark:text-white/80 hover:text-reviva-teal dark:hover:text-reviva-mint transition-colors">
+                  Reviva Solutions
+                </a>
+              </li>
+              <li>
+                <a href="/parents" className="text-reviva-charcoal/80 dark:text-white/80 hover:text-reviva-teal dark:hover:text-reviva-mint transition-colors">
+                Espace Parents
+                </a>
+              </li>
+
+          
             </ul>
           </div>
           
@@ -97,7 +107,7 @@ const Footer = () => {
             <h3 className="font-medium text-lg mb-4 text-reviva-deep-teal">Contact Us</h3>
             <ul className="space-y-2">
               <li className="text-reviva-charcoal/80 dark:text-white/80">
-reviva.ma7@gmail.com              </li>
+reviva.ma6@gmail.com              </li>
               <li className="text-reviva-charcoal/80 dark:text-white/80">
 +212 (7-62908598)              </li>
               <li className="text-reviva-charcoal/80 dark:text-white/80">

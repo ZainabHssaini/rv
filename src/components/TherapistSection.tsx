@@ -6,17 +6,17 @@ const TherapistSection = () => {
   
   const initialTherapists = [
     {
-      name: "Dr. Sami Chakour",
+      name: "Dr. Fadoua BenSeddik",
       specialty: "Anxiety & Depression",
-      image: "/reviva/man.png",
+      image: "/reviva/woman.png",
       rating: 4.9,
       reviews: 128,
       nextAvailable: "Today"
     },
     {
       name: "Dr. Ihssan Yousfi",
-      specialty: "Trauma Recovery",
-      image: "/reviva/woman (1).png",
+      specialty: "Adolescent  Psychology & psychopathology",
+      image: "/reviva/woman.png",
       rating: 4.8,
       reviews: 93,
       nextAvailable: "Tomorrow"
@@ -24,7 +24,7 @@ const TherapistSection = () => {
     {
       name: "Dr. Inasse El Bouchikhi",
       specialty: "Relationship Counseling",
-      image: "/reviva/woman (1).png",
+      image: "/reviva/woman.png",
       rating: 4.9,
       reviews: 156,
       nextAvailable: "In 2 days"
