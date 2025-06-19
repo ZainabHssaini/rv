@@ -75,6 +75,10 @@ const Navbar = () => {
             <a href="/pet-game" className="text-reviva-charcoal dark:text-white hover:text-reviva-teal dark:hover:text-reviva-mint transition-colors relative group">
               Pet Care
             </a>
+            <Link to="/parents" className="text-reviva-charcoal dark:text-white hover:text-reviva-teal dark:hover:text-reviva-mint transition-colors relative group">
+              Espace Parents
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-reviva-teal group-hover:w-full transition-all duration-300 rounded-full"></span>
+            </Link>
             <a href="/mood-tracker" className="text-reviva-charcoal dark:text-white hover:text-reviva-teal dark:hover:text-reviva-mint transition-colors relative group">
               Mood Tracker
             </a>
@@ -83,7 +87,7 @@ const Navbar = () => {
               Blogs & Podcasts
             </a>
             <a href="/sol" className="text-reviva-charcoal dark:text-white hover:text-reviva-teal dark:hover:text-reviva-mint transition-colors relative group">
-              Reviva Solution
+              Reviva Solutions
             </a>
             <div className="flex items-center gap-8">
               {isLoggedIn ? (
