@@ -15,6 +15,7 @@ import { PetGameProvider } from "./context/PetGameContext";
 import SignUp from "./pages/SignUp";
 import ChatTherapist from "./components/ChatTherapist";
 import BookVideo from "./components/BookVideo";
+import ParentsPage from "./pages/ParentsPage";
 import BankTransfer from "./pages/BankTransfer";
 import RevivaSolution from "./pages/RevivaSolution";
 import Entrepreneur from "./pages/Entrepreneur";
@@ -40,6 +41,7 @@ const App = () => (
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/therapy" element={<TherapyPage />} />
+          <Route path="/parents" element={<ParentsPage />} />
           <Route path="/pet-game" element={
             <PetGameProvider>
               <PetGamePage />
