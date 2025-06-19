@@ -8,8 +8,11 @@ import Image from "next/image";
 import { useState } from "react";
 import { toast } from "sonner";
 
+interface EntrepreneurProps {
+  teamId?: string; // Make it optional with ?
+}
 
-const Entrepreneur = ({ teamId }: { teamId: string }) => {
+const Entrepreneur = ({ teamId }: EntrepreneurProps) => {
 const handleInviteClick = () => {
     // Simuler l'envoi de l'invitation
     toast.success("Invitation sent successfully!", {
