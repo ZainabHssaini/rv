@@ -1,14 +1,17 @@
 import { useEffect, useState } from 'react';
-import { Search, Filter, Users, Star, Clock, Flame } from 'lucide-react';
+import { Search, Filter, Users, Star, Clock, Flame, X } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import Navbar from '@/components/Navbar';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 
 const ExploreProjectsPage = () => {
   const [activeFilter, setActiveFilter] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
+  const [selectedProject, setSelectedProject] = useState<any>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
     const mockprojects = [
   {
     id: 1,
@@ -109,7 +112,15 @@ const [projects, setProjects] = useState<any[]>(mockprojects);
   fetchProjects();
 }, []);
 
+const handleViewDetails = (project: any) => {
+    setSelectedProject(project);
+    setIsModalOpen(true);
+  };
 
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedProject(null);
+  };
 
   const filteredProjects = projects.filter(project => {
     const matchesFilter = activeFilter === 'all' || 
@@ -123,7 +134,7 @@ const [projects, setProjects] = useState<any[]>(mockprojects);
   });
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#f0f9fa] to-[#e0f2f1]">
+    <div className="min-h-screen bg-white dark:bg-reviva-charcoal overflow-hidden">
         <Navbar />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 pt-20">
             <div className="max-w-7xl mx-auto px-4 py-16">
@@ -229,7 +240,9 @@ const [projects, setProjects] = useState<any[]>(mockprojects);
                     </div>
 
                     <div className="px-6 pb-6">
-                        <Button className="w-full bg-[#1d858d] hover:bg-[#10566e]">
+                        <Button className="w-full bg-[#1d858d] hover:bg-[#10566e]"
+                        onClick={() => setSelectedProject(project)}
+                        >
                         View Project Details
                         </Button>
                     </div>
@@ -237,6 +250,75 @@ const [projects, setProjects] = useState<any[]>(mockprojects);
                 ))}
                 </div>
 
+                {/* Project Details Dialog */}
+                <Dialog open={!!selectedProject} onOpenChange={() => setSelectedProject(null)}>
+                  {selectedProject && (
+                    <DialogContent className="sm:max-w-[625px] max-h-[90vh] overflow-y-auto">
+                      <DialogHeader>
+                        <DialogTitle className="text-2xl text-[#10566e]">
+                          {selectedProject.name}
+                        </DialogTitle>
+                      </DialogHeader>
+                      
+                      <div className="space-y-4">
+                        <div className="flex gap-2">
+                          <span className="inline-block px-3 py-1 rounded-full text-xs font-medium bg-[#e0f2f1] text-[#10566e]">
+                            {selectedProject.category}
+                          </span>
+                          {selectedProject.isTrending && (
+                            <span className="inline-block px-3 py-1 rounded-full text-xs font-medium bg-[#fff3e0] text-[#e65100]">
+                              Trending
+                            </span>
+                          )}
+                        </div>
+
+                        <div>
+                          <h3 className="font-medium text-[#1d858d] mb-1">Description</h3>
+                          <p className="text-gray-700">{selectedProject.description}</p>
+                        </div>
+
+                        <div className="grid grid-cols-2 gap-4">
+                          <div className="flex items-center gap-2">
+                            <Users className="w-4 h-4 text-[#279692]" />
+                            <span>3-5 members</span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <Clock className="w-4 h-4 text-[#279692]" />
+                            <span>{getRecency(selectedProject.createdAt)}</span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <Star className="w-4 h-4 text-[#ffb74d] fill-[#ffb74d]" />
+                            <span>Popularity: {selectedProject.popularity}/100</span>
+                          </div>
+                        </div>
+
+                        <div>
+                          <h3 className="font-medium text-[#1d858d] mb-2">Skills Needed</h3>
+                          <div className="flex flex-wrap gap-2">
+                            {selectedProject.skills.map((skill: string) => (
+                              <span key={skill} className="px-2 py-1 bg-[#e0f2f1] text-[#10566e] text-xs rounded">
+                                {skill}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+
+                        <div className="flex justify-end gap-3 pt-4">
+                          <Button 
+                            variant="outline" 
+                            onClick={() => setSelectedProject(null)}
+                            className="text-[#1d858d] border-[#1d858d] hover:bg-[#e0f2f1]"
+                          >
+                            Close
+                          </Button>
+                          <Button className="bg-[#1d858d] hover:bg-[#10566e]">
+                            Join Project
+                          </Button>
+                        </div>
+                      </div>
+                    </DialogContent>
+                  )}
+                </Dialog>
                 {filteredProjects.length === 0 && (
                 <div className="text-center py-12">
                     <Search className="mx-auto w-12 h-12 text-[#35a79b] mb-4" />
