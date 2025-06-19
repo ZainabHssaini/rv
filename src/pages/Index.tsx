@@ -7,6 +7,7 @@ import TherapistSection from '@/components/TherapistSection';
 import MoodTracker from '@/components/MoodTracker';
 import PetGame from '@/components/PetGame';
 import Footer from '@/components/Footer';
+import Partners from '@/components/Partners';
 
 const Index = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false); // État pour vérifier si l'utilisateur est connecté
@@ -50,7 +51,7 @@ const Index = () => {
       {isLoggedIn ? <Welcome /> : <Hero />} {/* Afficher Welcome si connecté, sinon Hero */}
       <FeaturesSection />
       <TherapistSection />
-      <MoodTracker />
+      <Partners />
       <PetGame />
       <Footer />
     </div>
