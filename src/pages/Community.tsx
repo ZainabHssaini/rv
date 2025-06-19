@@ -6,48 +6,100 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import { MessageCircle, Users, BookOpen, Lightbulb, Heart, Search, Plus, TrendingUp, Calendar, MapPin, Clock } from "lucide-react";
 import { useState } from "react";
+import { db } from "@/lib/firebase";
+import { collection, addDoc, getDocs } from "firebase/firestore";
+import { useEffect } from "react";
+import { useToast } from "@/hooks/use-toast"; // Import the useToast hook
+
 
 const Community = () => {
+
+  const user = JSON.parse(localStorage.getItem('user') || '{}'); // Get user data from localStorage
+
   const [showPopup, setShowPopup] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
-  const discussions = [
-    {
-      id: 1,
-      title: "How to manage stress during a hackathon?",
-      author: "Marie L.",
-      replies: 12,
-      category: "Wellness",
-      time: "2h ago",
-      isHot: true
-    },
-    {
-      id: 2,
-      title: "Looking for a web development mentor",
-      author: "Thomas K.",
-      replies: 5,
-      category: "Mentorship",
-      time: "4h ago",
-      isHot: false
-    },
-    {
-      id: 3,
-      title: "Experience sharing: My first ideathon",
-      author: "Sarah M.",
-      replies: 18,
-      category: "Experience",
-      time: "6h ago",
-      isHot: true
-    },
-    {
-      id: 4,
-      title: "Recommended tools for project management",
-      author: "Alex P.",
-      replies: 25,
-      category: "Resources",
-      time: "1d ago",
-      isHot: false
+  const [viewAll, setViewAll] = useState(false);
+  const [newPostText, setNewPostText] = useState("");
+  const { toast } = useToast(); // Initialize the toast function
+  const [newPostCategory, setNewPostCategory] = useState("Question"); // Valeur par défaut
+  const [discussions, setDiscussions] = useState<any[]>([
+  {
+    id: 1,
+    title: "How to manage stress during a hackathon?",
+    author: "Marie L.",
+    replies: 12,
+    category: "Wellness",
+    time: "2h ago",
+    isHot: true
+  },
+  {
+    id: 2,
+    title: "Looking for a web development mentor",
+    author: "Thomas K.",
+    replies: 5,
+    category: "Mentorship",
+    time: "4h ago",
+    isHot: false
+  },
+  {
+    id: 3,
+    title: "Experience sharing: My first ideathon",
+    author: "Sarah M.",
+    replies: 18,
+    category: "Experience",
+    time: "6h ago",
+    isHot: true
+  },
+  {
+    id: 4,
+    title: "Recommended tools for project management",
+    author: "Alex P.",
+    replies: 25,
+    category: "Resources",
+    time: "1d ago",
+    isHot: false
+  }
+]);
+
+const postToFirebase = async (newPost: any) => {
+  await addDoc(collection(db, "discussions"), newPost);
+};
+
+
+  const handlePostSubmit = async () => {
+    if (!newPostText.trim()) {
+      toast({
+        title: "Post cannot be empty",
+        description: "Please enter some text before submitting.",
+        variant: "destructive",
+      });
+      return;
     }
-  ];
+
+    const newPost = {
+      id: Date.now(), // ou laisse Firebase générer l'id
+      title: newPostText,
+      author: user.firstname + user.lastname || "Unknown", // à remplacer par user réel si dispo
+      replies: 0,
+      category: newPostCategory,
+      time: "Just now",
+      isHot: false,
+    };
+
+    try {
+      await postToFirebase(newPost);
+      setDiscussions((prev) => [...prev, newPost]);
+      console.log("Post submitted");
+      toast({
+        title: "Post submitted",
+        description: "Your post has been successfully added to the community.",
+      });
+      setNewPostText(""); // Réinitialiser le champ de texte
+    } catch (error) {
+      console.error("Error submitting post:", error);
+    }
+  };
+
 interface Event {
   id: number;
   title: string;
@@ -117,6 +169,9 @@ interface Event {
       fileUrl: "https://docs.scs.community/community/hackathons/checklist/"
     }
   ];
+
+  
+
   const handleRegisterClick = (e: React.MouseEvent, event: Event) => {
       e.preventDefault();
       setSelectedEvent(event);
@@ -127,6 +182,8 @@ interface Event {
       setShowPopup(false);
       setSelectedEvent(null);
     };
+
+    
 
   const getCategoryColor = (category: string) => {
     switch (category) {
@@ -147,6 +204,32 @@ interface Event {
   link.click();
   document.body.removeChild(link);
 };
+
+useEffect(() => {
+  const fetchDiscussions = async () => {
+    const snapshot = await getDocs(collection(db, "discussions"));
+    const firebasePosts = snapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    }));
+
+    setDiscussions((prevDiscussions) => {
+      // Extraire les ids existants
+      const existingIds = new Set(prevDiscussions.map(d => d.id));
+
+      // Filtrer les posts Firestore pour ne garder que ceux pas dans prevDiscussions
+      const newUniquePosts = firebasePosts.filter(post => !existingIds.has(post.id));
+
+      // Retourner la concaténation (mockées + posts Firestore non dupliqués)
+      return [...prevDiscussions, ...newUniquePosts];
+    });
+  };
+
+  fetchDiscussions();
+}, []);
+
+
+
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
@@ -196,23 +279,28 @@ interface Event {
                   <Textarea 
                     placeholder="Ask a question, share your experience or seek advice..."
                     className="min-h-[100px]"
+                    value={newPostText}
+                    onChange={(e) => setNewPostText(e.target.value)}
                   />
                   <div className="flex justify-between items-center">
                     <div className="flex gap-2">
-                      <Button variant="outline" size="sm">
-                        <MessageCircle className="w-4 h-4 mr-2" />
-                        Question
-                      </Button>
-                      <Button variant="outline" size="sm">
-                        <Lightbulb className="w-4 h-4 mr-2" />
-                        Idea
-                      </Button>
-                      <Button variant="outline" size="sm">
-                        <Heart className="w-4 h-4 mr-2" />
-                        Experience
-                      </Button>
+                      {["Question", "Idea", "Experience"].map((cat) => (
+                        <Button
+                          key={cat}
+                          variant={newPostCategory === cat ? "default" : "outline"}
+                          size="sm"
+                          onClick={() => setNewPostCategory(cat)}
+                        >
+                          {cat === "Question" && <MessageCircle className="w-4 h-4 mr-2" />}
+                          {cat === "Idea" && <Lightbulb className="w-4 h-4 mr-2" />}
+                          {cat === "Experience" && <Heart className="w-4 h-4 mr-2" />}
+                          {cat}
+                        </Button>
+                      ))}
                     </div>
-                    <Button className="bg-[#35a79b] hover:bg-[#279692] text-white">
+                    <Button className="bg-[#35a79b] hover:bg-[#279692] text-white"
+                      onClick={() => handlePostSubmit()}
+                    >
                       <Plus className="w-4 h-4 mr-2" />
                       Post
                     </Button>
@@ -237,7 +325,8 @@ interface Event {
                 </div>
 
                 <div className="space-y-4">
-                  {discussions.map((discussion) => (
+                  {(viewAll ? discussions : discussions.slice(0, 4)).map((discussion) => (
+
                     <div key={discussion.id} className="border-b border-gray-100 pb-4 last:border-b-0">
                       <div className="flex justify-between items-start mb-2">
                         <div className="flex-1">
@@ -267,7 +356,8 @@ interface Event {
                 </div>
 
                 <div className="text-center mt-6">
-                  <Button variant="outline" className="border-[#35a79b] text-[#35a79b] hover:bg-[#35a79b] hover:text-white">
+                  <Button variant="outline" className="border-[#35a79b] text-[#35a79b] hover:bg-[#35a79b] hover:text-white"
+                  onClick={() => setViewAll(true)}>
                     View all discussions
                   </Button>
                 </div>
