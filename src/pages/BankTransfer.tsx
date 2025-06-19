@@ -101,22 +101,7 @@ const BankTransfer = () => {
                 </div>
 
                 {/* BIC */}
-                <div className="p-4 bg-teal-50 rounded-lg">
-                  <div className="flex justify-between items-start">
-                    <div>
-                      <p className="text-xs font-medium text-teal-600 uppercase tracking-wider mb-1">BIC</p>
-                      <p className="font-mono text-gray-800 text-sm">{ribInfo.bic}</p>
-                    </div>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => copyToClipboard(ribInfo.bic, "BIC")}
-                      className="text-teal-600 hover:bg-teal-100"
-                    >
-                      <Copy className="w-4 h-4" />
-                    </Button>
-                  </div>
-                </div>
+                
 
                 {/* Address */}
                 <div className="p-4 bg-teal-50 rounded-lg">

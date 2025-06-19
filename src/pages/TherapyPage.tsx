@@ -1,7 +1,21 @@
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import { Calendar, Video, MessageSquare, CheckCircle, Star, Users, ChevronDown, ChevronUp } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { 
+  Calendar, 
+  Video, 
+  MessageSquare, 
+  CheckCircle, 
+  Star, 
+  Users, 
+  ChevronDown, 
+  ChevronUp,
+  PlayCircle,
+  HeartPulse,
+  BookOpen,
+  Activity,
+  Share2,
+  Bookmark
+} from 'lucide-react';import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import MeetButton from '@/components/MeetButton';
 
@@ -26,11 +40,118 @@ type SupportGroup = {
   topics: string[];
   meetLink: string;
 };
+type TherapeuticModel = {
+  id: number;
+  title: string;
+  description: string;
+  steps: string[];
+  duration: string;
+  image?: string;
+};
 
 const TherapyPage = () => {
   const [activeTab, setActiveTab] = useState<'individual' | 'group'>('individual');
   const [displayedTherapists, setDisplayedTherapists] = useState<Therapist[]>([]);
   const [showAllTherapists, setShowAllTherapists] = useState(false);
+
+
+  const therapeuticModels: TherapeuticModel[] = [
+    {
+      id: 1,
+      title: "Stress Management Protocol",
+      description: "Evidence-based techniques to reduce and manage stress",
+      steps: [
+        "Identify your stress triggers",
+        "Practice diaphragmatic breathing daily",
+        "Implement time management strategies",
+        "Engage in regular physical activity",
+        "Maintain a consistent sleep schedule",
+        "Practice mindfulness meditation"
+      ],
+      duration: "4-8 weeks",
+      image: "/image/stress-management.jpg"
+    },
+    {
+      id: 2,
+      title: "Cognitive Behavioral Therapy (CBT) Model",
+      description: "Identify and change negative thought patterns",
+      steps: [
+        "Recognize automatic negative thoughts",
+        "Challenge cognitive distortions",
+        "Develop alternative balanced thoughts",
+        "Behavioral activation techniques",
+        "Gradual exposure to feared situations",
+        "Relapse prevention planning"
+      ],
+      duration: "6-12 weeks",
+      image: "/image/CBT.jpg"
+
+    },
+    {
+      id: 3,
+      title: "Sleep Hygiene Program",
+      description: "Improve sleep quality through behavioral changes",
+      steps: [
+        "Establish consistent sleep schedule",
+        "Create optimal sleep environment",
+        "Limit screen time before bed",
+        "Reduce caffeine and alcohol intake",
+        "Implement relaxation techniques",
+        "Use bed only for sleep and intimacy"
+      ],
+      duration: "3-4 weeks",
+      image: "/image/sleep.jpg"
+
+    },
+    {
+      id: 4,
+      title: "Emotion Regulation Skills",
+      description: "DBT-based techniques for managing intense emotions",
+      steps: [
+        "Identify and label emotions",
+        "Practice mindfulness of current emotion",
+        "Use opposite action technique",
+        "Implement self-soothing strategies",
+        "Build positive experiences",
+        "Apply distress tolerance skills"
+      ],
+      duration: "8-12 weeks",
+      image: "/image/emotion.jpg"
+
+    },
+    {
+      id: 5,
+      title: "Mindfulness-Based Stress Reduction",
+      description: "Cultivate present-moment awareness to reduce stress",
+      steps: [
+        "Daily body scan meditation",
+        "Mindful breathing exercises",
+        "Walking meditation practice",
+        "Mindful eating techniques",
+        "Loving-kindness meditation",
+        "Integration into daily activities"
+      ],
+      duration: "8 weeks",
+      image: "/image/reduce-stress.jpg"
+
+    },
+    {
+      id: 6,
+      title: "Trauma Recovery Model",
+      description: "Phased approach to trauma processing and healing",
+      steps: [
+        "Establish safety and stabilization",
+        "Process traumatic memories",
+        "Cognitive restructuring",
+        "Emotional regulation skills",
+        "Rebuild interpersonal connections",
+        "Post-traumatic growth integration"
+      ],
+      duration: "12+ weeks",
+      image: "/image/trauma.jpg"
+
+    }
+  ];
   
   const allTherapists: Therapist[] = [
     {
@@ -453,6 +574,8 @@ const TherapyPage = () => {
                 How It Works
               </h2>
               
+
+
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div className="text-center glass-card dark:glass-card-dark p-6 rounded-xl animate-scale-in">
                   <div className="w-16 h-16 bg-reviva-mint/30 dark:bg-reviva-teal/10 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -482,6 +605,157 @@ const TherapyPage = () => {
                   <p className="text-sm text-reviva-charcoal/80 dark:text-white/80">
                     Follow your personalized care plan and schedule follow-up sessions as needed.
                   </p>
+                </div>
+              </div>
+            </div>
+
+
+           {/* Therapeutic Models Section */}
+           {/* Therapeutic Models Section */}
+<div className="max-w-6xl mx-auto mt-16">
+  <h2 className="text-2xl font-bold text-reviva-purple mb-8 text-center animate-fade-in">
+    <HeartPulse className="h-6 w-6 text-reviva-teal inline mr-3 animate-pulse" />
+    Evidence-Based Therapeutic Models
+    <HeartPulse className="h-6 w-6 text-reviva-teal inline ml-3 animate-pulse" />
+  </h2>
+  
+  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    {therapeuticModels.map((model, index) => (
+      <div 
+        key={model.id} 
+        className="glass-card dark:glass-card-dark p-6 rounded-xl hover:shadow-lg transition-all duration-300 hover:-translate-y-1 animate-fade-in"
+        style={{ animationDelay: `${index * 100}ms` }}
+      >
+        <div className="relative h-48 mb-4 rounded-lg overflow-hidden group">
+          <img 
+            src={model.image || "/reviva/therapy-default.jpg"} 
+            alt={model.title} 
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-4">
+            <h3 className="text-xl font-bold text-white">{model.title}</h3>
+          </div>
+          <div className="absolute top-0 right-0 bg-reviva-teal text-white text-xs font-bold px-2 py-1 rounded-bl-lg">
+            {model.duration}
+          </div>
+        </div>
+        
+        <p className="text-sm text-reviva-charcoal/80 dark:text-white/80 mb-4">
+          {model.description}
+        </p>
+        
+        <div className="mb-4">
+          <h4 className="text-sm font-medium mb-2 flex items-center">
+            <BookOpen className="h-4 w-4 text-reviva-teal mr-2" />
+            Key Steps:
+          </h4>
+          <ul className="space-y-2 text-sm">
+            {model.steps.map((step, idx) => (
+              <li 
+                key={idx} 
+                className="flex items-start hover:bg-reviva-mint/10 dark:hover:bg-reviva-teal/10 p-2 rounded transition-colors"
+              >
+                <CheckCircle className="h-4 w-4 text-reviva-teal mr-2 mt-0.5 flex-shrink-0" />
+                <span>{step}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+        
+        <div className="flex justify-between items-center">
+          <span className="text-xs bg-reviva-mint/20 text-reviva-teal dark:bg-reviva-teal/10 dark:text-reviva-mint px-2 py-1 rounded-full flex items-center">
+            <Calendar className="h-3 w-3 mr-1" />
+            {model.duration}
+          </span>
+          <button 
+            className="text-reviva-teal text-sm font-medium flex items-center hover:text-reviva-deep-teal transition-colors"
+            onClick={() => console.log(`Learn more about ${model.title}`)}
+          >
+            <PlayCircle className="h-4 w-4 mr-1 animate-bounce-x" />
+            Learn More
+          </button>
+        </div>
+      </div>
+    ))}
+  </div>
+</div>
+
+            {/* Therapist-Recommended Resources */}
+            <div className="max-w-4xl mx-auto mt-16 glass-card dark:glass-card-dark p-8 rounded-xl">
+              <h2 className="text-2xl font-bold text-reviva-deep-teal mb-6 flex items-center">
+                <HeartPulse className="h-6 w-6 text-reviva-teal mr-3" />
+                Therapist-Recommended Resources
+              </h2>
+              
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="border-l-4 border-reviva-teal pl-4 py-2">
+                  <h3 className="font-medium mb-3">Mobile Apps</h3>
+                  <ul className="space-y-2 text-sm">
+                    <li className="flex items-center">
+                      <CheckCircle className="h-4 w-4 text-reviva-teal mr-2" />
+                      <span>Headspace (Meditation)</span>
+                    </li>
+                    <li className="flex items-center">
+                      <CheckCircle className="h-4 w-4 text-reviva-teal mr-2" />
+                      <span>MoodTools (Depression)</span>
+                    </li>
+                    <li className="flex items-center">
+                      <CheckCircle className="h-4 w-4 text-reviva-teal mr-2" />
+                      <span>Daylio (Mood Tracking)</span>
+                    </li>
+                  </ul>
+                </div>
+                
+                <div className="border-l-4 border-reviva-purple pl-4 py-2">
+                  <h3 className="font-medium mb-3">Books</h3>
+                  <ul className="space-y-2 text-sm">
+                    <li className="flex items-center">
+                      <BookOpen className="h-4 w-4 text-reviva-purple mr-2" />
+                      <span>The Body Keeps the Score</span>
+                    </li>
+                    <li className="flex items-center">
+                      <BookOpen className="h-4 w-4 text-reviva-purple mr-2" />
+                      <span>Feeling Good by David Burns</span>
+                    </li>
+                    <li className="flex items-center">
+                      <BookOpen className="h-4 w-4 text-reviva-purple mr-2" />
+                      <span>The Happiness Trap</span>
+                    </li>
+                  </ul>
+                </div>
+                
+                <div className="border-l-4 border-reviva-mint pl-4 py-2">
+                  <h3 className="font-medium mb-3">Online Programs</h3>
+                  <ul className="space-y-2 text-sm">
+                    <li className="flex items-center">
+                      <Activity className="h-4 w-4 text-reviva-mint mr-2" />
+                      <span>CBT-I for Insomnia</span>
+                    </li>
+                    <li className="flex items-center">
+                      <Activity className="h-4 w-4 text-reviva-mint mr-2" />
+                      <span>DBT Skills Training</span>
+                    </li>
+                    <li className="flex items-center">
+                      <Activity className="h-4 w-4 text-reviva-mint mr-2" />
+                      <span>Mindfulness-Based CBT</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              
+              <div className="mt-8 bg-reviva-beige/30 dark:bg-reviva-charcoal/50 p-4 rounded-lg">
+                <div className="flex items-start">
+                  <img 
+                    src="/reviva/woman (1).png" 
+                    alt="Dr. Yousfi" 
+                    className="h-12 w-12 rounded-full mr-4"
+                  />
+                  <div>
+                    <p className="text-sm italic mb-1">
+                      "These resources complement our therapy sessions perfectly. I recommend starting with one resource at a time to avoid feeling overwhelmed."
+                    </p>
+                    <p className="text-sm font-medium">— Dr. Ihssan Yousfi, Clinical Psychologist</p>
+                  </div>
                 </div>
               </div>
             </div>
