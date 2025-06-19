@@ -5,6 +5,7 @@ import { useToast } from "@/hooks/use-toast"; // Import the useToast hook
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
 import { auth, db } from "@/lib/firebase"; // adapte le chemin si besoin
+import { useState } from 'react';
 
 const SignIn = () => {
   const {
@@ -15,9 +16,12 @@ const SignIn = () => {
 
   const navigate = useNavigate(); // Hook for navigation
   const { toast } = useToast(); // Initialize the toast function
+  const [loading, setLoading] = useState(false);
+
 
   const onSubmit = async (data: any) => {
     try {
+      setLoading(true); // Start loading
       // 1. Authentifier l'utilisateur via Firebase Auth
       const userCredential = await signInWithEmailAndPassword(auth, data.email, data.password);
       const user = userCredential.user;
@@ -60,6 +64,9 @@ const SignIn = () => {
         description:"Something went wrong. Please try again.",
       });
     }
+    }
+    finally {
+      setLoading(false); // Stop loading
     }
   };
 
@@ -125,13 +132,23 @@ const SignIn = () => {
           </div>
 
           <button
-            type="submit"
-            className="w-full bg-reviva-teal text-white py-3 px-6 rounded-lg font-medium
-                     hover:bg-reviva-deep-teal transition-colors duration-200
-                     focus:outline-none focus:ring-2 focus:ring-reviva-teal focus:ring-offset-2"
-          >
-            Sign In
-          </button>
+  type="submit"
+  className="w-full bg-reviva-teal text-white py-3 px-6 rounded-lg font-medium
+           hover:bg-reviva-deep-teal transition-colors duration-200
+           focus:outline-none focus:ring-2 focus:ring-reviva-teal focus:ring-offset-2
+           flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+  disabled={loading}
+>
+  {loading ? (
+    <>
+      <span className="animate-spin rounded-full h-4 w-4 border-t-2 border-white border-opacity-50"></span>
+      Signing In...
+    </>
+  ) : (
+    "Sign In"
+  )}
+</button>
+
 
           <p className="text-center text-sm text-reviva-charcoal/80">
             Don't have an account?{' '}
