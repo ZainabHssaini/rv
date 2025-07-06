@@ -20,7 +20,7 @@ const RevivaSolution = () => {
     },
     {
       icon: Calendar,
-      title: "Marathon",
+      title: "Events",
       description: "Participate in innovation marathons, hackathons, and ideathons. Register individually or as a group and track your results in real-time.",
       buttonText: "Participate",
       color: "#279692",

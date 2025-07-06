@@ -26,6 +26,7 @@ import MarathonPage from "./pages/MarathonPage";
 import Chatbot from "./components/Chatbot";
 import PaymentComponent from "./components/PaymentComponent";
 import BankTransfer2 from "./pages/BankTransfer2";
+import PricingPage from "./pages/PricingPage";
 
 
 const queryClient = new QueryClient();
@@ -64,6 +65,9 @@ const App = () => (
           <Route path="/sol/marathon" element={<MarathonPage />} />
           <Route path="/sol/Community" element={<Community />} />
 
+          <Route path="/payment" element={<PricingPage />} />
+
+          {/* ADD ALL CUSTOM ROUTES BELOW THE CATCH-ALL "*" ROUTE */}
 
 =
 

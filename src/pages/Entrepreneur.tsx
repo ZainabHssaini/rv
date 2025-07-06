@@ -7,6 +7,12 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { useState } from "react";
 import { toast } from "sonner";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 
 interface EntrepreneurProps {
   teamId?: string; // Make it optional with ?
@@ -261,6 +267,12 @@ const handleJoinClick = async () => {
     );
   };
 
+const [isCreateProjectModalOpen, setIsCreateProjectModalOpen] = useState(false);
+
+// Update your handleCreateProject function
+const handleCreateProject = () => {
+  setIsCreateProjectModalOpen(true);
+};
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
       <Navbar />
@@ -290,12 +302,13 @@ const handleJoinClick = async () => {
                 <p className="text-gray-600 mb-6">
                   Share your vision and let our AI suggest the perfect team to bring your project to life.
                 </p>
-                <a href="/createProject">
-                  <Button className="bg-[#1d858d] hover:bg-[#10566e] text-white px-8 py-3 rounded-xl">
-                    <Plus className="w-5 h-5 mr-2" />
-                    Create My Project
-                  </Button>
-                </a>
+                <Button 
+                  className="bg-[#1d858d] hover:bg-[#10566e] text-white px-8 py-3 rounded-xl"
+                  onClick={handleCreateProject}
+                >
+                  <Plus className="w-5 h-5 mr-2" />
+                  Create My Project
+                </Button>
               </div>
             </Card>
 
@@ -485,6 +498,58 @@ const handleJoinClick = async () => {
         </div>
       </div>
       <Footer />
+      <Dialog open={isCreateProjectModalOpen} onOpenChange={setIsCreateProjectModalOpen}>
+        <DialogContent className="sm:max-w-[625px] rounded-lg">
+          <DialogHeader>
+            <DialogTitle className="text-2xl text-center text-[#1d858d] mb-4">
+              Project Submission Received
+            </DialogTitle>
+          </DialogHeader>
+          <div className="text-center">
+            <div className="w-24 h-24 bg-[#1d858d]/10 rounded-full flex items-center justify-center mx-auto mb-6">
+              <Lightbulb className="w-12 h-12 text-[#1d858d]" />
+            </div>
+            <h3 className="text-xl font-semibold text-gray-800 mb-4">
+              Your project request has been submitted for review!
+            </h3>
+            <p className="text-gray-600 mb-6 px-4">
+              Our team will carefully evaluate your project proposal. You'll receive a notification via email once your project is approved.
+            </p>
+            
+            <div className="bg-blue-50 p-6 rounded-lg mb-6 text-left mx-4">
+              <h4 className="font-medium text-gray-800 mb-3 text-lg">What to expect next:</h4>
+              <ul className="space-y-3">
+                <li className="flex items-start">
+                  <span className="bg-[#1d858d] text-white rounded-full w-6 h-6 flex items-center justify-center mr-3 flex-shrink-0">1</span>
+                  <span className="text-gray-700">Initial review within 24-48 hours</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="bg-[#1d858d] text-white rounded-full w-6 h-6 flex items-center justify-center mr-3 flex-shrink-0">2</span>
+                  <span className="text-gray-700">Potential follow-up questions from our team</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="bg-[#1d858d] text-white rounded-full w-6 h-6 flex items-center justify-center mr-3 flex-shrink-0">3</span>
+                  <span className="text-gray-700">Approval notification with next steps</span>
+                </li>
+                
+              </ul>
+            </div>
+            
+            <div className="mt-6">
+              <Button 
+                className="bg-[#1d858d] hover:bg-[#10566e] text-white px-8 py-3 rounded-xl text-lg"
+                onClick={() => setIsCreateProjectModalOpen(false)}
+              >
+                Understood
+              </Button>
+            </div>
+            
+            <p className="text-sm text-gray-500 mt-6">
+              Need help? Contact us at <span className="text-[#1d858d]">reviva.ma6@gmail.com</span>
+            </p>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
