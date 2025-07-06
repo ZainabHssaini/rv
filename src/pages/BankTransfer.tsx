@@ -37,8 +37,7 @@ const BankTransfer = () => {
   const handleConfirmTransfer = () => {
     setTransferConfirmed(true);
     toast({
-      title: "Transfer confirmed!",
-      description: "Please upload your payment proof below",
+      title: "Please upload your payment proof below",
     });
   };
 

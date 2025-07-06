@@ -140,12 +140,12 @@ const RevivaSolution = () => {
               transition={{ delay: 0.2, duration: 0.8 }}
             >
               <h2 className="text-4xl font-bold md:text-5xl text-reviva-purple mb-4 relative inline-block">
-                Reviva Solution
+                Reviva Solutions
                 <motion.span 
                   className="absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r "
                   initial={{ scaleX: 0 }}
                   whileInView={{ scaleX: 1 }}
-                  viewport={{ once: true }}
+                  viewport={{ once: true }} 
                   transition={{ duration: 1 }}
                 />
               </h2>
