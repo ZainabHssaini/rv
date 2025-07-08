@@ -32,6 +32,26 @@
         id: 5,
         name: 'Fédératrion nationale de la santé mentale',
         logo: 'image/FNSM LOGO.png'
+        },
+        {
+        id: 6,
+        name: 'Fédératrion nationale de la santé mentale',
+        logo: 'image/1000041446.png'
+        },
+        {
+        id: 7,
+        name: 'Fédératrion nationale de la santé mentale',
+        logo: 'image/associationChamss LOGO.png'
+        },
+        {
+        id: 8,
+        name: 'Fédératrion nationale de la santé mentale',
+        logo: 'image/LaboLogo.jpeg'
+        },
+        {
+        id: 9,
+        name: 'Fédératrion nationale de la santé mentale',
+        logo: 'image/psy2ALogo.png'
         }
     ];
 

@@ -164,8 +164,7 @@ const Welcome = () => {
               >
                 Get Started
               </button>
-
-<Link
+        <Link
           to="/payment"
           className="px-6 py-3 rounded-full font-medium flex items-center justify-center gap-2 
                     bg-gradient-to-br from-yellow-400 via-yellow-500 to-yellow-600 text-white font-bold
