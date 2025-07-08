@@ -63,6 +63,22 @@ const Hero = () => {
               >
                 Get Started
               </button>
+              <Link
+          to ="/payment"
+          className="px-6 py-3 rounded-full font-medium flex items-center justify-center gap-2 
+                    bg-gradient-to-br from-yellow-400 via-yellow-500 to-yellow-600 text-white font-bold
+                    hover:from-yellow-500 hover:via-yellow-600 hover:to-yellow-700
+                    transform hover:scale-[1.03] transition-all duration-300
+                    shadow-lg hover:shadow-yellow-500/40
+                    border-2 border-yellow-300/30
+                    relative overflow-hidden group"
+        >
+          <span className="relative z-10 flex items-center gap-2">
+            Premium <Sparkles size={18} className="fill-white/80" />
+          </span>
+          {/* Effet de lumière supplémentaire */}
+          <span className="absolute inset-0 bg-white/10 group-hover:bg-white/20 transition-all duration-500"></span>
+        </Link>
               <button 
                 className="px-6 py-3 rounded-full font-medium flex items-center justify-center gap-2 hover:bg-reviva-mint/20 transition-colors border border-reviva-teal text-reviva-teal"
                 onClick={toggleLearnMore}
