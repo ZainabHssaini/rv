@@ -159,7 +159,7 @@ const Hero = () => {
               <div className="bg-white dark:bg-reviva-charcoal rounded-xl overflow-hidden">
                 <img
                   src="https://cdn.pixabay.com/photo/2020/03/06/14/50/photo-4907278_1280.jpg"
-                  alt="Mental wellness illustration"
+                  alt ="Mental wellness illustration"
                   className="w-full h-auto object-cover aspect-[4/3]"
                 />
                 <div className="p-4">
