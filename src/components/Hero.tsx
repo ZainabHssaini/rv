@@ -1,4 +1,4 @@
-import { ArrowRight, Brain, Heart, Shield, X } from 'lucide-react';
+import { ArrowRight, Brain, Heart, Link, Shield, Sparkles, X } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 
 const Hero = () => {
