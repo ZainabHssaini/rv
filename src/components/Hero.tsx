@@ -1,5 +1,6 @@
-import { ArrowRight, Brain, Heart, Link, Shield, Sparkles, X } from 'lucide-react';
+import { ArrowRight, Brain, Heart, Shield, Sparkles, X } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const Hero = () => {
   const floatingCirclesRef = useRef(null);
